@@ -1,7 +1,7 @@
-let globalSocket = null
+let socket = null
 
 // total data
-const game = {
+const gameInDB = {
     id: 2,
     name: "poker",
     description: null,
@@ -34,8 +34,6 @@ const game = {
     },
     globalValuesOfPlayer: {
         currentBet: {type: "number", value: 0},
-        hasPlayed: {type: "boolean", value: false},
-        haswin: {type: "boolean", value: false},
         attachedEventForTour: {type: "eventList", value: ["skipPlayerTour"]},
         gain: {
             type: "gainObject", value: {
@@ -61,7 +59,7 @@ const game = {
 
             actionOnlyAtPlayerTour: true,
             // all 10min , allPlayerPlayedAtSameTime
-            endOfTour: ["allPlayersHasPlayed"], // allPlayersHasPlayed default event 301
+            endOfTour: ["allPlayersHasPlayed/endOfTour"], // allPlayersHasPlayed default event 301
             actions: [{
                 name: "Se coucher",
                 condition: [],
@@ -180,12 +178,12 @@ const game = {
         }
     },
     events: { //Evenements globaux qui s'applique de maniere systematique
-        demon: [ // la partie se lance apres que tous les demons se soient activés si etat != start
+        demons: [ // la partie se lance apres que tous les demons se soient activés si etat != start
             {
-                condition: [
-                    "exp(comp({tour};isEqualNumber;4)&&allPlayersHasPlayed)"
-                ],
-                event: [13, 15, 16, 302]
+                condition: // pas besoin d'une liste de conditions , on met une comp "or" si plusieurs conditions d'exec
+                    "exp(comp({tour};isEqualNumber;4)&&allPlayersHasPlayed/endOfTour)"
+                ,
+                events: [13, 15, 16, 302]
                 // 13 récupération des mises
                 // 15 lancer la verification des cartes
                 // 16 reset global bet
@@ -193,34 +191,34 @@ const game = {
             },
 
             {
-                condition: [
+                condition:
                     "exp(comp({tour};isEqualNumber;5)&&eachEndOfTour)"
-                ],
-                event: []
+                ,
+                events: []
                 // lancer la verification des cartes
             },
 
 
             {
-                condition: [
-                    ["eachStartOfTour"]
-                ],
-                event: [13]
+                condition:
+                    "eachStartOfTour"
+                ,
+                events: [13]
                 // récupérer les mises centrales
             },
             {
-                condition: [
-                    ["startOfGame"]
-                ],
-                event: [8, 4]
+                condition:
+                    "startOfGame"
+                ,
+                events: [8, 4]
                 // melanger les cartes
                 // distribution des gains
                 // distrubtion des cartes se fait au debut de la manche
             }, {
-                condition: [
-                    ["eachStartOfManche"]
-                ],
-                event: [3, 5, 6, 7, 9, 8, 10, 14]
+                condition:
+                    "eachStartOfManche"
+                ,
+                events: [3, 5, 6, 7, 9, 8, 10, 14]
                 // 3 reset events 'coucher'
                 // 5 changer le joueur de depart
                 // 6 pose de la petite blinde
@@ -234,11 +232,13 @@ const game = {
 
             // creer automatiquement
             {
-                condition: [
-                    ["allPlayersHasPlayed"]
-                ],
-                event: [300]
+                condition:
+                    "allPlayersHasPlayed/endOfTour" // ALSO END OF TOUR
+                ,
+                events: [300]
             },
+
+
         ],
         events: [
             // default events
@@ -282,8 +282,10 @@ const game = {
                 id: 3,
                 name: "Faire revenir tous les joueurs dans la partie",
                 condition: [],
+
+                boucle: "{allPlayersInGame}",
                 event: {
-                    for: ["allPlayerInGame"],
+                    for: "{playerBoucle}",
                     give: {},
                     action: "removeAllAtachedEventsForTour",
                     value:
@@ -335,7 +337,7 @@ const game = {
                 condition: [],
                 event: {
                     from: ["{getPlayer(calc({startPlayer}+2))#gain#1}"],
-                    for: ["{getPlayer(calc({startPlayer}+2))#currentBet"],
+                    for: "{getPlayer(calc({startPlayer}+2))#currentBet",
                     give: {
                         "{gain#1}": "calc(2*{smallBlind})", //jeton 1    ,   key(gain donnée):value(quantité)
                     },
@@ -371,7 +373,7 @@ const game = {
                 name: "Distribuer",
                 condition: [],
                 event: {
-                    for: ["allPlayerInGame"],
+                    for: "{allPlayersInGame}",
                     give: {
                         "{card#type=french_standard}": {
                             "normal": 2
@@ -385,7 +387,7 @@ const game = {
                 id: 12,
                 name: "Distribuer",
                 condition: [],
-                boucle: "{allPlayerInGame}",
+                boucle: "{allPlayersInGame}",
                 event: {
                     for: ["{playerBoucle}"],
                     give: {
@@ -399,7 +401,7 @@ const game = {
                 id: 13,
                 name: "Recuperer les mises",
                 condition: [],
-                boucle: "{allPlayerInGame}",
+                boucle: "{allPlayersInGame}",
                 event: {
                     from: ["{playerBoucle#currentBet}"], // bien supprimer les currentBet
                     for: ["{groupPot}"],
@@ -425,7 +427,7 @@ const game = {
                 id: 15,
                 name: "Verification des combinaisons",
                 condition: [""],
-                boucle: "{allPlayerInGame}}",
+                boucle: "{allPlayersInGame}",
                 event: {
                     for: "{currentPlayer#handCardDeck#type=french_standard}",
                     action: "verificationCards",
@@ -815,15 +817,44 @@ const game = {
 // miser : event
 
 
-
 // win
 function connectSocket() {
-    if (globalSocket) return;
+    if (socket) return;
+    socket = io('ws://localhost:8008');
 
-    const socket = io('ws://localhost:8008');
-    globalSocket = socket;
+    let pseudo = "mey"
+    socket.emit("createRoom", {gameInDB, pseudo});
+
+    socket.on("roomCreated",(room)=>{
+        let roomId = room.roomId;
+        console.log(room,roomId);
+        document.querySelector("#startGame").addEventListener("click", (e) => {
+            socket.emit("startGame", {roomId});
+        })
+    })
 
 
-    socket.emit("createRoom");
+    socket.on("gameChanges",room=>{
+        if (room.data.status !== "waitingPlayers"){
+            writeMessage("#message",room.data.message)
+        }
+    })
+
+    socket.on("error",err=>{
+        console.log(err)
+        writeMessage("#error" , err)
+    })
 
 }
+function writeMessage(id,m) {
+
+    let t = document.querySelector(id)
+    if(t){
+        t.textContent = m
+    }else{
+        console.warn("found #"+id)
+    }
+}
+
+
+connectSocket()
