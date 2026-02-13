@@ -294,4 +294,3 @@ function resolveLogicalExpressionlist(list) {
 
 }
 
-exp.forEach((exp) => explodeExpression(exp))

@@ -1,26 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Cleint1</title>
 
-    <script src="https://cdn.socket.io/4.8.0/socket.io.min.js"
-            integrity="sha384-OoIbkvzsFFQAG88r+IqMAjyOtYDPGO0cqK5HF5Uosdy/zUEGySeAzytENMDynREd"
-            crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.socket.io/4.8.0/socket.io.min.js"
+      integrity="sha384-OoIbkvzsFFQAG88r+IqMAjyOtYDPGO0cqK5HF5Uosdy/zUEGySeAzytENMDynREd"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <script src="main.js"></script>
 
-</head>
-<body>
-<script src="main.js"></script>
-<script src="tests.js"></script>
-<button id="startGame">Start Game</button>
-<span id="message">Waiting for people</span>
-<span id="error" style="color:red"></span>
+    <div id="app">
+      <div id="message">Waiting for people</div>
 
+      <div class="right">
+        <div class="players">
+          <div class="p1">
+            <button id="startGame">Start Game</button>
+          </div>
 
-</body>
+          <div class="p2"></div>
+        </div>
+        <div class="gameStat"></div>
+      </div>
+
+      <div class="widget">
+        <div class="container">
+            <h1></h1>
+            <p></p>
+            <div class="input-container">  
+            </div>
+            <button></button>
+        </div>
+      </div>
+   </div>
+  </body>
 </html>
-
-
 
 <!--
 les pieds dans l'eau

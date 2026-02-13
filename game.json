@@ -1,0 +1,287 @@
+{
+  "id": 2,
+  "name": "Bataille",
+  "description": null,
+  "notes": [
+    {
+      "note": 2,
+      "commentaire": "anfnezgkfzf"
+    }
+  ],
+  "joueursAccueillis": 0,
+  "gamesEnded": 0,
+  "metadata": {
+    "type": [
+      "Strategy",
+      "luckk",
+      "smart"
+    ],
+    "lastEdit": "01/02/2025 12:20",
+    "editionHistory": []
+  },
+  "globalValue": {
+    "smallBlind": {
+      "type": "number",
+      "value": "1"
+    },
+    "allPlayersHasPlayed": {
+      "type": "boolean",
+      "value": false
+    },
+    "currentBet": {
+      "type": "number",
+      "value": 0
+    },
+    "startPlayer": {
+      "type": "number",
+      "value": 0
+    },
+    "state": {
+      "type": "string",
+      "value": "waiting"
+    },
+    "groupPot": {
+      "type": "gainObject",
+      "value": {
+        "gain#1": 0
+      }
+    },
+    "boardCard": {
+      "type": "cardList",
+      "value": []
+    },
+    "winners": {
+      "type": "playerList",
+      "value": []
+    },
+    "tour": {
+      "type": "number",
+      "value": 0
+    }
+  },
+  "globalValuesOfPlayer": {
+    "currentBet": {
+      "type": "number",
+      "value": {
+        "gain": {
+          "type": "gainObject",
+          "value": {
+            "1": {
+              "value": 0
+            }
+          }
+        }
+      },
+      "attachedEventForTour": {
+        "type": "eventList",
+        "value": [
+          "skipPlayerTour"
+        ]
+      },
+      "gain": {
+        "type": "gainObject",
+        "value": {
+          "1": {
+            "value": 0
+          }
+        }
+      }
+    },
+    "params": {
+      "globalGame": {
+        "jeuSolo": false,
+        "playersCanJoin": false,
+        "minPlayer": 2,
+        "maxPlayer": 2
+      },
+      "rendering": {
+        "menu": {
+          "template": 1,
+          "backgroundImage": null
+        },
+        "game": {
+          "template": 1,
+          "backgroundImage": null
+        }
+      },
+      "tours": {
+        "activation": true,
+        "sens": "incrementation",
+        "startNumber": 0,
+        "actionOnlyAtPlayerTour": true,
+        "endOfTour": [
+          "allPlayersHasPlayed/endOfTour"
+        ],
+        "actions": [
+
+        ],
+        "actionsAtEnd": 0
+      },
+      "manche": {
+        "actionsAtStart": [],
+        "actionsAtEnd": 0
+      },
+      "cards": {
+        "activeHandDeck": true,
+        "activPersonalHandDeck": true,
+        "activPersonalHandDiscard": true,
+        "activeDiscardDeck": false,
+        "discard": {
+          "quantity": {
+            "min": null,
+            "max": null
+          }
+        },
+        "pickOnDeck": {
+          "quantity": {
+            "min": null,
+            "max": null
+          }
+        },
+        "activeCardAsGain": true,
+        "handDeck": {
+          "activation": true,
+          "visibility": "nobody"
+        },
+        "cardBoard": {}
+      },
+      "gain": {
+        "groupPot": true
+      }
+    },
+    "events": {
+      "demons": [
+
+
+        {
+          "condition": "startOfGame",
+          "events": [
+            1,2
+          ]
+        }
+      ],
+      "events": [
+        {
+          "id": 300,
+          "name": "WIN",
+          "condition": [],
+          "event": {
+            "for": [
+              "{currentPlayer}"
+            ],
+            "give": {},
+            "attachedEventForTour": null,
+            "action": "WIN",
+            "value": null
+          }
+        },
+        {
+          "id": 301,
+          "name": "Change tour",
+          "condition": [],
+          "event": {
+            "for": null,
+            "give": {},
+            "attachedEventForTour": null,
+            "action": "endOfTour",
+            "value": null
+          }
+        },
+        {
+          "id": 302,
+          "name": "Change manche",
+          "condition": [],
+          "event": {
+            "for": null,
+            "give": {},
+            "attachedEventForTour": null,
+            "action": "endOfManche",
+            "value": null
+          }
+        },
+
+        {
+          "id": 2,
+          "name": "Distribute all gains",
+          "condition": [
+            ""
+          ],
+          "boucle": "{allPlayersInGame}",
+          "event": {
+            "for": "{playerBoucle}",
+            "give": {
+              "{gain#1}": "{cardsLength}"
+            },
+            "action": null,
+            "value": null
+          }
+        },
+        {
+          "id": 1,
+          "name": "Melanger le jeu",
+          "condition": [],
+          "event": {
+            "from": null,
+            "for": "{deck}",
+            "give": null,
+            "action": "shuffle",
+            "value": null
+          }
+        }
+      ],
+      "withValueEvent": [
+      ]
+    },
+    "assets": {
+      "cards": [
+        {
+          "id": 2,
+          "value": "1",
+          "type": "french_standard",
+          "addedAttributs": {
+            "couleur": "pique"
+          }
+        },
+        {
+          "id": 3,
+          "value": "3",
+          "type": "french_standard",
+          "addedAttributs": {
+            "couleur": "treffle"
+          }
+        },
+        {
+          "id": 4,
+          "value": "4",
+          "type": "french_standard",
+          "addedAttributs": {
+            "couleur": "coeur"
+          }
+        },
+        {
+          "id": 5,
+          "value": "5",
+          "type": "french_standard",
+          "addedAttributs": {
+            "couleur": "coeur"
+          }
+        }
+      ],
+      "gains": [
+        {
+          "id": 1,
+          "nom": "jetons",
+          "value": null,
+          "value_numérique": 1,
+          "quantite": null
+        }
+      ],
+      "roles": [
+        {
+          "nom": "dealer",
+          "attribution": "{getPlayer(calc({startPlayer}-1))}"
+        }
+      ]
+    }
+  }
+}
