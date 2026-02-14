@@ -6,6 +6,7 @@ const gameInDB = {
   id: 2,
   name: "poker",
   description: null,
+  isPublic: true,
   notes: [
     {
       note: 2,
@@ -14,19 +15,29 @@ const gameInDB = {
   ],
   joueursAccueillis: 0,
   gamesEnded: 0,
-  metadata: {
-    type: ["Strategy", "luckk", "smart"],
-    lastEdit: "01/02/2025 12:20",
-    editionHistory: [],
-  },
+  types: ["Strategy", "luckk", "smart"],
+ 
+  editionHistory: [],
 
   globalValue: {
     smallBlind: { type: "number", value: 1 },
     allPlayersHasPlayed: { type: "boolean", value: false }, // default  calculated value
-    currentBet: { type: "number", value: 1 }, // value of the highter mise
+    currentBet: { type: "number", value: 0 }, // value of the highter mise
     state: { type: "string", value: "waitingPlayers" },
-    deck: { type: "cardList", value: [3, 4] }, //card id
-    discardDeck: { type: "cardList", value: [5, 2] }, // card id
+
+    deck: {
+      type: "cardList",
+      value: [
+        1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+        24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
+        42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
+      ],
+    },
+
+    discardDeck: {
+      type: "cardList",
+      value: [5, 2, 3, 4],
+    },
     groupPot: {
       type: "gainObject",
       value: {
@@ -59,7 +70,7 @@ const gameInDB = {
 
     attachedEventForTour: {
       type: "array",
-      value: ["skipPlayerTour"],
+      value: [],
     },
     gain: {
       type: "object",
@@ -91,6 +102,7 @@ const gameInDB = {
       activation: true,
       sens: "incrementation", // or decrementation
       startNumber: 0,
+      maxTour: 3,
 
       actionOnlyAtPlayerTour: true,
       // all 10min , allPlayerPlayedAtSameTime
@@ -108,11 +120,18 @@ const gameInDB = {
               type: "withValueEvent",
               player: "{currentPlayer}",
             },
+            //  Player status switch to played
+            {
+              id: 1,
+              inputBool: true,
+              player: "{currentPlayer}",
+            },
           ],
         },
         {
           name: "miser",
           return: "currentPlayer",
+          type: "askPlayer",
           appearAtPlayerTurn: true,
           condition:
             "comp({currentPlayer#gain#1};isSuperiorNumber;{currentBet})",
@@ -127,30 +146,37 @@ const gameInDB = {
         {
           name: "suivre",
           appearAtPlayerTurn: true,
-          condition: [
-            "exp(comp({currentPlayer#currentBet};isNotEqualNumber;{currentBet})&&comp({currentPlayer#gain#1};isSuperiorNumber;calc({currentBet}-{currentPlayer#currentBet})));",
-          ],
+          condition:
+            "exp(comp({currentPlayer#currentBet};isNotEqualNumber;{currentBet})&&comp({currentPlayer#gain#1};isSuperiorNumber;calc({currentBet}-{currentPlayer#currentBet})))",
+
           return: "{currentPlayer}",
           withValue: [
             // Suivre la mise
             {
               id: 14,
-              type: "withValueEvent",
               player: "{currentPlayer}",
               inputNumber: "calc({currentBet}-{currentPlayer#currentBet})",
+            },
+            {
+              id: 1,
+              inputBool: true,
+              player: "{currentPlayer}",
             },
           ],
         },
         {
           name: "Check",
           appearAtPlayerTurn: true,
-          condition: ["comp({currentPlayer#currentBet};isEqualNumber;0)"],
+          condition:
+            "comp({currentPlayer#currentBet};isEqualNumber;{currentBet})",
+
           return: "currentPlayer",
           withValue: [
             // Suivre la mise
+            //  Player status switch to played
             {
-              id: 8,
-              type: "withValueEvent",
+              id: 1,
+              inputBool: true,
               player: "{currentPlayer}",
             },
           ],
@@ -158,9 +184,9 @@ const gameInDB = {
         {
           name: "Tapis",
           appearAtPlayerTurn: true,
-          condition: [
-            "exp(comp({currentPlayer#currentBet};isNotEqualNumber;{currentBet})&&comp({currentPlayer#gain#1};isInferiorNumber;calc({currentBet}-{currentPlayer#currentBet})));",
-          ],
+          condition:
+            "exp(comp({currentPlayer#currentBet};isInferiorOrEqual;{currentBet})&&comp({currentPlayer#gain#1};isSuperiorNumber;0))",
+
           return: "currentPlayer",
           withValue: [
             // Suivre la mise
@@ -170,6 +196,23 @@ const gameInDB = {
               player: "{currentPlayer}",
               inputNumber: "{currentPlayer#gain#1}",
             },
+            {
+              id: 3,
+              inputNumber: "{currentPlayer#currentBet}",
+            },
+
+            //  Player status switch to played
+            {
+              id: 1,
+              inputBool: true,
+              player: "{currentPlayer}",
+            },
+
+            // Change all Other Player to "not played"
+            {
+              id: 8,
+              inputBool: true,
+            },
           ],
         },
       ],
@@ -178,6 +221,7 @@ const gameInDB = {
     manche: {
       actionsAtStart: [],
       actionsAtEnd: 0,
+      maxManche: null,
     },
     cards: {
       activeHandDeck: true, // card in player's hand
@@ -214,6 +258,7 @@ const gameInDB = {
       // la partie se lance apres que tous les demons se soient activés si etat != start
       {
         // pas besoin d'une liste de conditions , on met une comp "or" si plusieurs conditions d'exec
+        name: "",
         condition:
           "exp(comp({tour};isEqualNumber;4)&&allPlayersHasPlayed/endOfTour)",
         events: [13, 15, 16, 302],
@@ -223,25 +268,26 @@ const gameInDB = {
         // 302 change manche
       },
 
-      {
-        condition: "exp(comp({tour};isEqualNumber;5)&&eachEndOfTour)",
+      {name: "",
+        condition: "exp(comp({tour};isEqualNumber;5)&&onChangeTour)",
         events: [],
         // lancer la verification des cartes
       },
 
-      {
-        condition: "eachEndOfTour",
-        events: [13],
+      {name: "",
+        condition: "onChangeTour",
+        events: [13, 18],
         // récupérer les mises centrales
       },
-      {
+      {name: "",
         condition: "startOfGame",
         events: [8, 4],
+        removeAfterUse: true,
         // melanger les cartes
         // distribution des gains
         // distrubtion des cartes se fait au debut de la manche
       },
-      {
+      {name: "",
         condition: "eachStartOfManche",
         events: [3, 5, 6, 7, 9, 8, 10, 14],
         // 3 reset events 'coucher'
@@ -254,10 +300,22 @@ const gameInDB = {
         // 14 mettre le status de tous les joueurs en "non joués"
       },
 
+      {name: "",
+        boucle: "{allPlayersInGame}",
+        condition:
+          "exp(comp({playerBoucle};samePlayer;{currentPlayer})||comp({playerBoucle#attachedEventForTour};contain;<<skipPlayerTour>>))",
+        events: [13, 17, 18, 302],
+        // relance  eachStartOfManche
+        // récupérer les mises centrales
+        // 18 remettre current bet a  0
+      },
+
       // creer automatiquement
-      {
+      {name: "",
         condition: "allPlayersHasPlayed/endOfTour", // ALSO END OF TOUR
-        events: [300],
+        events: [14, 301],
+        // 14 mettre le status de tous les joueurs en "non joués"
+        // 301 changement de tour
       },
     ],
     events: [
@@ -267,10 +325,10 @@ const gameInDB = {
         name: "WIN",
         condition: null,
         event: {
-          for: ["{currentPlayer}"],
-          give: {},
+          for: "{currentPlayer}",
+          give: null,
           attachedEventForTour: null,
-          action: "WIN",
+          action: "win",
           value: null,
         },
       },
@@ -281,7 +339,7 @@ const gameInDB = {
         condition: null,
         event: {
           for: null,
-          give: {},
+          give: null,
           attachedEventForTour: null,
           action: "endOfTour",
           value: null,
@@ -294,9 +352,9 @@ const gameInDB = {
         condition: null,
         event: {
           for: null,
-          give: {},
+          give: null,
           attachedEventForTour: null,
-          action: "endOfManche",
+          action: "changeManche",
           value: null,
         },
       },
@@ -310,7 +368,7 @@ const gameInDB = {
         boucle: "{allPlayersInGame}",
         event: {
           for: "{playerBoucle}",
-          give: {},
+          give: null,
           action: "removeAllAtachedEventsForTour",
           value: null,
         },
@@ -336,7 +394,6 @@ const gameInDB = {
         id: 5,
         name: "Changer le joueur qui commence",
         loadMessage: "Changement du joueur de départ...",
-        condition: null,
         event: {
           for: null,
           give: null,
@@ -355,9 +412,10 @@ const gameInDB = {
           give: {
             "{gain#1}": "{smallBlind}", //jeton 1    ,   key(gain donnée):value(quantité)
           },
+
+          action: null,
+          value: null,
         },
-        action: null,
-        value: null,
       },
       {
         id: 7,
@@ -378,6 +436,14 @@ const gameInDB = {
               doEvents: [],
             },
           },
+          withValue: [
+            // change global "currentBet"
+            {
+              id: 3,
+              inputNumber:
+                "{getPlayer(calc({startPlayer#position}+2))#currentBet}",
+            },
+          ],
         },
       },
       {
@@ -416,6 +482,7 @@ const gameInDB = {
         loadMessage: "Distribution des cartes aux joueurs...",
         event: {
           for: "{playerBoucle#handDeck}",
+          from: "{deck}",
           give: {
             "{cards}": 2,
           },
@@ -431,10 +498,10 @@ const gameInDB = {
         condition: null,
         boucle: "{allPlayersInGame}",
         event: {
-          from: ["{playerBoucle#currentBet}"], // bien supprimer les currentBet
-          for: ["{groupPot}"],
+          from: "{playerBoucle#currentBet}", // bien supprimer les currentBet
+          for: "{groupPot}",
           give: {
-            "gain#1": "{playerBoucle#currentBet}",
+            "{gain#1}": "{playerBoucle#currentBet}",
           },
           attachedEventForTour: null,
           action: null,
@@ -460,7 +527,7 @@ const gameInDB = {
         boucle: "{allPlayersInGame}",
         loadMessage: "Analyse des cartes...",
         event: {
-          for: "{currentPlayer#handCardDeck#type=french_standard}",
+          for: "{currentPlayer#handœCardDeck#type=french_standard}",
           action: "verificationCards",
           return: "{winnersPlayers}",
           withValue: [{ id: 6, inputPlayers: "{winnersPlayers}" }],
@@ -473,6 +540,29 @@ const gameInDB = {
         condition: null,
         event: {
           for: "{groupPot#gain#1}",
+          action: "updateGlobalValue",
+          value: 0,
+        },
+      },
+      {
+        id: 17,
+        name: "Donner les mises à un joueur",
+        loadMessage: "Réinitialisation de la mise globale...",
+        condition: null,
+        event: {
+          from: "{groupPot}",
+          for: "{currentPlayer}",
+          give: {
+            "{gain#1}": "*",
+          },
+        },
+      },
+      {
+        id: 18,
+        name: "Reset current bet",
+        condition: null,
+        event: {
+          for: "{currentBet}",
           action: "updateGlobalValue",
           value: 0,
         },
@@ -490,7 +580,7 @@ const gameInDB = {
         event: {
           condition: null,
           for: ["card"],
-          give: {},
+          give: null,
           action: "french-card-verify-straight",
           value: true,
         },
@@ -503,7 +593,7 @@ const gameInDB = {
         event: {
           condition: null,
           for: ["card"],
-          give: {},
+          give: null,
           action: "french-card-verify-royal-straight",
           value: true,
         },
@@ -516,7 +606,7 @@ const gameInDB = {
         event: {
           condition: null,
           for: ["card"],
-          give: {},
+          give: null,
           action: "french-card-verify-straight-flush",
           value: true,
         },
@@ -529,7 +619,7 @@ const gameInDB = {
         event: {
           condition: null,
           for: ["card"],
-          give: {},
+          give: null,
           action: "french-card-verify-four-of-a-kind",
           value: true,
         },
@@ -542,7 +632,7 @@ const gameInDB = {
         event: {
           condition: null,
           for: ["card"],
-          give: {},
+          give: null,
           action: "french-card-verify-full-house",
           value: true,
         },
@@ -555,7 +645,7 @@ const gameInDB = {
         event: {
           condition: null,
           for: ["card"],
-          give: {},
+          give: null,
           action: "french-card-verify-flush",
           value: true,
         },
@@ -568,7 +658,7 @@ const gameInDB = {
         event: {
           condition: null,
           for: ["card"],
-          give: {},
+          give: null,
           action: "french-card-verify-three-of-a-kind",
           value: true,
         },
@@ -581,7 +671,7 @@ const gameInDB = {
         event: {
           condition: null,
           for: ["card"],
-          give: {},
+          give: null,
           action: "french-card-verify-two-pair",
           value: true,
         },
@@ -594,7 +684,7 @@ const gameInDB = {
         event: {
           condition: null,
           for: ["card"],
-          give: {},
+          give: null,
           action: "french-card-verify-one-pair",
           value: true,
         },
@@ -607,7 +697,7 @@ const gameInDB = {
         event: {
           condition: null,
           for: ["card"],
-          give: {},
+          give: null,
           action: "french-card-verify-high-card",
           value: true,
         },
@@ -621,7 +711,7 @@ const gameInDB = {
         boucle: null,
         event: {
           for: "{player#hasPlayed}",
-          give: {},
+          give: null,
           action: "updateGlobalValue",
           value: "{inputBool}",
         },
@@ -659,11 +749,11 @@ const gameInDB = {
         // Change all player wich not bet to "no played"
         id: 4,
         name: "change play status to all player when player bet",
-        condition: [""],
+        condition: null,
         boucle: "{allPlayersInGame}",
         event: {
           condition:
-            "exp(comp({playerBoucle#attachedEventForTour};notContain;<<skipPlayerTour>>)||comp({playerBoucle};differentPlayer;{currentPlayer}))",
+            "exp(comp({playerBoucle#attachedEventForTour};notContain;<<skipPlayerTour>>)&&comp({playerBoucle};differentPlayer;{currentPlayer}))",
           for: "{playerBoucle#hasPlayed}",
           action: "updateGlobalValue",
           value: "false",
@@ -675,10 +765,11 @@ const gameInDB = {
         condition: null,
         boucle: null,
         event: {
-          from: ["{player#gain#1}"],
-          for: "{playerr#currentBet}",
-          action: "updateGlobalValue",
-          value: "{inputNumber}",
+          from: "{player}",
+          for: "{player#currentBet}",
+          give: {
+            "{gain#1}": "{inputNumber}",
+          },
         },
       },
       {
@@ -702,7 +793,6 @@ const gameInDB = {
             {
               id: 2,
               inputNumber: "{insertedValue}",
-             
             },
 
             // change global "currentBet"
@@ -715,6 +805,7 @@ const gameInDB = {
             {
               id: 1,
               inputBool: true,
+              player: "{currentPlayer}",
             },
 
             // Change all Other Player to "not played"
@@ -731,7 +822,7 @@ const gameInDB = {
       {
         id: 5,
         name: "distribution de carte dans le pot",
-        condition: [""],
+        condition: null,
         boucle: null,
         event: {
           from: "{deck}",
@@ -747,7 +838,7 @@ const gameInDB = {
       {
         id: 6,
         name: "distribution des gains  ",
-        condition: [""],
+        condition: null,
         boucle: "{inputPlayers}",
         event: {
           from: "{groupPot}",
@@ -767,58 +858,347 @@ const gameInDB = {
         condition: null,
         event: {
           for: "{currentPlayer}",
-          give: {},
+          give: null,
           action: "skipPlayerTour",
           value: null,
         },
       },
       {
+        // Change all player status if current bet is not global current bet
         id: 8,
-        name: "Check", // pas besoin de donner la mise
+        name: "change play status to all player when player bet",
         condition: null,
+        boucle: "{allPlayersInGame}",
         event: {
-          for: ["{currentPlayer}"],
-          give: {},
-          attachedEventForTour: null,
-          action: "skipPlayerTour",
-          value: null,
+          condition:
+            "exp(exp(comp({playerBoucle#attachedEventForTour};notContain;<<skipPlayerTour>>)&&comp({playerBoucle};differentPlayer;{currentPlayer}))&&comp({playerBoucle#currentBet};isInferiorNumber;{currentBet}))",
+          for: "{playerBoucle#hasPlayed}",
+          action: "updateGlobalValue",
+          value: "false",
         },
       },
     ],
   },
   assets: {
     cards: {
-      2: {
-        id: 2,
+      // --- PIQUES (Spades) ---
+      1: {
+        id: 1,
         value: 1,
         type: "french_standard",
-        addedAttributs: {
-          couleur: "pique",
-        },
+        addedAttributs: { couleur: "pique" },
+      },
+      2: {
+        id: 2,
+        value: 2,
+        type: "french_standard",
+        addedAttributs: { couleur: "pique" },
       },
       3: {
         id: 3,
         value: 3,
         type: "french_standard",
-        addedAttributs: {
-          couleur: "treffle",
-        },
+        addedAttributs: { couleur: "pique" },
       },
       4: {
         id: 4,
         value: 4,
         type: "french_standard",
-        addedAttributs: {
-          couleur: "coeur",
-        },
+        addedAttributs: { couleur: "pique" },
       },
       5: {
         id: 5,
         value: 5,
         type: "french_standard",
-        addedAttributs: {
-          couleur: "coeur",
-        },
+        addedAttributs: { couleur: "pique" },
+      },
+      6: {
+        id: 6,
+        value: 6,
+        type: "french_standard",
+        addedAttributs: { couleur: "pique" },
+      },
+      7: {
+        id: 7,
+        value: 7,
+        type: "french_standard",
+        addedAttributs: { couleur: "pique" },
+      },
+      8: {
+        id: 8,
+        value: 8,
+        type: "french_standard",
+        addedAttributs: { couleur: "pique" },
+      },
+      9: {
+        id: 9,
+        value: 9,
+        type: "french_standard",
+        addedAttributs: { couleur: "pique" },
+      },
+      10: {
+        id: 10,
+        value: 10,
+        type: "french_standard",
+        addedAttributs: { couleur: "pique" },
+      },
+      11: {
+        id: 11,
+        value: 11,
+        type: "french_standard",
+        addedAttributs: { couleur: "pique" },
+      }, // Valet
+      12: {
+        id: 12,
+        value: 12,
+        type: "french_standard",
+        addedAttributs: { couleur: "pique" },
+      }, // Dame
+      13: {
+        id: 13,
+        value: 13,
+        type: "french_standard",
+        addedAttributs: { couleur: "pique" },
+      }, // Roi
+
+      // --- TREFLES (Clubs) ---
+      14: {
+        id: 14,
+        value: 1,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+      15: {
+        id: 15,
+        value: 2,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+      16: {
+        id: 16,
+        value: 3,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+      17: {
+        id: 17,
+        value: 4,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+      18: {
+        id: 18,
+        value: 5,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+      19: {
+        id: 19,
+        value: 6,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+      20: {
+        id: 20,
+        value: 7,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+      21: {
+        id: 21,
+        value: 8,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+      22: {
+        id: 22,
+        value: 9,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+      23: {
+        id: 23,
+        value: 10,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+      24: {
+        id: 24,
+        value: 11,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+      25: {
+        id: 25,
+        value: 12,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+      26: {
+        id: 26,
+        value: 13,
+        type: "french_standard",
+        addedAttributs: { couleur: "treffle" },
+      },
+
+      // --- COEURS (Hearts) ---
+      27: {
+        id: 27,
+        value: 1,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+      28: {
+        id: 28,
+        value: 2,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+      29: {
+        id: 29,
+        value: 3,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+      30: {
+        id: 30,
+        value: 4,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+      31: {
+        id: 31,
+        value: 5,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+      32: {
+        id: 32,
+        value: 6,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+      33: {
+        id: 33,
+        value: 7,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+      34: {
+        id: 34,
+        value: 8,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+      35: {
+        id: 35,
+        value: 9,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+      36: {
+        id: 36,
+        value: 10,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+      37: {
+        id: 37,
+        value: 11,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+      38: {
+        id: 38,
+        value: 12,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+      39: {
+        id: 39,
+        value: 13,
+        type: "french_standard",
+        addedAttributs: { couleur: "coeur" },
+      },
+
+      // --- CARREAUX (Diamonds) ---
+      40: {
+        id: 40,
+        value: 1,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
+      },
+      41: {
+        id: 41,
+        value: 2,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
+      },
+      42: {
+        id: 42,
+        value: 3,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
+      },
+      43: {
+        id: 43,
+        value: 4,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
+      },
+      44: {
+        id: 44,
+        value: 5,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
+      },
+      45: {
+        id: 45,
+        value: 6,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
+      },
+      46: {
+        id: 46,
+        value: 7,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
+      },
+      47: {
+        id: 47,
+        value: 8,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
+      },
+      48: {
+        id: 48,
+        value: 9,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
+      },
+      49: {
+        id: 49,
+        value: 10,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
+      },
+      50: {
+        id: 50,
+        value: 11,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
+      },
+      51: {
+        id: 51,
+        value: 12,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
+      },
+      52: {
+        id: 52,
+        value: 13,
+        type: "french_standard",
+        addedAttributs: { couleur: "carreau" },
       },
     },
     gains: [
@@ -894,22 +1274,7 @@ async function connectSocket() {
     writeMessage("error", err);
   });
   socket.on("askPlayer", ({ event, params, roomId }) => {
-    console.log("event :>> ", event);
-    console.log("param :>> ", params);
-
-    function sendValueToServer(value) {
-      const obj = value;
-      socket.emit("playerInsertedValue", { roomId, event, obj, params });
-    }
-    widget(
-      event.event.requiresInput.label,
-      event.event.requiresInput.description,
-      "Valider",
-      event.event.requiresInput.type,
-      sendValueToServer,
-      (min = event.event.requiresInput.min),
-      (max = event.event.requiresInput.max)
-    );
+    displayWidget(event, params, roomId);
   });
 }
 
@@ -927,7 +1292,9 @@ function connectSocket2() {
   let pseudo = "mey2";
   let roomId = "a4a4a4a4";
   socket2.emit("joinRoom", { roomId, pseudo });
-  socket2.on("roomJoined", (room) => {});
+  socket2.on("roomJoined", (room) => {
+    connectSocket3();
+  });
   socket2.on("gameChanges", (room) => {
     changeGamePlayerVariable(2, playerId, room);
   });
@@ -937,23 +1304,54 @@ function connectSocket2() {
   });
 
   socket.on("askPlayer", ({ event, params, roomId }) => {
-    console.log("event :>> ", event);
-    console.log("param :>> ", params);
-
-    function sendValueToServer(value) {
-      const obj = value;
-      socket.emit("playerInsertedValue", { roomId, event, obj, params });
-    }
-    widget(
-      event.event.requiresInput.label,
-      event.event.requiresInput.description,
-      "Valider",
-      event.event.requiresInput.type,
-      sendValueToServer,
-      (min = event.event.requiresInput.min),
-      (max = event.event.requiresInput.max)
-    );
+    displayWidget(event, params, roomId);
   });
+}
+let socket3 = null;
+
+function connectSocket3() {
+  if (socket3) return;
+  socket3 = io("ws://localhost:8008");
+
+  let playerId = null;
+  socket3.on("playerDataId", (id) => {
+    playerId = id;
+  });
+
+  let pseudo = "mey3";
+  let roomId = "a4a4a4a4";
+  socket3.emit("joinRoom", { roomId, pseudo });
+  socket3.on("roomJoined", (room) => {});
+  socket3.on("gameChanges", (room) => {
+    changeGamePlayerVariable(3, playerId, room);
+  });
+  socket3.on("error", (err) => {
+    console.log(err);
+    writeMessage("error", err);
+  });
+
+  socket.on("askPlayer", ({ event, params, roomId }) => {
+    displayWidget(event, params, roomId);
+  });
+}
+
+function displayWidget(event, params, roomId) {
+  console.log("event :>> ", event);
+  console.log("param :>> ", params);
+
+  function sendValueToServer(value) {
+    const obj = value;
+    socket.emit("playerInsertedValue", { roomId, event, obj, params });
+  }
+  widget(
+    event.event.requiresInput.label,
+    event.event.requiresInput.description,
+    "Valider",
+    event.event.requiresInput.type,
+    sendValueToServer,
+    (min = event.event.requiresInput.min),
+    (max = event.event.requiresInput.max),
+  );
 }
 
 function writeMessage(type, m) {
@@ -974,12 +1372,20 @@ function getPlayer(players, id) {
 }
 
 function getCardObjectFromId(cardId, gameData) {
-  return gameData.roomInDb.assets.cards[
-    Object.keys(gameData.roomInDb.assets.cards).filter((k) => k == cardId)[0]
-  ];
+  if (!cardId) {
+    console.warn("cardId is null");
+    return null;
+  }
+  if (!gameData.roomInDb.assets.cards[cardId]) {
+    console.warn("cardId not found in assets : " + cardId);
+    return null;
+  }
+
+  return gameData.roomInDb.assets.cards[cardId];
 }
 function cardToStr(cardObject) {
-  return `${cardObject.value}`;
+  if (!cardObject) return "Card not found";
+  return `${cardObject.value} ${cardObject.addedAttributs.couleur}`;
 }
 function getGainName(gainId, gameData) {
   return gameData.roomInDb.assets.gains.filter((e) => e.id == gainId)[0].nom;
@@ -1001,36 +1407,36 @@ function changeGamePlayerVariable(id, playerId, room) {
         <span>Hand deck : (${
           player.handDeck.value.length
         }) : ${player.handDeck.value.map((id) =>
-      cardToStr(getCardObjectFromId(id, room))
-    )}</span>
+          cardToStr(getCardObjectFromId(id, room)),
+        )}</span>
         <span>personalHandDeck : ${player.personalHandDeck.value.length}</span>
         <span>personalHandDiscard : ${
           player.personalHandDiscard.value.length
         }</span>
 
         <!-- Roles -->
-        <span>Roles  : ${player.roles.value.map((r) => `${r.nom}`)}</span>/home/mey/WebstormProjects/CARDGames-front-end/p1/index.html
+        <span>Roles  : ${player.roles.value.map((r) => `${r.nom}`)}</span> 
         
         <!-- Actions -->
         <span>Actions  : ${player.actions.value.map(
           (a) =>
-            `<button onclick="changeTour('${playerId}','${room.roomId}','${a.name}')">${a.name}</button>`
+            `<button onclick="doAction('${playerId}','${room.roomId}','${a.name}','${a.type}')">${a.name}</button>`,
         )}</span>
 
 
         <!-- Gain -->
         <span>Gain  : ${Object.keys(player.gain.value).map(
-          (k) => `${getGainName(k, room)} : ${player.gain.value[k].value}`
+          (k) => `${getGainName(k, room)} : ${player.gain.value[k].value}`,
         )}</span>
 
         
         <!-- Other dynamique values -->
-        ${Object.keys(room.roomInDb.globalValuesOfPlayer).map(
-          (k) =>
-            `<span>${k} :  ${
-              player[k].value ? player[k].value : player[k]
-            }</span>`
-        )}
+        ${Object.keys(room.roomInDb.globalValuesOfPlayer).map((k) => {
+          if (k == "gain") return "";
+          return `<span>${k} :  ${
+            player[k].value != null ? player[k].value : player[k]
+          }</span>`;
+        })}
 
         <!-- Turn -->
         ${
@@ -1051,10 +1457,12 @@ function changeGamePlayerVariable(id, playerId, room) {
     console.warn("found #" + id);
   }
 }
-function changeTour(playerId, roomId, action) {
+function doAction(playerId, roomId, action, actionType) {
   console.log("change tour");
-  socket.emit("changeCurrentPlayer", { playerId, roomId, action });
+
+  socket.emit("doAction", { playerId, roomId, action, actionType });
 }
+
 function changeGameStat(room) {
   let div = document.querySelector(".gameStat");
   if (div) {
@@ -1074,7 +1482,7 @@ function changeGameStat(room) {
                        ? JSON.stringify(room.data[k].value)
                        : room.data[k].value
                      : room.data[k]
-                 }</span>`
+                 }</span>`,
              )}
       
         `;
