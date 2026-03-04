@@ -14,7 +14,112 @@ CARD Games est une interface web multijoueur qui permet de créer ou rejoindre f
 - WebSocket (Socket.IO côté client) : synchronisation en temps réel des rooms, joueurs et événements de partie.
 - API HTTP : récupération des jeux disponibles et de leurs configurations.
 - Outils de projet : Makefile pour les commandes de développement et tests JavaScript via tests.js.
+# Architecture
 
+## Schéma général
+
+```mermaid
+graph TB
+    subgraph "Pages (Écrans de l'app)"
+        Home["Home<br/>(Accueil)"]
+        Games["Games<br/>(Catalogue)"]
+        EnterLink["EnterLink<br/>(Rejoindre par code)"]
+        ChoosePseudo["ChoosePseudo<br/>(Entrer son pseudo)"]
+        GamePage["GamePage<br/>(Interface de jeu)"]
+        Loading["Loading<br/>(Chargement)"]
+        ErrorPage["GameCodeError<br/>(Erreur)"]
+    end
+
+    subgraph "Composants (UI réutilisables)"
+        Button["Button"]
+        Header["Header"]
+        Message["Message"]
+        ErrorContainer["ErrorContainer"]
+        DefaultCard["DefaultCard"]
+        WaitingPage["WaitingPage<br/>(Salle d'attente)"]
+        PlayerCard["PlayerCard"]
+    end
+
+    subgraph "Src - Logique métier"
+        Router["Router<br/>(Navigation)"]
+        WebSocket["WebSocket<br/>(Connection.js)"]
+        subgraph "Controllers"
+            ErrorCtrl["Error"]
+            GameCtrl["Game (game.js)"]
+            LauncherCtrl["Launcher (louancher.js)"]
+            MessagesCtrl["Messages"]
+            PlayersCtrl["Players"]
+            DataPlayer["DataOfPlayer"]
+        end
+        Helpers["Helpers<br/>(copy.js)"]
+    end
+
+    subgraph "Services externes"
+        API["API HTTP<br/>localhost:8000<br/>(Jeux & Configs)"]
+        APIConfig["API Config<br/>localhost:8001<br/>(Détails jeu)"]
+        SocketServer["WebSocket Server<br/>localhost:8008<br/>(Partie temps réel)"]
+    end
+
+    Home -->|click| Router
+    Games -->|click| Router
+    EnterLink -->|click| Router
+    ChoosePseudo -->|click| Router
+    GamePage -->|click| Router
+
+    Router -->|render| Games
+    Router -->|render| Home
+    Router -->|render| EnterLink
+    Router -->|render| ChoosePseudo
+    Router -->|render| GamePage
+
+    Games -->|utilise| Button
+    Home -->|utilise| Button
+    GamePage -->|utilise| WaitingPage
+    WaitingPage -->|utilise| PlayerCard
+    WaitingPage -->|utilise| Message
+
+    GameCtrl -->|emit/on| WebSocket
+    LauncherCtrl -->|emit/on| WebSocket
+    MessagesCtrl -->|emit/on| WebSocket
+    DataPlayer -->|store| Router
+
+    Games -->|fetch| API
+    ChoosePseudo -->|fetch| APIConfig
+    GameCtrl -->|fetch| APIConfig
+
+    WebSocket -->|connect| SocketServer
+    SocketServer -->|events| LauncherCtrl
+    SocketServer -->|events| GameCtrl
+    SocketServer -->|events| MessagesCtrl
+
+    ErrorCtrl -->|log| ErrorContainer
+
+    style Pages fill:#e1f5ff
+    style Composants fill:#f3e5f5
+    style Src fill:#e8f5e9
+    style "Services externes" fill:#fff3e0
+```
+
+## Organisation des dossiers
+
+| Dossier | Rôle |
+|---------|------|
+| **pages/** | Pages principales de l'application (accueil, catalogue jeux, saisie code/pseudo, interface de jeu) |
+| **components/** | Composants UI réutilisables (boutons, cartes, messages, salle d'attente) |
+| **src/** | Cœur métier : routeur, WebSocket, contrôleurs et helpers |
+| **src/router/** | Gère la navigation et le chargement des pages |
+| **src/websocket/** | Connexion Socket.IO et gestion des événements temps réel |
+| **src/controller/** | Logique métier des actions (parties, messages, joueurs) |
+| **src/helpers/** | Fonctions utilitaires (copie de code, etc.) |
+| **assets/** | Images et ressources statiques |
+
+## Flux de communication
+
+1. **Utilisateur clique** → **Router** décide quelle page afficher
+2. **Page charge** → Utilise **Composants** et appelle **Controllers**
+3. **Controller** → Émet des événements via **WebSocket** ou effectue appels **HTTP**
+4. **Serveur WebSocket** → Retourne les mises à jour de partie
+5. **Composants** → Se réactualisent avec les nouvelles données
 # Création d'un jeu
 
  
