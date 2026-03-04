@@ -20,7 +20,7 @@ CARD Games est une interface web multijoueur qui permet de créer ou rejoindre f
 
 ```mermaid
 graph TB
-    subgraph "Pages (Écrans de l'app)"
+    subgraph Pages ["Pages (Écrans de l'app)"]
         Home["Home<br/>(Accueil)"]
         Games["Games<br/>(Catalogue)"]
         EnterLink["EnterLink<br/>(Rejoindre par code)"]
@@ -30,7 +30,7 @@ graph TB
         ErrorPage["GameCodeError<br/>(Erreur)"]
     end
 
-    subgraph "Composants (UI réutilisables)"
+    subgraph Composants ["Composants (UI réutilisables)"]
         Button["Button"]
         Header["Header"]
         Message["Message"]
@@ -40,10 +40,10 @@ graph TB
         PlayerCard["PlayerCard"]
     end
 
-    subgraph "Src - Logique métier"
+    subgraph Src ["Src - Logique métier"]
         Router["Router<br/>(Navigation)"]
         WebSocket["WebSocket<br/>(Connection.js)"]
-        subgraph "Controllers"
+        subgraph Controllers
             ErrorCtrl["Error"]
             GameCtrl["Game (game.js)"]
             LauncherCtrl["Launcher (louancher.js)"]
@@ -54,50 +54,51 @@ graph TB
         Helpers["Helpers<br/>(copy.js)"]
     end
 
-    subgraph "Services externes"
-        API["API HTTP<br/>localhost:8000<br/>(Jeux & Configs)"]
-        APIConfig["API Config<br/>localhost:8001<br/>(Détails jeu)"]
-        SocketServer["WebSocket Server<br/>localhost:8008<br/>(Partie temps réel)"]
+    subgraph Services ["Services externes"]
+        API["API HTTP<br/>(Jeux & Configs)"]
+        APIConfig["API Config<br/>(Détails jeu)"]
+        SocketServer["WebSocket Server<br/>(Temps réel)"]
     end
 
-    Home -->|click| Router
-    Games -->|click| Router
-    EnterLink -->|click| Router
-    ChoosePseudo -->|click| Router
-    GamePage -->|click| Router
+    Home --> Router
+    Games --> Router
+    EnterLink --> Router
+    ChoosePseudo --> Router
+    GamePage --> Router
 
-    Router -->|render| Games
-    Router -->|render| Home
-    Router -->|render| EnterLink
-    Router -->|render| ChoosePseudo
-    Router -->|render| GamePage
+    Router --> Games
+    Router --> Home
+    Router --> EnterLink
+    Router --> ChoosePseudo
+    Router --> GamePage
 
-    Games -->|utilise| Button
-    Home -->|utilise| Button
-    GamePage -->|utilise| WaitingPage
-    WaitingPage -->|utilise| PlayerCard
-    WaitingPage -->|utilise| Message
+    Games --> Button
+    Home --> Button
+    GamePage --> WaitingPage
+    WaitingPage --> PlayerCard
+    WaitingPage --> Message
 
-    GameCtrl -->|emit/on| WebSocket
-    LauncherCtrl -->|emit/on| WebSocket
-    MessagesCtrl -->|emit/on| WebSocket
-    DataPlayer -->|store| Router
+    GameCtrl --> WebSocket
+    LauncherCtrl --> WebSocket
+    MessagesCtrl --> WebSocket
+    DataPlayer --> Router
 
-    Games -->|fetch| API
-    ChoosePseudo -->|fetch| APIConfig
-    GameCtrl -->|fetch| APIConfig
+    Games --> API
+    ChoosePseudo --> APIConfig
+    GameCtrl --> APIConfig
 
-    WebSocket -->|connect| SocketServer
-    SocketServer -->|events| LauncherCtrl
-    SocketServer -->|events| GameCtrl
-    SocketServer -->|events| MessagesCtrl
+    WebSocket --> SocketServer
+    SocketServer --> LauncherCtrl
+    SocketServer --> GameCtrl
+    SocketServer --> MessagesCtrl
 
-    ErrorCtrl -->|log| ErrorContainer
+    ErrorCtrl --> ErrorContainer
 
+    %% Application des styles
     style Pages fill:#e1f5ff
     style Composants fill:#f3e5f5
     style Src fill:#e8f5e9
-    style "Services externes" fill:#fff3e0
+    style Services fill:#fff3e0
 ```
 
 ## Organisation des dossiers
@@ -120,7 +121,12 @@ graph TB
 3. **Controller** → Émet des événements via **WebSocket** ou effectue appels **HTTP**
 4. **Serveur WebSocket** → Retourne les mises à jour de partie
 5. **Composants** → Se réactualisent avec les nouvelles données
-# Création d'un jeu
+
+
+
+
+
+# Connexion à un jeu
 
  
 ```mermaid
