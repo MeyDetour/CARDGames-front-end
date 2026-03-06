@@ -3,6 +3,7 @@
   height: 117px;
   border: 1px solid grey;
   border-radius: 8px;
+  background: white;
   position: relative;
   .leftValue {
     position: absolute;
@@ -40,4 +41,9 @@
   .text-slate-900{
     color:black
   }
+}
+
+.defaultCardOfGame.hoverable:hover{
+  cursor: pointer;
+  transform: scale(1.05);
 }

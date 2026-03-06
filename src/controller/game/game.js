@@ -2,7 +2,12 @@ import { connectSocket, socket } from "../../websocket/connection.js";
 import { navigateTo } from "../../router/router.js";
 import { reloadComposant_gamePage } from "../../../pages/game/game.js";
 import { deleteStoreDataOfPlayer } from "./dataOfPlayer.js";
+import { apiClient } from "../../helpers/api.js";
 export async function gameLogin(params) {
+
+  console.log("======TRY TO LOGIN======");
+  console.log(params);
+
   window.gameState = "";
   if (!socket) return console.log("cannot find socket");
 
@@ -15,19 +20,23 @@ export async function gameLogin(params) {
   let roomId = params.roomId;
 
   try {
-    let gameInDB = await fetch("http://localhost:8001/game/" + gameId);
+    let gameInDB = await apiClient("game/" + gameId);
 
-    if (!gameInDB.ok) {
+    if (!gameInDB) {
       throw new Error("error while fetch");
     }
+  
 
-    gameInDB = await gameInDB.json();
+   console.log(gameId);
+    console.log(roomId);
+    console.log(pseudo);
+    console.log(gameInDB);
 
     // IF GAME IS SELECTED BUT NOT PSEUDO
     if ((gameId || roomId) && !pseudo && gameInDB) {
       console.log("enter pseudo to create game");
-      navigateTo( {
-        path:"/choose-pseudo",
+      navigateTo({
+        path: "/choose-pseudo",
         gameId: gameInDB.id,
         state: "waitingPeople",
         name: gameInDB.name,
@@ -63,22 +72,20 @@ export function verifyGameId(params) {
   let roomId = params.roomId;
   let result = params.result;
   let gameId = params.gameId;
-  let pathOnEchec = params.pathOnEchec
-    ? params.pathOnEchec
-    : "/";
+  let pathOnEchec = params.pathOnEchec ? params.pathOnEchec : "/";
   console.log(roomId);
   console.log(result);
-    if (!result && result != null && result != undefined) {
+  if (!result && result != null && result != undefined) {
     console.log("<<<<<ROOM ID DOESNOT EXIST>>>>>");
     deleteStoreDataOfPlayer();
     navigateTo({ path: pathOnEchec });
     return;
   }
-  if (!roomId && result==undefined) {
+  if (!roomId && result == undefined) {
     let roomId = document.querySelector("#roomCode")
       ? document.querySelector("#roomCode").value
       : null;
-    if (!roomId) { 
+    if (!roomId) {
       navigateTo({ path: "/" });
       return;
     }
@@ -91,7 +98,7 @@ export function verifyGameId(params) {
     return;
   }
   if (roomId && (result == null || result == undefined)) {
-    socket.emit("isExistingRoom", { roomId ,pathOnEchec });
+    socket.emit("isExistingRoom", { roomId, pathOnEchec });
   }
 
   if (result && gameId) {

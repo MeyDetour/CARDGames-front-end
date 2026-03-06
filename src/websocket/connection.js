@@ -1,6 +1,6 @@
 import { displayError } from "../controller/error.js";
 import { gameChanges, verifyGameId } from "../controller/game/game.js";
-import { joinRoom } from "../controller/game/louancher.js"; 
+import { joinRoom } from "../controller/game/louancher.js";
 import { updateListOfMessages } from "../controller/game/messages.js";
 import {
   messageSuccessfullySend,
@@ -8,6 +8,7 @@ import {
 } from "../controller/game/messages.js";
 import { reloadComposant_waitingPagePlayersBlock } from "../../components/game/waitingPage/waitingPagePlayersBlock/waitingPagePlayersBlock.js";
 import { reloadComposant_waitingPageCopyBlock } from "../../components/game/waitingPage/waitingPageCopyBlock/waitingPageCopyBlock.js";
+import { storeRoomId , storeDataOfPlayer} from "../controller/game/dataOfPlayer.js";
 export let socket = null;
 export async function connectSocket() {
   if (socket) return;
@@ -16,23 +17,28 @@ export async function connectSocket() {
   console.log("CONNECTED TO SOCKET SERVER");
   // expose on window so other legacy code can access it
   window.socket = socket;
-  let playerId = null;
 
-  socket.on("playerDataId", (id) => {
-    playerId = id;
-  });
+  socket.on("roomCreated", ({ gameData , player}) => {
+    console.log("room created"); 
 
-  socket.on("roomCreated", ({ gameData, playerId }) => {
-    joinRoom(gameData, playerId);
+      storeDataOfPlayer(player);
+      storeRoomId(gameData.roomId);
+      console.log(player);
+      joinRoom(gameData);
+   
   });
-  socket.on("playerHasJoinedRoom", (gameData ) => {
+   socket.on("playerData", (currentPlayer) => {
+      console.log(currentPlayer);
+      storeDataOfPlayer(currentPlayer);
+    });
+  socket.on("playerHasJoinedRoom", (gameData) => {
     console.log("<<EVENT : PLAYER JOIN GAME>>");
 
     gameChanges(gameData);
     reloadComposant_waitingPagePlayersBlock();
     reloadComposant_waitingPageCopyBlock(gameData);
   });
-  socket.on("playerHasLeftRoom", ( gameData ) => {
+  socket.on("playerHasLeftRoom", (gameData) => {
     console.log("<<EVENT : PLAYER LEFT GAME>>");
 
     gameChanges(gameData);
@@ -49,8 +55,10 @@ export async function connectSocket() {
     updateListOfMessages(messages);
     addNewMessageInMessagerie(message);
   });
-  socket.on("roomJoined", ({ gameData, playerId }) => {
-    joinRoom(gameData, playerId);
+  socket.on("roomJoined", ({ gameData, player }) => {
+    storeRoomId(gameData.roomId);
+      storeDataOfPlayer(player);
+    joinRoom(gameData);
   });
   socket.on("gameChanges", (gameData) => {
     gameChanges(gameData);
@@ -60,12 +68,18 @@ export async function connectSocket() {
     displayError(err);
   });
 
-  socket.on("isExistingRoomResult", ({ roomId, result, gameId , pathOnEchec }) => {
-    verifyGameId({ roomId: roomId, result: result, gameId: gameId  , pathOnEchec :pathOnEchec});
-  });
-  socket.on("playerDataId", (playerId) => {
-    storePlayerId(playerId);
-  });
+  socket.on(
+    "isExistingRoomResult",
+    ({ roomId, result, gameId, pathOnEchec }) => {
+      verifyGameId({
+        roomId: roomId,
+        result: result,
+        gameId: gameId,
+        pathOnEchec: pathOnEchec,
+      });
+    },
+  );
+
   socket.on("gameChanges", (room) => {
     console.log(room);
   });

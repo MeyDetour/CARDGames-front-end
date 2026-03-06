@@ -1,7 +1,7 @@
-import { getPlayerId } from "../../src/controller/game/dataOfPlayer.js"
+import { getCurrentPlayer } from "../../src/controller/game/dataOfPlayer.js"
 
 export function playerCard(admin,player) {
-  let playerId = getPlayerId()
+  let currentPlayer = getCurrentPlayer()
 
   if (!player){
     console.warn("please provide player to playerCard")
@@ -19,7 +19,7 @@ export function playerCard(admin,player) {
                 <div class="letter">${player.pseudo.charAt(0)}</div>
                 <div>
 
-                <span class="pseudo">${player.pseudo} ${playerId==player.id ? "(vous)":""}</span>
+                <span class="pseudo">${player.pseudo} ${currentPlayer.id==player.id ? "(vous)":""}</span>
                 ${admin.id === player.id ? "<span>Hôte</span>" : ""}
                 </div>
             </div>

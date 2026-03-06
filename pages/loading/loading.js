@@ -7,7 +7,7 @@ const loadingSteps = [
 
 export function loadingPage() {
   let index = 0;
-  const loadingAnimation =  setInterval(() => {
+  const loadingAnimation = setInterval(() => {
     let eltText = document.querySelector(".loadingPage .text");
     let dot = document.querySelector(".loadingPage .dot" + [index % 4]);
     if (eltText && dot) {
@@ -24,14 +24,14 @@ export function loadingPage() {
     }
   }, 500);
 
-  window.loadingAnimation =loadingAnimation
+  window.loadingAnimation = loadingAnimation;
   return /*html*/ `
      <div class="loadingPage">
         <div class="round"> 
             <div class="white"></div>
             <div class="loader"></div>
         </div>
-           <div class="text"></div> 
+        <div class="text"></div> 
         <div class="dots">
         <div class="dot0"></div>
         <div class="dot1"></div>

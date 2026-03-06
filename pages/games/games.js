@@ -1,5 +1,6 @@
 import { headerComponent } from '../../components/header/header.js'
 import { button } from '../../components/button/button.js'
+import { apiClient } from '../../src/helpers/api.js';
 
 export async function gamesPage(params = {}) {
   let games = [];
@@ -8,11 +9,11 @@ export async function gamesPage(params = {}) {
   
 
   try {
-    let res = await fetch("http://localhost:8000/games");
-    if (!res.ok) {
-      throw new Error("error while fetch");
+    games = await apiClient("games", null, { });
+    console.log( "games :>> ", games);
+    if (!games || !Array.isArray(games)) {
+      games = [];
     }
-    games = await res.json();
   } catch (err) {}
 
   if (games) {

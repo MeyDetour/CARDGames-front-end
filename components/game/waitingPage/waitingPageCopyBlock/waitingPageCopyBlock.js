@@ -1,7 +1,7 @@
-import { getPlayerId } from "../../../../src/controller/game/dataOfPlayer.js";
+import { getCurrentPlayer } from "../../../../src/controller/game/dataOfPlayer.js";
 import { button } from "../../../button/button.js";
 export function waitingPageCopyBlock() {
-  let playerId = getPlayerId()
+  let currentPlayer = getCurrentPlayer()
  let gameData = window.gameData
   return /*html*/ `
  
@@ -21,7 +21,7 @@ export function waitingPageCopyBlock() {
           ${
             gameData.roomInDb.params.globalGame.minPlayer <=
             gameData.data.players.length
-              ? gameData.admin.id === playerId
+              ? gameData.admin.id === currentPlayer.id
                 ? button(
                     null,
                     null,

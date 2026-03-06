@@ -1,11 +1,8 @@
-import { getPlayerId, storeDataOfPlayer } from "./dataOfPlayer.js"; 
 import { navigateTo } from "../../router/router.js";
 
 export function startGame(params) {
-
-    console.log("=========START ROOM======="); 
-    console.log("roomId :>> "+params.roomId);
-    console.log('playerId :>> ', getPlayerId());
+  console.log("=========START ROOM=======");
+  console.log("roomId :>> " + params.roomId);
   if (!params.roomId) {
     console.warn("Provide room bitteschon");
   }
@@ -18,15 +15,13 @@ export function startGame(params) {
   }
 }
 
-export function joinRoom(gameData,playerId) {
-    console.log("=========JOIN ROOM=======");
-    console.log('gameData :>> ', gameData);
-    console.log('playerId :>> ', playerId);
+export function joinRoom(gameData) {
+  console.log(gameData);
   window.gameData = gameData;
-  storeDataOfPlayer( playerId,gameData.roomId);  
-  navigateTo({ path: "/game", roomId:  gameData.roomId, state: "waitingPeople" });
-
+  navigateTo({
+    path: "/game",
+    roomId: gameData.roomId
+  });
 }
- 
 
 window.startGame = startGame;

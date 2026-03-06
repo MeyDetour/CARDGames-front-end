@@ -1,10 +1,12 @@
- 
-import { defaultCard } from "../../components/defaultCard/defaultCard.js"; 
-import { getPlayerId } from "../../src/controller/game/dataOfPlayer.js"; 
+import gameplayPage from "../../components/game/game/gameplayPage.js";
+import { waitingPage } from "../../components/game/waitingPage/waitingPage.js";
+import { getCurrentPlayer } from "../../src/controller/game/dataOfPlayer.js";
 export function gamePage(params = {}) {
-  let playerId = getPlayerId();
-/*
-  if (!playerId) {
+  let currentPlayer = getCurrentPlayer();
+ console.log("current player in game page");
+ console.log(currentPlayer);
+
+  if (!currentPlayer) {
     navigateTo({ path: "/" });
     return;
   }
@@ -20,31 +22,13 @@ export function gamePage(params = {}) {
     return;
   }
   console.log(window.gameData);
-  if (window.gameState === gameData.data.state) {
+  if (window.gameState === window.gameData.data.state) {
     return;
   }
-  window.gameState == gameData.data.state;
+  window.gameState = gameData.data.state;
   if (gameData.data.state.value == "waitingPlayers") {
-    return waitingPage(gameData, playerId);
+    return waitingPage(window.gameData, currentPlayer);
   }
-*/
-  const playerHand = [
-    { id: "1", suit: "hearts", value: "9", faceUp: true },
-    { id: "2", suit: "hearts", value: "K", faceUp: true },
-    { id: "3", suit: "clubs", value: "10", faceUp: true },
-    { id: "4", suit: "spades", value: "A", faceUp: true },
-    { id: "5", suit: "diamonds", value: "Q", faceUp: true },
-    { id: "6", suit: "diamonds", value: "J", faceUp: true },
-  ];
-
- 
-
-  return /*html*/ ` 
-      ${defaultCard(playerHand[0])}
-      ${defaultCard(playerHand[1])}
-      ${defaultCard(playerHand[3])}
-      ${defaultCard(playerHand[4])}
-    `;
 }
 
 export function reloadComposant_gamePage() {

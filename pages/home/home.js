@@ -46,6 +46,7 @@ export function homePage() {
                     
                        
                                 ${button(null, "right-arrow-dark", null, "navigateTo", "Parcourir les jeux", "whiteButton",{path:"/games"})}
+                                ${button(null, "right-arrow-dark", null, "navigateTo", "Game", "whiteButton",{path:"/gameplay"})}
  
                 </div>
       </div>

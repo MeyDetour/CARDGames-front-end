@@ -3,7 +3,7 @@ import { headerComponent } from "../../header/header.js";
 import { messageComponent } from "../../message/message.js";
 import { waitingPagePlayersBlock } from "./waitingPagePlayersBlock/waitingPagePlayersBlock.js";
 import { waitingPageCopyBlock } from "./waitingPageCopyBlock/waitingPageCopyBlock.js";
-export function waitingPage(gameData, playerId) {
+export function waitingPage(gameData, currentPlayer) {
   console.log(gameData);
 
   
@@ -38,7 +38,7 @@ export function waitingPage(gameData, playerId) {
                     </div>
                     
                     <div class="send">
-                        <input type="text" data-pseudo="${window.pseudo}" data-playerid="${playerId}" placeholder="Ecrivez un message">
+                        <input type="text" data-pseudo="${window.pseudo}" data-playerid="${currentPlayer.id}" placeholder="Ecrivez un message">
                         <div class="sendIcon" onclick="sendMessageInMessagerie()">
                             <img src="./assets/send.svg">
                         </div>
