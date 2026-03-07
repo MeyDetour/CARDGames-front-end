@@ -4,7 +4,6 @@ import { reloadComposant_gamePage } from "../../../pages/game/game.js";
 import { deleteStoreDataOfPlayer } from "./dataOfPlayer.js";
 import { apiClient } from "../../helpers/api.js";
 export async function gameLogin(params) {
-
   console.log("======TRY TO LOGIN======");
   console.log(params);
 
@@ -25,9 +24,8 @@ export async function gameLogin(params) {
     if (!gameInDB) {
       throw new Error("error while fetch");
     }
-  
 
-   console.log(gameId);
+    console.log(gameId);
     console.log(roomId);
     console.log(pseudo);
     console.log(gameInDB);

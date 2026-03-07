@@ -8,6 +8,8 @@
     position: absolute;
     bottom: 2%;
     width: 98%;
+    padding-inline: 21px;
+    box-sizing: border-box;
     left: 1%;
     flex-direction: row;
     align-items: center;
@@ -15,19 +17,35 @@
     height: 91px;
     background: white;
     border-radius: 10px;
-  }
-  .actions {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 16px;
-    button {
-      width: fit-content;
-      text-wrap: nowrap;
+    .leftStat {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
     }
+    .middle {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 16px;
+      button {
+        width: fit-content;
+        text-wrap: nowrap;
+      }
+    }
+    .right {
+      .player {
+        position: relative !important;
+        .playerImageContainer {
+          height: 100% !important;
+          max-height: 48px !important;
+          width: auto !important;
+        }
+      }
+    }
+  }
+
+  .currentPlayer {
+    position: relative;
   }
   .handDeck {
     position: absolute;
@@ -36,54 +54,6 @@
     flex-direction: row;
     gap: 15px;
     bottom: 14%;
-    transform: translate(-50%, 0);
-  }
-  .player {
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    width: fit-content;
-    gap: 11px;
-    .rightStatContainer {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      width: fit-content;
-      gap: 6px;
-      align-items: start;
-      height: fit-content;
-    }
-    .identityContainer {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      width: fit-content;
-      gap: 6px;
-      align-items: center;
-      span {
-        text-align: center;
-      }
-      .playerImageContainer {
-        width: 78px;
-        aspect-ratio: 1 / 1;
-        display: flex;
-        flex-direction: row;
-        justify-content: end;
-        border-radius: 50%;
-        clip-path: border-box;
-        border: 1px solid grey;
-        img {
-          object-fit: contain;
-          width: 100%;
-          object-position: bottom;
-        }
-      }
-    }
-  }
-  .player1.playerCount2 {
-    top: 5%;
-    left: 50%;
     transform: translate(-50%, 0);
   }
 }

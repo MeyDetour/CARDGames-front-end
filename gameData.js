@@ -1,4 +1,4 @@
-export const gameData = {
+export const originalGameData = {
   roomInDb: {
     id: 1,
     name: "Default Poker",
@@ -1421,6 +1421,299 @@ export const gameData = {
         pseudo: "zlef,flze",
         socketID: "UPRbWyVkbiojOvUyAAAH",
         id: "43y9ax",
+        currentBet: {
+          type: "number",
+          value: 1,
+        },
+        attachedEventForTour: {
+          type: "array",
+          value: [],
+        },
+        gain: {
+          type: "object",
+          value: {
+            1: {
+              value: 6249,
+            },
+          },
+        },
+        handDeck: {
+          type: "cardList",
+          value: [3, 43],
+        },
+        personalHandDeck: {
+          type: "cardList",
+          value: [],
+        },
+        personalHandDiscard: {
+          type: "cardList",
+          value: [],
+        },
+        hasPlayed: {
+          type: "boolean",
+          value: false,
+        },
+        haswin: {
+          type: "boolean",
+          value: false,
+        },
+        actions: {
+          type: "array",
+          value: [],
+        },
+        roles: {
+          type: "array",
+          value: [],
+        },
+      },{
+        position: 3,
+        pseudo: "zlebzfekjf",
+        socketID: "UPRbWyVkbiojOvUyAAAH",
+        id: "43y9axkkk",
+        currentBet: {
+          type: "number",
+          value: 1,
+        },
+        attachedEventForTour: {
+          type: "array",
+          value: [],
+        },
+        gain: {
+          type: "object",
+          value: {
+            1: {
+              value: 6249,
+            },
+          },
+        },
+        handDeck: {
+          type: "cardList",
+          value: [3, 43],
+        },
+        personalHandDeck: {
+          type: "cardList",
+          value: [],
+        },
+        personalHandDiscard: {
+          type: "cardList",
+          value: [],
+        },
+        hasPlayed: {
+          type: "boolean",
+          value: false,
+        },
+        haswin: {
+          type: "boolean",
+          value: false,
+        },
+        actions: {
+          type: "array",
+          value: [],
+        },
+        roles: {
+          type: "array",
+          value: [],
+        },
+      },{
+        position: 4,
+        pseudo: "zlebzjf",
+        socketID: "UPRbWyVkbiojOvUyAAAH",
+        id: "43fe554kk",
+        currentBet: {
+          type: "number",
+          value: 1,
+        },
+        attachedEventForTour: {
+          type: "array",
+          value: [],
+        },
+        gain: {
+          type: "object",
+          value: {
+            1: {
+              value: 6249,
+            },
+          },
+        },
+        handDeck: {
+          type: "cardList",
+          value: [3, 43],
+        },
+        personalHandDeck: {
+          type: "cardList",
+          value: [],
+        },
+        personalHandDiscard: {
+          type: "cardList",
+          value: [],
+        },
+        hasPlayed: {
+          type: "boolean",
+          value: false,
+        },
+        haswin: {
+          type: "boolean",
+          value: false,
+        },
+        actions: {
+          type: "array",
+          value: [],
+        },
+        roles: {
+          type: "array",
+          value: [],
+        },
+      },{
+        position: 5,
+        pseudo: "zlezfefbzjf",
+        socketID: "UPRbWyVkbiojOvUyAAAH",
+        id: "43fe554fffff551451kk",
+        currentBet: {
+          type: "number",
+          value: 1,
+        },
+        attachedEventForTour: {
+          type: "array",
+          value: [],
+        },
+        gain: {
+          type: "object",
+          value: {
+            1: {
+              value: 6249,
+            },
+          },
+        },
+        handDeck: {
+          type: "cardList",
+          value: [3, 43],
+        },
+        personalHandDeck: {
+          type: "cardList",
+          value: [],
+        },
+        personalHandDiscard: {
+          type: "cardList",
+          value: [],
+        },
+        hasPlayed: {
+          type: "boolean",
+          value: false,
+        },
+        haswin: {
+          type: "boolean",
+          value: false,
+        },
+        actions: {
+          type: "array",
+          value: [],
+        },
+        roles: {
+          type: "array",
+          value: [],
+        }},{
+        position: 6,
+        pseudo: "z888888zjf",
+        socketID: "UPRbWyVkbiojOvUyAAAH",
+        id: "edze451kk",
+        currentBet: {
+          type: "number",
+          value: 1,
+        },
+        attachedEventForTour: {
+          type: "array",
+          value: [],
+        },
+        gain: {
+          type: "object",
+          value: {
+            1: {
+              value: 6249,
+            },
+          },
+        },
+        handDeck: {
+          type: "cardList",
+          value: [3, 43],
+        },
+        personalHandDeck: {
+          type: "cardList",
+          value: [],
+        },
+        personalHandDiscard: {
+          type: "cardList",
+          value: [],
+        },
+        hasPlayed: {
+          type: "boolean",
+          value: false,
+        },
+        haswin: {
+          type: "boolean",
+          value: false,
+        },
+        actions: {
+          type: "array",
+          value: [],
+        },
+        roles: {
+          type: "array",
+          value: [],
+        },
+      },{
+        position: 7,
+        pseudo: "zrgre88888zjf",
+        socketID: "UPRbWyVkbiojOvUyAAAH",
+        id: "88622k",
+        currentBet: {
+          type: "number",
+          value: 1,
+        },
+        attachedEventForTour: {
+          type: "array",
+          value: [],
+        },
+        gain: {
+          type: "object",
+          value: {
+            1: {
+              value: 6249,
+            },
+          },
+        },
+        handDeck: {
+          type: "cardList",
+          value: [3, 43],
+        },
+        personalHandDeck: {
+          type: "cardList",
+          value: [],
+        },
+        personalHandDiscard: {
+          type: "cardList",
+          value: [],
+        },
+        hasPlayed: {
+          type: "boolean",
+          value: false,
+        },
+        haswin: {
+          type: "boolean",
+          value: false,
+        },
+        actions: {
+          type: "array",
+          value: [],
+        },
+        roles: {
+          type: "array",
+          value: [],
+        },
+      },{
+        position: 8,
+        pseudo: "zrgre8f",
+        socketID: "UPRbWyVkbiojOvUyAAAH",
+        id: "8862mmmm2k",
         currentBet: {
           type: "number",
           value: 1,

@@ -2,6 +2,7 @@ import './websocket/connection.js'
 import './controller/game/messages.js'
 import './controller/game/game.js'
 import './controller/error.js'
+import './controller/game/actions.js'
 import "./helpers/copy.js"
 import { router } from './router/router.js'
 

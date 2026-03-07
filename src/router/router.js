@@ -10,9 +10,7 @@ import {
   deleteRoomId,
   deleteStoreDataOfPlayer,
   getRoomId,
-} from "../controller/game/dataOfPlayer.js";
-import { getCurrentPlayer } from "../controller/game/dataOfPlayer.js";
-import { gameData } from "../../gameData.js";
+} from "../controller/game/dataOfPlayer.js"; 
 import gameplayPage from "../../components/game/game/gameplayPage.js";
 import { verifyGameId } from "../controller/game/game.js";
 export async function loadRoute(params = {}) {
@@ -78,135 +76,7 @@ export async function loadRoute(params = {}) {
       html = homePage(params);
       break;
     case "/gameplay":
-      html = gameplayPage(gameData, {
-        position: 1,
-        pseudo: "zvml,zv",
-        socketID: "FBZRkLFYoBB5onM8AAAJ",
-        id: "1q6lvq",
-        currentBet: {
-          type: "number",
-          value: 2,
-        },
-        attachedEventForTour: {
-          type: "array",
-          value: [],
-        },
-        gain: {
-          type: "object",
-          value: {
-            1: {
-              value: 6248,
-            },
-          },
-        },
-        handDeck: {
-          type: "cardList",
-          value: [29, 45],
-        },
-        personalHandDeck: {
-          type: "cardList",
-          value: [],
-        },
-        personalHandDiscard: {
-          type: "cardList",
-          value: [],
-        },
-        hasPlayed: {
-          type: "boolean",
-          value: false,
-        },
-        haswin: {
-          type: "boolean",
-          value: false,
-        },
-        actions: {
-          type: "array",
-          value: [
-            {
-              id: 1,
-              name: "Se coucher",
-              condition: null,
-              appearAtPlayerTurn: true,
-              withValue: [
-                {
-                  id: 7,
-                  player: "{currentPlayer}",
-                },
-                {
-                  id: 1,
-                  inputBool: true,
-                  player: "{currentPlayer}",
-                },
-              ],
-            },
-            {
-              id: 2,
-              name: "miser",
-              type: "askPlayer",
-              appearAtPlayerTurn: true,
-              condition:
-                "comp({currentPlayer#gain#1};isSuperiorNumber;{currentBet})",
-              withValue: [
-                {
-                  id: 11,
-                  player: "{currentPlayer}",
-                },
-              ],
-            },
-            {
-              id: 4,
-              name: "Check",
-              appearAtPlayerTurn: true,
-              condition:
-                "comp({currentPlayer#currentBet};isEqualNumber;{currentBet})",
-              withValue: [
-                {
-                  id: 1,
-                  inputBool: true,
-                  player: "{currentPlayer}",
-                },
-              ],
-            },
-            {
-              id: 5,
-              name: "Tapis",
-              appearAtPlayerTurn: true,
-              condition:
-                "exp(comp({currentPlayer#currentBet};isInferiorOrEqual;{currentBet})&&comp({currentPlayer#gain#1};isSuperiorNumber;0))",
-              withValue: [
-                {
-                  id: 14,
-                  type: "withValueEvent",
-                  player: "{currentPlayer}",
-                  inputNumber: "{currentPlayer#gain#1}",
-                },
-                {
-                  id: 3,
-                  inputNumber: "{currentPlayer#currentBet}",
-                },
-                {
-                  id: 1,
-                  inputBool: true,
-                  player: "{currentPlayer}",
-                },
-                {
-                  id: 8,
-                  inputBool: true,
-                },
-              ],
-            },
-          ],
-        },
-        roles: {
-          type: "array",
-          value: [
-            {
-              nom: "dealer",
-              attribution: "{startPlayer}",
-            },
-          ],
-        },
-      });
+      html = gameplayPage();
       break;
     default:
       html = homePage(params);
