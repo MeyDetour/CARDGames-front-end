@@ -19,8 +19,9 @@
       gap: 37px;
      
 
-      .players-container {
-        clip-path: border-box;
+      .players-container {-moz-clip-path: border-box;
+-webkit-clip-path: border-box;
+clip-path: border-box;
         overflow: hidden;
         width: 100%;
         border-radius: 16px;
@@ -86,41 +87,7 @@
       justify-content: center;
       padding: 20px;
       box-sizing: border-box;
-      .chat {
-        width: 100%;
-        height: 100%;
-        border-radius: 16px;
-        border: 0.8px solid #e1e8f1;
-        background: #fff;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        h3 {
-          color: var(--dark-blue);
-        }
-        .chat-header {
-          padding: 20px;
-          border-bottom: 1px solid #e1e8f1;
-          display: flex;
-          flex-direction: row;
-          justify-content: start;
-          gap: 16px;
-          h3 {
-            margin: 0;
-          }
-        }
-        .wrapper {
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-          justify-content: start;
-          height: 84%;
-          padding: 50px 20px;
-          box-sizing: border-box;
-                    overflow-y: scroll;
-        }
-      }
+     
     }
   }
   .send {

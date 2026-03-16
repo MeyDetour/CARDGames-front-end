@@ -38,12 +38,17 @@
         .playerImageContainer {
           height: 100% !important;
           max-height: 48px !important;
-          width: auto !important;
+          width: auto !important; 
         }
       }
     }
   }
 
+  .headerButtons{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
   .currentPlayer {
     position: relative;
   }

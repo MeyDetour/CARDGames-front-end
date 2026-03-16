@@ -17,7 +17,8 @@
     height: 150px;
     border-radius: 50%;
     position: relative;
-    clip-path: border-box;
+        clip-path: border-box;
+    -webkit-clip-path: border-box;
     overflow: hidden;
     .loader {
       width: 155px;

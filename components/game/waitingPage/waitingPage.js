@@ -1,18 +1,9 @@
 import { button } from "../../button/button.js";
 import { headerComponent } from "../../header/header.js";
-import { messageComponent } from "../../message/message.js";
 import { waitingPagePlayersBlock } from "./waitingPagePlayersBlock/waitingPagePlayersBlock.js";
 import { waitingPageCopyBlock } from "./waitingPageCopyBlock/waitingPageCopyBlock.js";
+import { messaegerieComponent } from "../../messagerie/messagerie.js";
 export function waitingPage(gameData, currentPlayer) {
-  console.log(gameData);
-
-  
-  let messagehtml = "";
-  gameData.data.messages.forEach((message) => {
-    messagehtml += messageComponent(message);
-  });
-
- 
   setTimeout(() => {
     scrollToBottom();
   }, 100);
@@ -29,31 +20,16 @@ export function waitingPage(gameData, currentPlayer) {
                 </div>
             </div>
             <div class="right">
-                 <div class="chat">
-                    <div class="chat-header">
-                        <h3>Chat</h3>
-                    </div>
-                    <div class="wrapper">
-                        ${messagehtml}
-                    </div>
-                    
-                    <div class="send">
-                        <input type="text" data-pseudo="${window.pseudo}" data-playerid="${currentPlayer.id}" placeholder="Ecrivez un message">
-                        <div class="sendIcon" onclick="sendMessageInMessagerie()">
-                            <img src="./assets/send.svg">
-                        </div>
-                    </div>
-                </div>
-                       
+                 
+                       ${messaegerieComponent()}
             </div>
         </div>
     `;
 }
-function scrollToBottom() {
-  const chatContainer = document.querySelector(".chat .wrapper"); // Remplace par ton ID
-  if (chatContainer) {
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-  } else {
-    console.warn("dont find chat");
+
+export function reloadComposant_messagerie_inWaitingPage() {
+  let content = document.querySelector(".waitingPage .row .right");
+  if (content) {
+    content.innerHTML = messaegerieComponent( );
   }
 }

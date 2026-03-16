@@ -9,8 +9,7 @@ export async function gamesPage(params = {}) {
   
 
   try {
-    games = await apiClient("games", null, { });
-    console.log( "games :>> ", games);
+    games = await apiClient("games", null, { }); 
     if (!games || !Array.isArray(games)) {
       games = [];
     }

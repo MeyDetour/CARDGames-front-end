@@ -23,8 +23,9 @@ export function loadingPage() {
       console.log("trext :", eltText);
     }
   }, 500);
-
+  // store the animation to stop it in router
   window.loadingAnimation = loadingAnimation;
+ 
   return /*html*/ `
      <div class="loadingPage">
         <div class="round"> 

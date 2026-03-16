@@ -1,9 +1,10 @@
 import { messageComponent } from "../../../components/message/message.js";
 import { messageLogComponent } from "../../../components/messageLog/messageLog.js";
+import { storeGameData } from "./dataStorage.js";
 
 export function sendMessageInMessagerie() {
   let input = document.querySelector(".waitingPage .right .send input");
-  if (input) {
+  if (input && input.value.trim() !== "") {
     if (window.socket) {
       var currentdate = new Date();
       let message = {
@@ -38,9 +39,7 @@ export function addNewMessageInMessagerie(message) {
 export function updateListOfMessages(messages){
  let gameData = window.gameData
  gameData.data.messages=messages
- window.gameData = gameData
- console.log("NEW GAME DATA ");
- console.log(gameData);
+ storeGameData(gameData); 
 }
 
 window.sendMessageInMessagerie = sendMessageInMessagerie;

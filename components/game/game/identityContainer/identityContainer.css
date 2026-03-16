@@ -26,7 +26,8 @@
         text-align: center;
       }
       .playerImageContainer {
-        width: 78px;
+      
+                width: 50px;
         aspect-ratio: 1 / 1;
         display: flex;
         position: relative;
@@ -35,12 +36,13 @@
         justify-content: end;
         align-items: end;
         border-radius: 50%;
-        clip-path: border-box;
+        clip-path: border-box; 
         border: 1px solid grey;
         img {
           object-fit: contain;
           width: 100%;
-          object-position: bottom;
+          object-position: bottom;          aspect-ratio: 1/1;
+          border-radius: 50%;
         }
       }
     }

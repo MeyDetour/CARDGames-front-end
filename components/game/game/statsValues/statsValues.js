@@ -1,6 +1,6 @@
 export function statsValues(params, player) {
   return /*html */ `
-      ${params.displaypoints ? /*html */ `<span class="cardCount">Cartes : ${player.handDeck.value.length}</span>` : ""}
+      ${params.displaypoints ? /*html */ `<div class="cardCount-stat"><img src="/assets/cards-count.svg" alt="Cartes"> <span>${player.handDeck.value.length}</span></div>` : ""}
       ${
         params.gainList && params.gainList.length > 0
           ? params.gainList

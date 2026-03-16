@@ -1,8 +1,7 @@
 
 export function copy(text) {
   navigator.clipboard.writeText(text).then(
-    () => {
-      console.log("copied");
+    () => { 
       let elt = document.querySelector(".linkToCopy");
       let content = elt ? elt.textContent : "";
       if (elt) { 

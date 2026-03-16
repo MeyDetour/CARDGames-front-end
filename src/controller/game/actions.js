@@ -13,25 +13,7 @@ function doAction(params) {
     let actionType = params.actionType || "default";
     
   console.log("Do Action :>> ", { playerId, roomId, action, actionType });
-  //  socket.emit("doAction", { playerId, roomId, action, actionType });
-}
-function changeTour() {
-  let gameData = window.gameData;
-  if (!gameData) {
-    console.warn("No game data found to change tour");
-    return;
-  }
-  gameData.data.currentPlayerPosition.value =
-    (gameData.data.currentPlayerPosition.value % gameData.data.players.length) +
-    1;
-  window.gameData = gameData;
-  console.log("change tour");
-  console.log(
-    "current player position :>> ",
-    gameData.data.currentPlayerPosition.value,
-  ); 
-  reloadComposant_gameplayPage();
-}
+   socket.emit("doAction", { playerId, roomId, action, actionType });
+} 
 
-window.doAction = doAction;
-window.changeTour = changeTour;
+window.doAction = doAction; 

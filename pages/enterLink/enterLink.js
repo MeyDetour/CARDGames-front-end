@@ -1,8 +1,7 @@
 import { headerComponent } from '../../components/header/header.js'
 import { button } from '../../components/button/button.js'
 
-export function enterLinkPage() {
-  console.log(window.socket);
+export function enterLinkPage() { 
   return /*html*/ `  <div class="enterLinkPage">
         ${headerComponent("enter-link")}
         <div class="box">

@@ -33,8 +33,7 @@ export async function apiClient(
     }
 
     if (response.status === 401) {
-      if (path && path.toLowerCase().includes("api/login_check")) {
-        console.log("throw event");
+      if (path && path.toLowerCase().includes("api/login_check")) { 
         throw new Error("Email ou mot de passe invalide");
       }
       throw new Error("UNAUTHORIZED");

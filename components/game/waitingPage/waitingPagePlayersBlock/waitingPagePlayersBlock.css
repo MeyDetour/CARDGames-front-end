@@ -2,6 +2,7 @@
   .row {
     .left {
       .players-container {
+        -webkit-clip-path:border-box;
         clip-path: border-box;
         overflow: hidden;
         width: 100%;
@@ -53,6 +54,7 @@
               align-items: start;
               .pseudo {
                 color: var(--dark-blue);
+                text-align: start;
               }
             }
           }

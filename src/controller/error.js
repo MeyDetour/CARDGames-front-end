@@ -1,4 +1,5 @@
 export function displayError(error) {
+  console.error(error)
   let content = /*html */ `  
              <p>${error.message}</p>
      

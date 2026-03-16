@@ -1,8 +1,11 @@
-import { getCurrentPlayer } from "../../../../src/controller/game/dataOfPlayer.js";
+import {
+  getCurrentPlayer,
+  getGameData,
+} from "../../../../src/controller/game/dataStorage.js";
 import { button } from "../../../button/button.js";
 export function waitingPageCopyBlock() {
-  let currentPlayer = getCurrentPlayer()
- let gameData = window.gameData
+  let currentPlayer = getCurrentPlayer();
+  let gameData = getGameData();
   return /*html*/ `
  
       <div class="top">
@@ -17,7 +20,13 @@ export function waitingPageCopyBlock() {
         </div>
       </div>
       <div class="bottom">
+      ${
+        gameData.roomInDb.params.globalGame.minPlayer
+          ? /*html */ `
           <p>Pour commencer la partie, vous devez être au moins ${gameData.roomInDb.params.globalGame.minPlayer} joueurs. Partagez le lien d'invitation ci-dessous avec vos amis pour qu'ils puissent rejoindre la table instantanément.</p>
+       `
+          : ""
+      }
           ${
             gameData.roomInDb.params.globalGame.minPlayer <=
             gameData.data.players.length
@@ -39,10 +48,9 @@ export function waitingPageCopyBlock() {
   `;
 }
 
-
-export function reloadComposant_waitingPageCopyBlock(){
-  let div = document.querySelector(".waitingPage .left .copyBlock")
-  if(div){
-  div.innerHTML = waitingPageCopyBlock()
+export function reloadComposant_waitingPageCopyBlock() {
+  let div = document.querySelector(".waitingPage .left .copyBlock");
+  if (div) {
+    div.innerHTML = waitingPageCopyBlock();
   }
 }

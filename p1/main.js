@@ -1250,14 +1250,12 @@ async function connectSocket() {
   });
 
   socket.on("roomCreated", (room) => {
-    let roomId = room.roomId;
-    console.log(room, roomId);
+    let roomId = room.roomId; 
     connectSocket2();
     changeGameStat(room);
   });
 
-  socket.on("gameChanges", (room) => {
-    console.log(room);
+  socket.on("gameChanges", (room) => { 
     changeGamePlayerVariable(1, playerId, room);
     changeGameStat(room);
   });

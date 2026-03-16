@@ -45,8 +45,7 @@ export function homePage() {
                     </div>
                     
                        
-                                ${button(null, "right-arrow-dark", null, "navigateTo", "Parcourir les jeux", "whiteButton",{path:"/games"})}
-                                ${button(null, "right-arrow-dark", null, "navigateTo", "Game", "whiteButton",{path:"/gameplay"})}
+                                ${button(null, "right-arrow-dark", null, "navigateTo", "Parcourir les jeux", "whiteButton",{path:"/games"})} 
  
                 </div>
       </div>
@@ -55,5 +54,4 @@ export function homePage() {
     </div>
     `;
 }
-
-window.homePage = homePage;
+ 

@@ -1,8 +1,8 @@
+import { getGameData } from "../../../../src/controller/game/dataStorage.js";
 import { playerCard } from "../../../playerCard/playerCard.js";
 
 export function waitingPagePlayersBlock() {
-  let gameData = window.gameData;
-  console.log(gameData);
+  let gameData = getGameData() 
   let playerhtml = "";
   gameData.data.players.forEach((player) => {
     playerhtml += playerCard(gameData.admin, player);

@@ -7,7 +7,14 @@ import { statsValues } from "../statsValues/statsValues.js";
     totalPlayerCount: the total number of players in the game, which can be used for styling purposes (e.g., adjusting the layout based on the number of players).
 */
 
-export   function identityContainer(player,key, isCurrentPlayerTurn,totalPlayerCount,displayOtherPlayerCount,gainList) {
+export function identityContainer(
+  player,
+  key,
+  isCurrentPlayerTurn,
+  totalPlayerCount,
+  displayOtherPlayerCount,
+  gainList,
+) {
   return /*html */ `<div  data-player-id="${player.id}" class="player player${key} playerCount${totalPlayerCount}  ${isCurrentPlayerTurn ? "currentPlayerTurn" : ""}">
                  
                 <div class="identityContainer">
@@ -17,7 +24,7 @@ export   function identityContainer(player,key, isCurrentPlayerTurn,totalPlayerC
                     <span>${player.pseudo}</span>
                 </div>
                 <div class="rightStatContainer">
-                           ${statsValues({displaypoints :displayOtherPlayerCount, gainList : gainList},player)}                     
+                           ${statsValues({ displaypoints: displayOtherPlayerCount, gainList: gainList }, player)}                     
                 </div>
                     </div>`;
 }

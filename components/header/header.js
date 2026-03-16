@@ -11,5 +11,4 @@ export function headerComponent(page = "games") {
         </header>
     `;
 }
-
-window.headerComponent = headerComponent;
+ 
