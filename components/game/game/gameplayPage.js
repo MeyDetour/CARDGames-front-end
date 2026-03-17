@@ -1,24 +1,36 @@
 import { button } from "../../button/button.js";
 import { defaultCard } from "../../defaultCard/defaultCard.js";
-import { identityContainer } from "./identityContainer/identityContainer.js";
-import { originalGameData } from "../../../gameData.js";
-import { statsValues } from "./statsValues/statsValues.js";
+import { gameplay_identityContainer } from "./identityContainer/identityContainer.js";
+import { reloadComposant_gameplayPlayers } from "./players/players.js";
 import {
   getCurrentPlayer,
   getGameData,
 } from "../../../src/controller/game/dataStorage.js";
 import { displayError } from "../../../src/controller/error.js";
+import { removeMessageNotification } from "../../../src/controller/game/messages.js";
 import { messaegerieComponent } from "../../messagerie/messagerie.js";
+import { gameplay_messageOfLoading } from "./messageOfLoading/messageOfLoading.js";
+import { gameplay_displayAllPlayers } from "./players/players.js";
+import {
+  gameplay_handdeck,
+  reloadComposant_gameplayHanddeck,
+} from "./handdeck/handdeck.js";
+import {
+  gameplay_actionsButtons,
+  reloadComposant_gameplayActionsButtons,
+} from "./actionsButtons/actionsButtons.js";
 export default function gameplayPage() {
   let currentPlayer = getCurrentPlayer();
-
   let gameData = getGameData();
   if (!gameData) {
     displayError("No game data found to display game");
     return;
   }
+  if (!currentPlayer) {
+    displayError("No current player found to display game");
+    return;
+  }
   let points = 45;
-  let displaypoints = gameData.roomInDb.params.rendering.game.displayStatistics;
   let actions =
     currentPlayer.actions && currentPlayer.actions.value
       ? currentPlayer.actions.value
@@ -28,115 +40,93 @@ export default function gameplayPage() {
       ? currentPlayer.handDeck.value
       : [];
   let cardList = gameData.roomInDb.assets.cards;
-  let gainList = gameData.roomInDb.assets.gains;
-  let players = gameData.data.players.filter(
-    (player) => player.id !== currentPlayer.id,
-  );
-  let displayOtherPlayerCount =
-    gameData.roomInDb.params.rendering.game.displayCountAdversaryHandDeck;
 
+  let params = gameData.roomInDb.params.rendering.game;
   return /*html */ `
         <div id="gameplayPage">
-
-            <div class="playerToolBar"  >
-                    <div class="leftStat">
-                        ${statsValues({ displaypoints: displaypoints, gainList: gainList }, currentPlayer)}                    
-                    </div>
-                    <div class="middle">
-                      ${actions
-                        .map((action) => {
-                          let mustAppear =
-                            !action.appearAtPlayerTurn ||
-                            (action.appearAtPlayerTurn &&
-                              gameData.data.currentPlayerPosition.value ===
-                                currentPlayer.position);
-
-                          if (!mustAppear) return "";
-
-                          return /*html */ `
-                              ${button(
-                                null,
-                                null,
-                                null,
-                                "doAction",
-                                action.name,
-                                "greyButton",
-                                {
-                                  playerId: currentPlayer.id,
-                                  roomId: gameData.roomId,
-                                  action: action.name,
-                                  actionType: action.type || "default",
-                                },
-                              )}
-                          `;
-                        })
-                        .join("")}
-                    </div>
-                    <div class="right">
-                        <div  data-player-id="${currentPlayer.id}" class="player currentPlayer ${gameData.data.currentPlayerPosition.value == currentPlayer.position ? "currentPlayerTurn" : ""}">  
-                          <div class="identityContainer ">
-                              <div class="playerImageContainer">
-                                  <img src="/assets/images/template-player.png" alt="avatar" />
-                              </div>
-                              <span>${currentPlayer.pseudo}</span>
-                          </div> 
-                        </div>
-                    </div> 
-            </div>
-            <div class="handDeck">
-                  ${handDeck
-                    .map((cardId) => {
-                      let carElt = cardList[cardId];
-                      carElt.faceUp = true;
-                      const suits = {
-                        coeur: "hearts",
-                        carreau: "diamonds",
-                        treffle: "clubs",
-                        pique: "spades",
-                      };
-
-                      carElt.suit = suits[carElt.addedAttributs.couleur] || "";
-                      carElt.hoverable = true;
-                      return defaultCard(carElt);
-                    })
-                    .join("")}
-            </div>
-            <div class="gameplayMessagerie-container">
-                    ${messaegerieComponent()}
-            </div>
+         ${gameplay_messageOfLoading(gameData.data.logs)}
+         
+         ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList)}
+           ${gameplay_actionsButtons(currentPlayer.actions.value, gameData.data.currentPlayerPosition.value === currentPlayer.position, currentPlayer.id, gameData.roomId)}
+                                      
+                   
+            ${params.displayChat ? `<div class="gameplayMessagerie-container"> </div>` : ""}
             <div class="headerButtons">
+                    ${params.displayChat ? button("chat", null, null, "gamePlayeToggleMessagerie", null, "whiteButton gameplayChatButton") : ""}
+                    ${button("menu", null, null, "gamePlayOpenMenu", null, "whiteButton gameplayMenuButton")}
             </div>
-            ${players
-              .map((player, key) => {
-                return identityContainer(
-                  player,
-                  key + 1,
-                  gameData.data.currentPlayerPosition.value === player.position,
-                  players.length + 1,
-                  displayOtherPlayerCount,
-                  gainList,
-                );
-              })
-              .join("")}
-              
+          
+            ${gameplay_displayAllPlayers(gameData, currentPlayer)}  
 
             
         </div>
     `;
 }
 
+// On fait un rechargement par suppresion-creation car tous les elements sont en position absolute
+// dans waiting page on fait un ecrasement de contenu à partir d'une div précise car c'est un contenu en position relative
 export function reloadComposant_gameplayPage() {
   if (document.querySelector("#gameplayPage")) {
-    let content = document.querySelector("#content");
+    let gameData = getGameData();
+    let currentPlayer = getCurrentPlayer();
+    let content = document.querySelector("#gameplayPage");
+    if (!content) {
+      displayError("No content found to reload players");
+      return;
+    }
 
-    content.innerHTML = gameplayPage();
+    if (!gameData) {
+      displayError("No game data found to display game");
+      return;
+    }
+    if (!currentPlayer) {
+      displayError("No current player found to display game");
+      return;
+    }
+
+    reloadComposant_gameplayPlayers(content, gameData, currentPlayer);
+    reloadComposant_gameplayHanddeck(
+      content,
+      gameData.roomInDb.params.rendering.game.displayHandDeck,
+      currentPlayer.handDeck.value,
+      gameData.roomInDb.assets.cards,
+    );
+    reloadComposant_gameplayActionsButtons(
+      content,
+      currentPlayer.actions.value,
+      gameData.data.currentPlayerPosition.value === currentPlayer.position,
+      currentPlayer.id,
+      gameData.roomId,
+    );
   }
 }
+// ===============RELOAD PLAYERS==========
 
+// ===============MESSAGERIE=============
+export function gamePlayeToggleMessagerie() {
+  if (
+    document.querySelector("#gameplayPage .gameplayMessagerie-container .chat")
+  ) {
+    console.log("remove messagerie");
+    let container = document.querySelector(
+      "#gameplayPage .gameplayMessagerie-container",
+    );
+    container.style.display = "none";
+    container.innerHTML = "";
+  } else {
+    console.log("add messagerie");
+    removeMessageNotification();
+    reloadComposant_messagerie_gameplayPage();
+  }
+}
+window.gamePlayeToggleMessagerie = gamePlayeToggleMessagerie;
 
 export function reloadComposant_messagerie_gameplayPage() {
-  let content = document.querySelector("#gameplayPage .gameplayMessagerie-container");
+  let content = document.querySelector(
+    "#gameplayPage .gameplayMessagerie-container",
+  );
   if (content) {
+    content.style.display = "flex";
     content.innerHTML = messaegerieComponent();
   }
 }

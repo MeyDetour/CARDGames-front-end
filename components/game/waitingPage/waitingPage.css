@@ -90,46 +90,5 @@ clip-path: border-box;
      
     }
   }
-  .send {
-    border-top: 1px solid #e1e8f1;
-    border-radius: 10px;
-    opacity: 0.5;
-    width: 100%;
-    height: 63px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    padding: 5px 19px;
-    box-sizing: border-box;
-    color: #717182;
-    transition: opacity 0.2s ease;
-    input {
-      width: 93%;
-      border-radius: 10px;
-      border: 0.8px solid #b0b6be;
-      background: #ebf1f6;
-      font-size: 18px;
-      padding: 12px 20px;
-      color: #454242;
-    }
-    svg {
-      width: 16px;
-      height: 16px;
-    }
-    .sendIcon {
-      height: 100%;
-      aspect-ratio: 1 / 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      border-radius: 10px;
-      border: 0.8px solid #717184; 
-      background: #f8fafc;
-      box-sizing: border-box;
-    }
-    
-  }
+  
 }

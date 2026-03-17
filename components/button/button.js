@@ -7,7 +7,7 @@ export function button(leftIcon, rightIcon, link, functionName, text, classname 
     return `
       <a href="${link}" class="button ${classname}">
         ${leftIcon ? `<img src="/assets/${leftIcon}.svg">` : ""}
-        ${text}
+        ${text? text : "" }
         ${rightIcon ? `<img src="/assets/${rightIcon}.svg">` : ""}
       </a>
     `
@@ -19,7 +19,7 @@ export function button(leftIcon, rightIcon, link, functionName, text, classname 
   return `
     <button onclick="${functionName}(${serializedParams})" class="button ${classname}">
       ${leftIcon ? `<img src="/assets/${leftIcon}.svg">` : ""}
-      ${text}
+      ${text? text : "" }
       ${rightIcon ? `<img src="/assets/${rightIcon}.svg">` : ""}
     </button>
   `

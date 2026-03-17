@@ -32,12 +32,10 @@ export function defaultCard(card) {
   let color = getSuitColor(card.suit);
   return /*html */ ` 
     <div class="defaultCardOfGame ${card.hoverable ? "hoverable" : ""}">
-        <span class="leftValue">${card.value}</span>
-        <span class="leftSuit ${color}">${suit}</span>
+        <span class="leftValue">${card.value}</span> 
         <span class="suit ${color}">${suit}</span> 
 
-        <span class="rightValue">${card.value}</span>
-        <span class="rightSuit ${color}">${suit}</span>
+        <span class="rightValue">${card.value}</span> 
     </div>
     `;
 }

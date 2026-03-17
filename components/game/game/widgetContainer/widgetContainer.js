@@ -1,4 +1,9 @@
 import { button } from "../../../button/button.js";
+// obligé d'ajouter et de supprimer le composant et 
+// de la mettre dans la page de base car la gameplay page est rechargé
+// et supprimer le composant
+
+
 function widgetContainer(
   title,
   message,

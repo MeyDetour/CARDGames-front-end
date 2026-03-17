@@ -7,7 +7,7 @@ export function getCurrentPlayer() {
   return window.currentPlayer || null;
 }
 export function storeGameData(gameData) {
-  console.log("ACTION : STORED GAME DATA");
+  //console.log("ACTION : STORED GAME DATA");
   window.gameData = gameData;
 }
 
@@ -22,10 +22,10 @@ export function getRoomId() {
 }
 
 export function storeRoomId(roomId) {
-  console.log("ACTION : STORE ROOM ID " + roomId);
+  //console.log("ACTION : STORE ROOM ID " + roomId);
   localStorage.setItem("roomId", roomId);
 }
 export function deleteRoomId() {
-  console.log("ACTION : DELETE ROOM ID");
+  //console.log("ACTION : DELETE ROOM ID");
   localStorage.setItem("roomId", "");
 }

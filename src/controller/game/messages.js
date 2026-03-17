@@ -3,7 +3,7 @@ import { messageLogComponent } from "../../../components/messageLog/messageLog.j
 import { storeGameData } from "./dataStorage.js";
 
 export function sendMessageInMessagerie() {
-  let input = document.querySelector(".waitingPage .right .send input");
+  let input = document.querySelector(".chat .send input");
   if (input && input.value.trim() !== "") {
     if (window.socket) {
       var currentdate = new Date();
@@ -22,24 +22,32 @@ export function sendMessageInMessagerie() {
     console.warn("input not found");
   }
 }
-export function messageSuccessfullySend(message) {
- addNewMessageInMessagerie(message)
-  let input = document.querySelector(".waitingPage .right .send input");
+export function cleanMessageInput(message) {
+  let input = document.querySelector(".chat .send input");
   if (input) {
     input.value = "";
   }
 }
 export function addNewMessageInMessagerie(message) {
-  let messagerie = document.querySelector(".waitingPage .right .wrapper");
+  let messagerie = document.querySelector(".chat .wrapper");
   if (messagerie) {
-      messagerie.innerHTML += messageComponent(message);
-     
+    messagerie.innerHTML += messageComponent(message);
   }
 }
-export function updateListOfMessages(messages){
- let gameData = window.gameData
- gameData.data.messages=messages
- storeGameData(gameData); 
+export function addMessageNotification(){
+  if (document.querySelector(".gameplayChatButton") && !document.querySelector("#gameplayPage .gameplayMessagerie-container .chat")) {
+    document.querySelector(".gameplayChatButton").classList.add("newMessage");
+  }
+}
+export function removeMessageNotification(){
+  if (document.querySelector(".gameplayChatButton")) {
+    document.querySelector(".gameplayChatButton").classList.remove("newMessage");
+  }
+}
+export function updateListOfMessages(messages) {
+  let gameData = window.gameData;
+  gameData.data.messages = messages;
+  storeGameData(gameData);
 }
 
 window.sendMessageInMessagerie = sendMessageInMessagerie;

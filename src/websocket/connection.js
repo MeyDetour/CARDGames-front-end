@@ -1,9 +1,12 @@
 import { displayError } from "../controller/error.js";
 import { gameChanges, verifyGameId } from "../controller/game/game.js";
 import { joinRoom, startGame } from "../controller/game/louancher.js";
-import { updateListOfMessages } from "../controller/game/messages.js";
 import {
-  messageSuccessfullySend,
+  updateListOfMessages,
+  addMessageNotification,
+} from "../controller/game/messages.js";
+import {
+  cleanMessageInput,
   addNewMessageInMessagerie,
 } from "../controller/game/messages.js";
 import { reloadComposant_waitingPagePlayersBlock } from "../../components/game/waitingPage/waitingPagePlayersBlock/waitingPagePlayersBlock.js";
@@ -25,6 +28,59 @@ export async function connectSocket() {
   // expose on window so other legacy code can access it
   window.socket = socket;
 
+  //===============GAME MANAGEMENT=============
+
+  socket.on("gameStarted", ({ gameData }) => {
+    console.log("RECEIVE GAME START SIGNAL");
+    storeGameData(gameData);
+    reloadComposant_gamePage();
+  });
+
+  //===============MESSAGERIE=============
+
+  //when player send message and message is successfully added
+  socket.on("messageAddedInMessagerie", ({ messages, message }) => {
+    console.log("RECEIVE MESSAGE SUCCESSFULLY ADDED IN MESSAGERIE :>>", {
+      messages,
+      message,
+    });
+    updateListOfMessages(messages);
+    cleanMessageInput(message);
+    addNewMessageInMessagerie(message);
+  });
+
+  socket.on("newMessageReceived", ({ messages, message }) => {
+    console.log("RECEIVE NEW MESSAGE :>> ", { messages, message });
+    updateListOfMessages(messages);
+    addNewMessageInMessagerie(message);
+    addMessageNotification();
+  });
+
+  //===============ERROR=============
+
+  socket.on("error", (err) => {
+    console.log("RECEIVE ERROR :>>", { err });
+    displayError(err);
+  });
+
+  //===============UPDATES=============
+
+  socket.on("playerData", (currentPlayer) => {
+    console.log("RECEIVE PLAYER DATA :>>", { currentPlayer });
+    storeDataOfPlayer(currentPlayer);
+  });
+
+  socket.on("gameChanges", ({ gameData, currentPlayer }) => {
+    console.log("RECEIVE GAME CHANGES :>>", { gameData, currentPlayer });
+    gameChanges(gameData, currentPlayer);
+  });
+
+  socket.on("updateGameDataLogs", (message) => {
+    addMessageInLoadingMessage(message);
+  });
+
+  //===============ROOM CONNECTION=============
+
   socket.on("roomCreated", ({ gameData, player }) => {
     console.log("RECEIVE ROOM SUCCESSFULLY CRTEATED :>>", { gameData, player });
     storeDataOfPlayer(player);
@@ -32,42 +88,7 @@ export async function connectSocket() {
     storeRoomId(gameData.roomId);
     joinRoom(gameData);
   });
-  socket.on("gameStarted", ({ gameData }) => {
-    console.log("RECEIVE GAME START SIGNAL");
-    storeGameData(gameData);
-    reloadComposant_gamePage();
-  });
-  socket.on("playerData", (currentPlayer) => {
-    console.log("RECEIVE PLAYER DATA :>>", { currentPlayer });
-    storeDataOfPlayer(currentPlayer);
-  });
-  socket.on("playerHasJoinedRoom", (gameData) => {
-    console.log("RECEIVE PLAYER HAS JOIN ROOM :>>", { gameData });
 
-    gameChanges(gameData);
-    reloadComposant_waitingPagePlayersBlock();
-    reloadComposant_waitingPageCopyBlock();
-  });
-  socket.on("playerHasLeftRoom", (gameData) => {
-    console.log("RECEIVE PLAYER HAS LEFT ROOM :>> ", gameData);
-    gameChanges(gameData);
-    reloadComposant_waitingPagePlayersBlock();
-    reloadComposant_waitingPageCopyBlock();
-  });
-  //when player send message and message is successfully added
-  socket.on("messageAddedInMessagerie", ({ messages, message }) => {
-    console.log("RECEIVE MESSAGE SUCCEFULLY ADD IN MESSAGERIE :>>", {
-      messages,
-      message,
-    });
-    updateListOfMessages(messages);
-    messageSuccessfullySend(message);
-  });
-  socket.on("newMessageReceived", ({ messages, message }) => {
-    console.log("RECEIVE NEW MESSAGE :>> ", { messages, message });
-    updateListOfMessages(messages);
-    addNewMessageInMessagerie(message);
-  });
   socket.on("roomJoined", ({ gameData, player }) => {
     console.log("RECEIVE ROOM JOINED :>>", { gameData, player });
     storeRoomId(gameData.roomId);
@@ -75,14 +96,20 @@ export async function connectSocket() {
     storeDataOfPlayer(player);
     joinRoom(gameData);
   });
-  socket.on("gameChanges", ({ gameData, currentPlayer }) => {
-    console.log("RECEIVE GAME CHANGES :>>", { gameData, currentPlayer });
-     
-    gameChanges(gameData, currentPlayer);
+
+  socket.on("playerHasLeftRoom", (gameData) => {
+    console.log("RECEIVE PLAYER HAS LEFT ROOM :>> ", gameData);
+    gameChanges(gameData);
+    reloadComposant_waitingPagePlayersBlock();
+    reloadComposant_waitingPageCopyBlock();
   });
-  socket.on("error", (err) => {
-    console.log("RECEIVE ERROR :>>", { err });
-    displayError(err);
+
+  socket.on("playerHasJoinedRoom", (gameData) => {
+    console.log("RECEIVE PLAYER HAS JOIN ROOM :>>", { gameData });
+
+    gameChanges(gameData);
+    reloadComposant_waitingPagePlayersBlock();
+    reloadComposant_waitingPageCopyBlock();
   });
 
   socket.on(
@@ -102,6 +129,8 @@ export async function connectSocket() {
       });
     },
   );
+
+  //===============ACTIONS=============
 
   socket.on("askPlayer", ({ event, params, roomId }) => {
     console.log("RECEIVE ORDER TO ASK PLAYER :>> ", { event, params, roomId });

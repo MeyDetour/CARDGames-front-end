@@ -4,9 +4,7 @@ import { waitingPagePlayersBlock } from "./waitingPagePlayersBlock/waitingPagePl
 import { waitingPageCopyBlock } from "./waitingPageCopyBlock/waitingPageCopyBlock.js";
 import { messaegerieComponent } from "../../messagerie/messagerie.js";
 export function waitingPage(gameData, currentPlayer) {
-  setTimeout(() => {
-    scrollToBottom();
-  }, 100);
+ 
   return /*html */ ` 
       <div class="waitingPage"> 
         ${headerComponent("game")}
