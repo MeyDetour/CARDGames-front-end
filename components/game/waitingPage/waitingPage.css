@@ -17,11 +17,11 @@
       padding: 20px;
       box-sizing: border-box;
       gap: 37px;
-     
 
-      .players-container {-moz-clip-path: border-box;
--webkit-clip-path: border-box;
-clip-path: border-box;
+      .players-container {
+        -moz-clip-path: border-box;
+        -webkit-clip-path: border-box;
+        clip-path: border-box;
         overflow: hidden;
         width: 100%;
         border-radius: 16px;
@@ -31,7 +31,7 @@ clip-path: border-box;
           color: var(--dark-blue);
         }
         .players-container-header {
-          padding: 20px; 
+          padding: 20px;
           color: white;
           background: var(--dark-blue);
           display: flex;
@@ -87,8 +87,6 @@ clip-path: border-box;
       justify-content: center;
       padding: 20px;
       box-sizing: border-box;
-     
     }
   }
-  
 }

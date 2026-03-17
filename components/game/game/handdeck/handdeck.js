@@ -1,3 +1,4 @@
+import { defaultCard } from "../../../defaultCard/defaultCard.js";
 export function gameplay_handdeck(displayHandDeck, handDeck, cardList) {
   if (!displayHandDeck) {
     return "";

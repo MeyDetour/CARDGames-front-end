@@ -1,11 +1,8 @@
-import {
-  getCurrentPlayer,
-  getGameData,
-} from "../../../src/controller/game/gameData.js";
+import { gameplay_identityContainer } from "../identityContainer/identityContainer.js"; 
 export function gameplay_displayAllPlayers(gameData, currentPlayer) {
   if (!gameData) {
     displayError("No game data found to display game");
-    return;
+    return "";
   }
   let gainList = gameData.roomInDb.assets.gains;
 
@@ -38,10 +35,10 @@ export function gameplay_displayAllPlayers(gameData, currentPlayer) {
                   isCurrentPlayerTurn:
                     gameData.data.currentPlayerPosition.value ===
                     player.position,
-                }),
+                })
               )
               .join("")}
-    ̀`;
+    ` 
 }
 
 export function reloadComposant_gameplayPlayers(content,gameData, currentPlayer) {

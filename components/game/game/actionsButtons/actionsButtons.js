@@ -1,14 +1,11 @@
-import { button } from "../../../button/button";
+import { button } from "../../../button/button.js";
 export function gameplay_actionsButtons(
   actions,
-  isCurrentTurn,
+  isCurrentTurn, 
   currentPlayerId,
   roomId
 ) {
-  if (!displayHandDeck) {
-    return "";
-  }
-
+  
   return /*html */ `
     ${actions
       .map((action) => {
@@ -46,13 +43,14 @@ export function reloadComposant_gameplayActionsButtons(
   currentPlayerId,
   roomId
 ) {
-  let handDeckContainer = document.querySelector(".handDeck");
-  if (handDeckContainer) {
-    handDeckContainer.remove();
+  let actionsContainer = document.querySelector(".actionsContainer");
+  if (actionsContainer) {
+    actionsContainer.remove();
   }
   content.innerHTML += gameplay_actionsButtons(
-    displayHandDeck,
-    handDeck,
-    cardList,
+    actions,
+    isCurrentTurn,
+    currentPlayerId,
+    roomId
   );
 }

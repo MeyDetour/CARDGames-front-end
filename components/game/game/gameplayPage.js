@@ -19,6 +19,10 @@ import {
   gameplay_actionsButtons,
   reloadComposant_gameplayActionsButtons,
 } from "./actionsButtons/actionsButtons.js";
+import { gameplay_menu } from "./menu/menu.js";
+
+
+
 export default function gameplayPage() {
   let currentPlayer = getCurrentPlayer();
   let gameData = getGameData();
@@ -42,18 +46,20 @@ export default function gameplayPage() {
   let cardList = gameData.roomInDb.assets.cards;
 
   let params = gameData.roomInDb.params.rendering.game;
+ 
+  console.log(gameplay_displayAllPlayers(gameData, currentPlayer));
   return /*html */ `
         <div id="gameplayPage">
          ${gameplay_messageOfLoading(gameData.data.logs)}
          
          ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList)}
            ${gameplay_actionsButtons(currentPlayer.actions.value, gameData.data.currentPlayerPosition.value === currentPlayer.position, currentPlayer.id, gameData.roomId)}
-                                      
+            ${gameplay_menu(gameData, currentPlayer)}
                    
             ${params.displayChat ? `<div class="gameplayMessagerie-container"> </div>` : ""}
             <div class="headerButtons">
                     ${params.displayChat ? button("chat", null, null, "gamePlayeToggleMessagerie", null, "whiteButton gameplayChatButton") : ""}
-                    ${button("menu", null, null, "gamePlayOpenMenu", null, "whiteButton gameplayMenuButton")}
+                    ${button("menu", null, null, "toggleGameplayMenu", null, "whiteButton gameplayMenuButton")}
             </div>
           
             ${gameplay_displayAllPlayers(gameData, currentPlayer)}  
