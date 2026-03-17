@@ -31,13 +31,14 @@ export async function loadRoute(params = {}) {
   if (route != "/" && route != "/game") { 
     deleteRoomId();
   }
+  
 
-  let roomId = getRoomId();
-  if (roomId && route == "/") { 
-    verifyGameId({ roomId: roomId, result: null }); 
-    deleteRoomId();
-    return;
-  }
+  //let roomId = getRoomId();
+  //if (roomId && route == "/") { 
+  //  verifyGameId({ roomId: roomId, result: null }); 
+  //  deleteRoomId();
+  //  return;
+  //}
 
   switch (route) {
     case "/choose-link":

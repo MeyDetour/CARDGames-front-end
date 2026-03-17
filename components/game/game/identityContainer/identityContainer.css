@@ -15,24 +15,35 @@
     background: #1a313f;
     color: white;
 
-
-      .cardCount-stat {
-        position: absolute;
-        right: -24px;
-        transform: translate(100%);
-        width: 31px;
-        img {
-          height: 100%;
-          width: 100%;
-        }
-        span {
-          position: absolute;
-          text-align: right;
-          right: 5px;
-          top: 6px;
-          color: black;
-        }
+    .cardCount-stat {
+      position: absolute;
+      right: -24px;
+      transform: translate(100%);
+      width: 31px;
+      img {
+        height: 100%;
+        width: 100%;
       }
+      span {
+        position: absolute;
+        text-align: right;
+        right: 5px;
+        top: 6px;
+        color: black;
+      }
+    }
+    .globalValue {
+      position: absolute;
+      right: -15px;
+      transform: translate(100%);
+      span {
+        background: #d08700;
+        padding: 10px 20px;
+        color: white;
+        border-radius: 50px;
+        font-weight: 500;
+      }
+    }
     .rightStatContainer {
       position: relative;
       display: flex;
@@ -55,7 +66,6 @@
           color: white;
         }
       }
-
     }
 
     .playerImageContainer {

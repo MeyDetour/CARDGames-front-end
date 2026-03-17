@@ -18,6 +18,7 @@ import {
 } from "../controller/game/dataStorage.js";
 import { displayAskPlayerWidget } from "../../components/game/game/widgetContainer/widgetContainer.js";
 import { reloadComposant_gamePage } from "../../pages/game/game.js";
+import { addMessageInLoadingMessage } from "../../components/game/game/messageOfLoading/messageOfLoading.js";
 
 export let socket = null;
 export async function connectSocket() {

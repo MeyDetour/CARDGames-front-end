@@ -22,7 +22,7 @@
 .button.greyButton {
 
   border-radius: 4px;
-  opacity: 0.5; 
+  /*opacity: 0.5; */
 
   width: 23%;
   height: 100%;
@@ -33,9 +33,15 @@
   justify-content: space-around;
 }
 .button.greyButton { 
+  background: #626b7e;
+  color: white;
+}
+.button.darkBlueButton { 
   background: #0d172d;
   color: white;
-}.button.redButton { 
+}
+
+.button.redButton { 
   background: #a93838;
   color: white;
 }.button.greenButton { 

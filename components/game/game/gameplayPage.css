@@ -82,6 +82,20 @@
     font-size: 27px;
     font-weight: bold;
     }
+    hr{
+
+    width: 100%;
+    margin-block: 29px;
+    height: 0;
+    border: 0.2px solid #ffffff;
+    }
+  }
+  .menu.open{
+    display: flex;
+     animation: menuAppear 1s ease-in-out;
+  }  .menu.close{
+    display: flex;
+     animation: menuDisappear 1s ease-in-out;
   }
   .headerButtons {
     position: absolute;
@@ -136,5 +150,27 @@
     gap: 15px;
     bottom: 14%;
     transform: translate(-50%, 0);
+  }
+}
+
+
+@keyframes menuAppear{
+  from {
+    opacity: 0;
+    transform: translate(100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+@keyframes menuDisappear{
+  from {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(100%, 0);
   }
 }

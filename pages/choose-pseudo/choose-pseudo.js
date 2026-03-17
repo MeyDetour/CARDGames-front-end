@@ -51,16 +51,20 @@ export function choosePseudoPage(params = {}) {
   "BombermanDoux", "RaymanSansBras", "SpyroLePetit", "CrashBandicool", "TombRaideur",
   "AgentDoubleZero", "SherlockF Holmes", "ArseneLapin", "ZorroEstArrivé", "TarzanEnVille"
 ];
- 
+ let pseudo = defaultsPseudo[Math.floor(Math.random() * defaultsPseudo.length)]
   return /*html*/ `  <div class="choosePseudoPage">
         ${headerComponent("choose-pseudo")}
         <div class="box">
-          <div>
-              <h1>${name}</h1>
-              <span>Choisissez votre pseudo</span>
-          </div>
-           <span id="error"></span>
-          <input id="pseudo" type="text" value="${defaultsPseudo[Math.floor(Math.random() * defaultsPseudo.length)]}"/>
+        <div class="head">
+
+              <h1>${name}</h1> 
+        </div> 
+          <div class="inputContainer">
+            <span>Pseudo</span>
+            <span id="error"></span>
+            <input id="pseudo" oninput="updateCharacterCount()" type="text" value="${pseudo}"/>
+            <span class="caractereCount">${pseudo.length}/20 caractères</span>
+            </div>
           ${button(null, null, null, "gameLogin", "Rejoindre", "dark-grey", {
             gameId: gameId,
             roomId: roomId, 
@@ -68,6 +72,15 @@ export function choosePseudoPage(params = {}) {
         </div>
 
     </div>
-    `;
+    `;  
 }
  
+window.updateCharacterCount = function() {
+  const input = document.getElementById("pseudo");
+  const characterCount = document.querySelector(".inputContainer span:last-child");
+  characterCount.textContent = `${input.value.length}/20 caractères`;
+
+  if (input.value.length > 20) { 
+    input.value = input.value.slice(0, 20);
+  }
+}

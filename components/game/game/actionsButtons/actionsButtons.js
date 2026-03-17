@@ -7,6 +7,7 @@ export function gameplay_actionsButtons(
 ) {
   
   return /*html */ `
+   <div class="actionsContainer">
     ${actions
       .map((action) => {
         let mustAppear =
@@ -15,8 +16,7 @@ export function gameplay_actionsButtons(
 
         if (!mustAppear) return "";
 
-        return /*html */ `  <div class="actionsContainer">
-                                 ${button(
+        return  button(
                                    null,
                                    null,
                                    null,
@@ -29,10 +29,10 @@ export function gameplay_actionsButtons(
                                      action: action.name,
                                      actionType: action.type || "default",
                                    },
-                                 )}
-                            </div>  `;
+                                 ) 
       })
       .join("")}
+        </div>  
      `;
 }
 

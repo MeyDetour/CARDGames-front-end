@@ -17,6 +17,16 @@ export function gameplay_identityContainer(
                 <div class="playerImageContainer">
                     <img src="/assets/images/template-player.png" alt="avatar" />
                 </div>
+                <div class="globalValue">
+                  ${Object.keys(player).map(key=>{
+                    if(typeof player[key].value !== "undefined" && player[key].display ){
+                      
+                      return /*html */ `<span >${key} : ${player[key].value}</span>`;
+                    }
+                    return "";
+                  }).join("")}
+                    
+                </div>
               
                 <div class="rightStatContainer">
                     <span class="pseudo">${player.pseudo}</span>   
