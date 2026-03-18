@@ -73,6 +73,7 @@ export async function connectSocket() {
 
   socket.on("gameChanges", ({ gameData, currentPlayer }) => {
     console.log("RECEIVE GAME CHANGES :>>", { gameData, currentPlayer });
+    console.log("current player position :",gameData.data.currentPlayerPosition.value);
     gameChanges(gameData, currentPlayer);
   });
 

@@ -13,23 +13,6 @@
     ),
     color(display-p3 1 1 1);
 
-  /* background: linear-gradient(135deg, #001a80 0%, #463998 50%, #160580 100%); */
-
-  .actionsContainer {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 16px;
-    bottom: 15px;
-    button {
-      width: fit-content;
-      text-wrap: nowrap;
-      opacity: 1 !important;
-    }
-  }
   .gameplayMessagerie-container {
     position: absolute;
     display: none;
@@ -63,51 +46,18 @@
       }
     }
   }
-  .menu{
-    display: none;
-    position: absolute;
-    right: 0;
-    height: 100%;
-    top: 0;
-    width: 20%;
-    background: #1a313f; 
-    flex-direction: column;
-    align-items: start;
-    padding: 25px;
-    box-sizing: border-box;
-    h2{
-
-    color: white;
-    text-transform: capitalize;
-    font-size: 27px;
-    font-weight: bold;
-    }
-    hr{
-
-    width: 100%;
-    margin-block: 29px;
-    height: 0;
-    border: 0.2px solid #ffffff;
-    }
-  }
-  .menu.open{
-    display: flex;
-     animation: menuAppear 1s ease-in-out;
-  }  .menu.close{
-    display: flex;
-     animation: menuDisappear 1s ease-in-out;
-  }
+  
   .headerButtons {
     position: absolute;
     top: 10px;
     right: 10px;
 
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        display: flex;
-        flex-direction: row;
-        gap: 7px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
     .gameplayChatButton,
     .gameplayMenuButton {
       aspect-ratio: 1 / 1;
@@ -142,35 +92,5 @@
   .currentPlayer {
     position: relative;
   }
-  .handDeck {
-    position: absolute;
-    left: 50%;
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    bottom: 14%;
-    transform: translate(-50%, 0);
-  }
-}
-
-
-@keyframes menuAppear{
-  from {
-    opacity: 0;
-    transform: translate(100%, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
-@keyframes menuDisappear{
-  from {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-  to {
-    opacity: 0;
-    transform: translate(100%, 0);
-  }
+ 
 }
