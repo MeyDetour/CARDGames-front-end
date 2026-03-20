@@ -1,3 +1,4 @@
+import { serializeParams } from "../../src/helpers/serializer.js";
 export function button(leftIcon, rightIcon, link, functionName, text, classname = "",params={}) {
   if (!link && !functionName) {
     return "PLEASE PROVIDE ACTION OR LINK FOR BUTTON";
@@ -12,9 +13,7 @@ export function button(leftIcon, rightIcon, link, functionName, text, classname 
       </a>
     `
   }
-  const serializedParams = typeof params === 'object' 
-    ? JSON.stringify(params).replace(/"/g, '&quot;') 
-    : `'${params}'`;
+  const serializedParams = serializeParams(params);
 
   return `
     <button onclick="${functionName}(${serializedParams})" class="button ${classname}">

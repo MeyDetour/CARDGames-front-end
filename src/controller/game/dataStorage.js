@@ -29,3 +29,17 @@ export function deleteRoomId() {
   //console.log("ACTION : DELETE ROOM ID");
   localStorage.setItem("roomId", "");
 }
+
+export function getCardSort() {
+  let sort = localStorage.getItem("CardSort");
+  return sort;
+}
+
+export function storeCardSort(CardSort) {
+  //console.log("ACTION : STORE CardSort);
+  localStorage.setItem("CardSort", CardSort);
+}
+export function deleteCardSort() {
+  //console.log("ACTION : DELETE Carort");
+  localStorage.setItem("CardSort", "");
+}

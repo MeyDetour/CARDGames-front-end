@@ -40,7 +40,15 @@
   background: #0d172d;
   color: white;
 }
+.button.linkApparence{
 
+    background: transparent;
+    color: white;
+    outline: 0;
+    border: 0;
+    padding: 0;
+    text-decoration: underline;
+}
 .button.redButton { 
   background: #a93838;
   color: white;

@@ -16,7 +16,7 @@ export function gameplay_actionsButtons(
 
         if (!mustAppear) return "";
 
-        return  button(
+        return  button( 
                                    null,
                                    null,
                                    null,
