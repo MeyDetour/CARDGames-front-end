@@ -51,7 +51,7 @@ export default function gameplayPage() {
   return /*html */ `
         <div id="gameplayPage">
          ${gameplay_messageOfLoading(gameData.data.logs)}
-         ${gameplay_globalValues(gameData.data)}
+         ${gameplay_globalValues({...gameData.data, ...gameData.data.globalValueStatic})}
          ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList)}
            ${gameplay_actionsButtons(currentPlayer.actions.value, gameData.data.currentPlayerPosition.value === currentPlayer.position, currentPlayer.id, gameData.roomId)}
             ${gameplay_menu(gameData.data.players, currentPlayer)}
@@ -91,7 +91,7 @@ export function reloadComposant_gameplayPage() {
     }
 
     reloadComposant_gameplayPlayers(content, gameData, currentPlayer);
-    reloadComposant_gameplayGlobalValues(content, gameData.data);
+    reloadComposant_gameplayGlobalValues(content, {...gameData.data, ...gameData.data.globalValueStatic});
     reloadComposant_gameplayHanddeck(
       content,
       gameData.roomInDb.params.rendering.game.displayHandDeck,

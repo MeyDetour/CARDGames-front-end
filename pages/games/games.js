@@ -41,6 +41,7 @@ export async function gamesPage(params = {}) {
                     ${button(null, "right-arrow", null, "gameLogin", "Créer une partie", "blackButton",{gameId:game.id})}
 
             </div>
+            </div>
         </div>
         `;
     }

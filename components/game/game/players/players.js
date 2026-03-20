@@ -16,7 +16,7 @@ export function gameplay_displayAllPlayers(gameData, currentPlayer) {
         ${gameplay_identityContainer(currentPlayer, {
           key: 0,
           displayPoints: params.displayStatistics,
-          displayCountAdversaryHandDeck: params.displayCountAdversaryHandDeck,
+          dislayCardCount: params.displayCountAdversaryHandDeck,
           gainList: gainList,
           totalPlayerCount: players.length + 1,
           isCurrentPlayerTurn:
@@ -28,8 +28,7 @@ export function gameplay_displayAllPlayers(gameData, currentPlayer) {
                 gameplay_identityContainer(player, {
                   key: key + 1,
                   displayPoints: params.displayStatistics,
-                  displayCountAdversaryHandDeck:
-                    params.displayCountAdversaryHandDeck,
+                  dislayCardCount: params.displayCountAdversaryHandDeck,
                   gainList: gainList,
                   totalPlayerCount: players.length + 1,
                   isCurrentPlayerTurn:

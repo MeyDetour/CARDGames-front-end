@@ -23,7 +23,7 @@ export function gameplay_identityContainer(
                       
                       return /*html */ `<span >${key} : ${player[key].value}</span>`;
                     }
-                    return "";
+                    return "";  
                   }).join("")}
                     
                 </div>
