@@ -1,13 +1,16 @@
 import { button } from "../../../button/button.js";
 import { storeCardSort,getCardSort } from "../../../../src/controller/game/dataStorage.js";
 import {autoReloadComposant_gameplayHanddeck} from "../handdeck/handdeck.js";
+import { hideGamePlayMessagerie } from "../gameplayPage.js";
+
+
 export function gameplay_menu(players, currentPlayer) {
   let sort = getCardSort()
   return /*html*/ `
     <div class="menu">
     <div class="actions">
         <h2>Menu</h2>
-        ${button(null, null, null, "letComment", "Laisser un commentaire", "whiteButton")}
+        ${button(null, null, null, "letComment", "Laisser un commentaire", "linkApparence")}
      </div>
         ${button(null, null, "/", null, "Retourner au menu", "exitButton")}
      <div class="settings">
@@ -50,9 +53,8 @@ function reloadSortSeleciton(){
   }
 }
 window.changeCardSort = changeCardSort
-
-export function toggleGameplayMenu() {
-  let menuContainer = document.querySelector(".menu");
+export function hideGameplayMenu() {
+    let menuContainer = document.querySelector(".menu");
   if (menuContainer) {
     if (menuContainer.style.display === "flex") {
       menuContainer.classList.add("close");
@@ -60,7 +62,17 @@ export function toggleGameplayMenu() {
         menuContainer.style.display = "none";
         menuContainer.classList.remove("close");
       }, 1000);
+    }
+  }
+}
+
+export function toggleGameplayMenu() {
+  let menuContainer = document.querySelector(".menu");
+  if (menuContainer) {
+    if (menuContainer.style.display === "flex") {
+      hideGameplayMenu()
     } else {
+      hideGamePlayMessagerie()
       menuContainer.style.display = "flex";
       menuContainer.classList.add("open");
       setTimeout(() => {

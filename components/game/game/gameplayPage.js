@@ -19,7 +19,7 @@ import {
   gameplay_actionsButtons,
   reloadComposant_gameplayActionsButtons,
 } from "./actionsButtons/actionsButtons.js";
-import { gameplay_menu } from "./menu/menu.js";
+import { gameplay_menu, hideGameplayMenu } from "./menu/menu.js";
 import {
   gameplay_globalValues,
   reloadComposant_gameplayGlobalValues,
@@ -35,6 +35,9 @@ export default function gameplayPage() {
   let gameData = getGameData();
   if (!gameData) {
     displayError("No game data found to display game");
+    return;
+  }
+  if (gameData.data.state.value !== "inProgress") {
     return;
   }
   if (!currentPlayer) {
@@ -101,7 +104,13 @@ export default function gameplayPage() {
          
          
          ${gameplay_actionsButtons(
-      playerActions.filter(a=>!a.actionOnDeck&& !a.actionOnDiscardDeck), gameData.data.currentPlayerPosition.value === currentPlayer.position, currentPlayer.id, gameData.roomId)}
+           playerActions.filter(
+             (a) => !a.actionOnDeck && !a.actionOnDiscardDeck,
+           ),
+           gameData.data.currentPlayerPosition.value === currentPlayer.position,
+           currentPlayer.id,
+           gameData.roomId,
+         )}
             ${gameplay_menu(gameData.data.players, currentPlayer)}
                    
             ${params.displayChat ? `<div class="gameplayMessagerie-container"> </div>` : ""}
@@ -121,16 +130,20 @@ export default function gameplayPage() {
 // dans waiting page on fait un ecrasement de contenu à partir d'une div précise car c'est un contenu en position relative
 export function reloadComposant_gameplayPage() {
   console.log("========RELOAD GAME PLAY PAGE============");
+
+  let gameData = getGameData();
+  if (!gameData) {
+    displayError("No game data found to display game");
+    return;
+  }
+  if (gameData.data.state.value !== "inProgress") {
+    return;
+  }
+
   if (document.querySelector("#gameplayPage")) {
     let content = document.querySelector("#gameplayPage");
     if (!content) {
-      displayError("No content found to reload players");
-      return;
-    }
-
-    let gameData = getGameData();
-    if (!gameData) {
-      displayError("No game data found to display game");
+      document.querySelector("#content").innerHTML = gameplayPage();
       return;
     }
 
@@ -160,7 +173,7 @@ export function reloadComposant_gameplayPage() {
     );
     reloadComposant_gameplayActionsButtons(
       content,
-      playerActions.filter(a=>!a.actionOnDeck&& !a.actionOnDiscardDeck),
+      playerActions.filter((a) => !a.actionOnDeck && !a.actionOnDiscardDeck),
       gameData.data.currentPlayerPosition.value === currentPlayer.position,
       currentPlayer.id,
       gameData.roomId,
@@ -206,19 +219,26 @@ export function gamePlayeToggleMessagerie() {
   if (
     document.querySelector("#gameplayPage .gameplayMessagerie-container .chat")
   ) {
-    console.log("remove messagerie");
-    let container = document.querySelector(
-      "#gameplayPage .gameplayMessagerie-container",
-    );
-    container.style.display = "none";
-    container.innerHTML = "";
+    hideGamePlayMessagerie();
   } else {
     console.log("add messagerie");
+    hideGameplayMenu();
     removeMessageNotification();
     reloadComposant_messagerie_gameplayPage();
   }
 }
 window.gamePlayeToggleMessagerie = gamePlayeToggleMessagerie;
+
+export function hideGamePlayMessagerie() {
+  console.log("remove messagerie");
+  let container = document.querySelector(
+    "#gameplayPage .gameplayMessagerie-container",
+  );
+  if (container) {
+    container.style.display = "none";
+    container.innerHTML = "";
+  }
+}
 
 export function reloadComposant_messagerie_gameplayPage() {
   let content = document.querySelector(

@@ -36,6 +36,11 @@ export async function connectSocket() {
     storeGameData(gameData);
     reloadComposant_gamePage();
   });
+  socket.on("gameEnd", ({ gameData }) => {
+    console.log("RECEIVE GAME END SIGNAL");
+    storeGameData(gameData);
+    reloadComposant_gamePage();
+  });
 
   //===============MESSAGERIE=============
 
@@ -73,7 +78,10 @@ export async function connectSocket() {
 
   socket.on("gameChanges", ({ gameData, currentPlayer }) => {
     console.log("RECEIVE GAME CHANGES :>>", { gameData, currentPlayer });
-    console.log("current player position :",gameData.data.currentPlayerPosition.value);
+    console.log(
+      "current player position :",
+      gameData.data.currentPlayerPosition.value,
+    );
     gameChanges(gameData, currentPlayer);
   });
 

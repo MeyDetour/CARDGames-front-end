@@ -1,0 +1,59 @@
+/* Conteneur principal */
+.winPage {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #222;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Texte par-dessus les particules */
+.winContent {
+  z-index: 10;
+  color: white;
+  text-align: center;
+  pointer-events: none;
+
+  height: 80%;
+  width: 40%;
+  background: #ffffff3d;
+  backdrop-filter: blur(4px);
+  border-radius: 20px;
+  padding: 33px;
+  box-sizing: border-box;
+  h1{
+        color: white;
+    font-weight: bold;
+  }
+}
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  /* On force le départ dans le coin en haut à gauche pour que 
+     les calculs de translate soient absolus par rapport à l'écran */
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+
+  /* Destination finale : la position aléatoire */
+  /* On ajoute translate(-50%, -50%) pour bien centrer le point de la particule */
+  transform: translate(var(--x), var(--y));
+  background: var(--bg);
+
+  animation:
+    shoot var(--t) ease-out infinite,
+    fade var(--t) ease-out infinite;
+  animation-delay: var(--d);
+}
+
+@keyframes shoot {
+  0% {
+    /* Départ EXACT au centre de l'écran */
+    transform: translate(50vw, 50vh);
+  }
+  /* 100% est implicitement le transform défini dans .particle */
+}

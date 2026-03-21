@@ -3,7 +3,7 @@ import { headerComponent } from "../../header/header.js";
 import { waitingPagePlayersBlock } from "./waitingPagePlayersBlock/waitingPagePlayersBlock.js";
 import { waitingPageCopyBlock } from "./waitingPageCopyBlock/waitingPageCopyBlock.js";
 import { messaegerieComponent } from "../../messagerie/messagerie.js";
-export function waitingPage(gameData, currentPlayer) {
+export function waitingPage() {
  
   return /*html */ ` 
       <div class="waitingPage"> 
@@ -23,6 +23,14 @@ export function waitingPage(gameData, currentPlayer) {
             </div>
         </div>
     `;
+}
+
+export function reloadComposant_waitingPage() {
+  let content = document.querySelector("#content");
+  if (!content) {
+    return;
+  }
+  content.innerHTML = waitingPage();
 }
 
 export function reloadComposant_messagerie_inWaitingPage() {

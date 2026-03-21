@@ -1,7 +1,7 @@
 import { button } from "../../../button/button.js";
 import { serializeParams } from "../../../../src/helpers/serializer.js";
 export function gameplay_cardPile(cardsParams,actionParams, type, label, classname = "") {
-  console.log(cardsParams);
+   
   if (type == "deck" && !cardsParams?.deck?.activation) {
     return "";
   }

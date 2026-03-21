@@ -104,7 +104,7 @@ export function gameChanges(gameData, currentPlayer) {
   if (currentPlayer) {
     storeDataOfPlayer(currentPlayer);
   }
-  reloadComposant_gameplayPage();
+  reloadComposant_gamePage();
   
 }
  
