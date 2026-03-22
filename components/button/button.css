@@ -39,6 +39,10 @@
 .button.darkBlueButton { 
   background: #0d172d;
   color: white;
+}.button.darkBlueBorderButton { 
+
+    border: 3px solid #0d172d;
+    background: #ffffff;
 }
 .button.linkApparence{
 

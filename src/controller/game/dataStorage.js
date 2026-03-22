@@ -43,3 +43,10 @@ export function deleteCardSort() {
   //console.log("ACTION : DELETE Carort");
   localStorage.setItem("CardSort", "");
 }
+
+
+export function deleteAllGameVariablesSaved(){
+  storeRoomId("")
+  storeGameData("")
+  storeDataOfPlayer("")
+}

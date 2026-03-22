@@ -3,7 +3,8 @@ import {
   getCurrentPlayer,
   getGameData,
 } from "../../../src/controller/game/dataStorage.js";
-export function winPage() {
+
+export function loosePage() {
   let currentPlayer = getCurrentPlayer();
   let gameData = getGameData();
   if (!gameData) {
@@ -11,37 +12,53 @@ export function winPage() {
     return null;
   }
   if (!currentPlayer) {
-    displayError("No current player found to display win page");
+    displayError("No current player found to display loose page");
     return null;
   }
-  if (currentPlayer.haswin.value !== true) {
+  if (currentPlayer.haswin.value) {
     return null;
   }
-
-
   // pas besoin de verifier que la partie soit finie
-  // car certains joueuers peuvent gagner avant la fin 
+  // car certains joueuers peuvent perdre avant la fin 
   // de la partie
 
-  let particlesHTML = "";
-  for (let i = 0; i < 400; i++) {
-    const x = Math.random() * 100 + "vw";
-    const y = Math.random() * 100 + "vh";
-    const bg = `hsl(${Math.random() * 360}, 100%, 65%)`;
-    const duration = 1 + Math.random() + "s";
-    const delay = "-" + Math.random() * 2 + "s"; // Délai aléatoire pour désynchroniser
-
-    particlesHTML += `<div class="particle" style="--x: ${x}; --y: ${y}; --bg: ${bg}; --t: ${duration}; --d: ${delay};"></div>`;
-  }
 
   return /*html*/ ` 
-    <div class="winPage">
-    
-       
-      <div class="winContent">
-         <img src="/assets/images/spooky-victory.png" alt="Image de victoire" class="victoryImage">
-       
+    <div class="loosePage"> 
+      <div class="rain">
+         <div class="d9-drop d9-drop1"></div>
+        <div class="d9-drop d9-drop2"></div>
+        <div class="d9-drop d9-drop3"></div>
+        <div class="d9-drop d9-drop4"></div>
+        <div class="d9-drop d9-drop5"></div>
+        <div class="d9-drop d9-drop6"></div>
+        <div class="d9-drop d9-drop7"></div>
+        <div class="d9-drop d9-drop8"></div>
+        <div class="d9-drop d9-drop9"></div>
+        <div class="d9-drop d9-drop10"></div>
+        <div class="d9-drop d9-drop11"></div>
+        <div class="d9-drop d9-drop12"></div>
+        <div class="d9-drop d9-drop13"></div>
 
+        <div class="d9-dropMedium d9-dropMedium1"></div>
+        <div class="d9-dropMedium d9-dropMedium2"></div>
+        <div class="d9-dropMedium d9-dropMedium3"></div>
+        <div class="d9-dropMedium d9-dropMedium4"></div>
+        <div class="d9-dropMedium d9-dropMedium5"></div>
+        <div class="d9-dropMedium d9-dropMedium6"></div>
+        <div class="d9-dropMedium d9-dropMedium7"></div>
+        <div class="d9-dropMedium d9-dropMedium8"></div>
+        <div class="d9-dropMedium d9-dropMedium9"></div>
+        <div class="d9-dropMedium d9-dropMedium10"></div>
+        <div class="d9-dropMedium d9-dropMedium11"></div>
+        <div class="d9-dropMedium d9-dropMedium12"></div>
+        <div class="d9-dropMedium d9-dropMedium13"></div>
+        </div>
+     
+      <div class="looseContent">
+       <img src="/assets/images/spooky-defeat.png" alt="Image de défaite" class="defeatImage">
+   
+        <h1>Défaite !</h1>
         ${
           gameData.data.winners && gameData.data.winners.length > 1
             ? `<p>Gagnants : ${gameData.data.winners
@@ -50,9 +67,7 @@ export function winPage() {
             : `<p>Gagnant : ${gameData.data.winners[0].pseudo}</p>`
         }
 
-        
-
-
+     
         <div class="buttons">
           ${gameData.data.state.value == "endOfGame" ? 
             // on affiche le boutton rejouer que si la partie est vraiment finie
@@ -69,21 +84,17 @@ export function winPage() {
             button(null, null, null, "replay", "Regarder la partie", "", { gameId: gameData.roomInDb.id }) : ""}
         </div>
         
+        
         ${button(null, null, null, "navigateTo", "Revenir au menu", "linkApparence", { path: "/games" })}
        
-    
-      </div>
-
-      <div  class="particles-container">
-      ${particlesHTML}
-      </div>
+         </div>
     </div>
     `;
 }
 
-export function reloadComposant_winPage() {
+export function reloadComposant_loosePage() {
   let content = document.querySelector("#content");
-  let page = winPage();
+  let page = loosePage();
   console.log(page);
   if (content && page) {
     content.innerHTML = page;

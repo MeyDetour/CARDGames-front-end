@@ -2,7 +2,7 @@ import { connectSocket, socket } from "../../websocket/connection.js";
 import { navigateTo } from "../../router/router.js";
 import { reloadComposant_gamePage } from "../../../pages/game/game.js";
 import { 
-  storeDataOfPlayer, storeGameData
+  storeDataOfPlayer, storeGameData, deleteAllGameVariablesSaved
 } from "./dataStorage.js";
 import { apiClient } from "../../helpers/api.js";
 import { reloadComposant_gameplayPage } from "../../../components/game/game/gameplayPage.js";
@@ -11,6 +11,7 @@ import { reloadComposant_gameplayPage } from "../../../components/game/game/game
 export async function gameLogin(params) {
   console.log("======TRY TO LOGIN======"); 
  
+       deleteAllGameVariablesSaved()
   if (!socket) return console.error("cannot find socket");
 
   // GET DATA

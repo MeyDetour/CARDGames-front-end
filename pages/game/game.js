@@ -6,6 +6,7 @@ import {
   waitingPage,
   reloadComposant_waitingPage, 
 } from "../../components/game/waitingPage/waitingPage.js"; 
+import { loosePage, reloadComposant_loosePage } from "../../components/game/loosePage/loosePage.js";
 import { displayError } from "../../src/controller/error.js";
 import {
   getCurrentPlayer,
@@ -37,10 +38,7 @@ export function gamePage(params = {}) {
   }
   if (gameData.data.state.value == "inProgress") {
     return gameplayPage();
-  }
-  if (gameData.data.state.value == "gameEnd") {
-    return winPage();
-  }
+  } 
 }
 
 export function reloadComposant_gamePage() {
@@ -52,11 +50,15 @@ export function reloadComposant_gamePage() {
     return;
   }
   if (gameData.data.state.value == "waitingPlayers") {
+    console.log("reload waiting players");
     reloadComposant_waitingPage();
   }
   if (gameData.data.state.value == "inProgress") {
+    console.log("reload in progress");
     reloadComposant_gameplayPage();
   }if (gameData.data.state.value == "endOfGame") {
+    console.log("reload win/lose page");
     reloadComposant_winPage();
+    reloadComposant_loosePage();
   }
 }

@@ -137,10 +137,11 @@ export function reloadComposant_gameplayPage() {
     return;
   }
   if (gameData.data.state.value !== "inProgress") {
+    console.log("room is not in progress");
+    console.log(gameData.data.state.value);
     return;
   }
-
-  if (document.querySelector("#gameplayPage")) {
+ 
     let content = document.querySelector("#gameplayPage");
     if (!content) {
       document.querySelector("#content").innerHTML = gameplayPage();
@@ -210,7 +211,7 @@ export function reloadComposant_gameplayPage() {
       "discardDeck",
       "Défausse",
     );
-  }
+ 
 }
 // ===============RELOAD PLAYERS==========
 

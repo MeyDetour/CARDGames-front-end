@@ -9,6 +9,7 @@ import { loadingPage } from "../../pages/loading/loading.js";
 import {
   deleteRoomId, 
   getRoomId,
+  deleteAllGameVariablesSaved
 } from "../controller/game/dataStorage.js"; 
 import gameplayPage from "../../components/game/game/gameplayPage.js";
 import { verifyGameId } from "../controller/game/game.js";
@@ -65,9 +66,11 @@ export async function loadRoute(params = {}) {
       html = enterLinkPage(params);
       break;
     case "/games":
+      deleteAllGameVariablesSaved()
       html = await gamesPage(params);
       break;
     case "/":
+      deleteAllGameVariablesSaved()
       html = homePage(params);
       break;
     case "/gameplay":
