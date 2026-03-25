@@ -37,7 +37,11 @@ export function winPage() {
   return /*html*/ ` 
     <div class="winPage">
     
-       
+       <div  class="particles-container">
+      ${particlesHTML}
+      </div>
+
+      
       <div class="winContent">
          <img src="/assets/images/spooky-victory.png" alt="Image de victoire" class="victoryImage">
        
@@ -54,12 +58,12 @@ export function winPage() {
 
 
         <div class="buttons">
-          ${gameData.data.state.value == "endOfGame" ? 
+          ${gameData.data.state.value == "endOfGame" && gameData.admin.id == currentPlayer.id ? 
             // on affiche le boutton rejouer que si la partie est vraiment finie
             // le bouton rejouer va reinitialiser la partie et donc faire revenir 
             // tous les joueurs dans la salle d'attente, c'est pour ça que je veux 
             // pas l'afficher avant que la partie soit vraiment finie
-             button(null, null, null, "replay", "Rejouer", "darkBlueButton", { gameId: gameData.roomInDb.id }) : ""}
+             button(null, null, null, "replay", "Rejouer", "darkBlueButton") : ""}
           
         
           ${gameData.roomInDb?.params?.globalGame?.autoriseSpectator && gameData.data.state.value != "endOfGame" ? 
@@ -74,17 +78,14 @@ export function winPage() {
     
       </div>
 
-      <div  class="particles-container">
-      ${particlesHTML}
-      </div>
+      
     </div>
     `;
 }
 
 export function reloadComposant_winPage() {
   let content = document.querySelector("#content");
-  let page = winPage();
-  console.log(page);
+  let page = winPage(); 
   if (content && page) {
     content.innerHTML = page;
   }

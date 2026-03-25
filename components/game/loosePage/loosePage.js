@@ -69,8 +69,8 @@ export function loosePage() {
 
      
         <div class="buttons">
-          ${gameData.data.state.value == "endOfGame" ? 
-            // on affiche le boutton rejouer que si la partie est vraiment finie
+       ${gameData.data.state.value == "endOfGame" && gameData.admin.id == currentPlayer.id ? 
+              // on affiche le boutton rejouer que si la partie est vraiment finie
             // le bouton rejouer va reinitialiser la partie et donc faire revenir 
             // tous les joueurs dans la salle d'attente, c'est pour ça que je veux 
             // pas l'afficher avant que la partie soit vraiment finie
@@ -94,8 +94,7 @@ export function loosePage() {
 
 export function reloadComposant_loosePage() {
   let content = document.querySelector("#content");
-  let page = loosePage();
-  console.log(page);
+  let page = loosePage(); 
   if (content && page) {
     content.innerHTML = page;
   }

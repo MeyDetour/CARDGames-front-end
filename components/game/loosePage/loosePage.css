@@ -13,8 +13,7 @@
 .looseContent {
   z-index: 10;
   color: white;
-  text-align: center;
-  pointer-events: none;
+  text-align: center; 
 
   height: 95%;
   width: 40%;  background: #8282823d;

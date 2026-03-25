@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8000/";
+const BASE_URL = "https://card-studio-api.genos-center.com/";
 
 export async function apiClient(
   path,

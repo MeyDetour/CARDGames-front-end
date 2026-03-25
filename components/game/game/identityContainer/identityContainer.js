@@ -8,8 +8,7 @@
 
 export function gameplay_identityContainer(
   player,params
-) {
-     
+) { 
   return /*html */ `
             <div  data-player-id="${player.id}" class="player player${params.key} playerCount${params.totalPlayerCount}  ${params.isCurrentPlayerTurn ? "currentPlayerTurn" : ""} ${params.className ? params.className : ""}">               
                ${params.dislayCardCount ? /*html */ `<div class="cardCount-stat"><img src="/assets/cards-count.svg" alt="Cartes"> <span>${player.handDeck.value.length}</span></div>` : ""}
