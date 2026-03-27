@@ -38,7 +38,6 @@ export function waitingPageCopyBlock() {
                     "startGame",
                     "Lancer la partie",
                     "green",
-                    { roomId: gameData.roomId },
                   )
                 : "En attente du lancement de la partie..."
               : "En attente de joueurs..."

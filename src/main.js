@@ -4,6 +4,7 @@ import './controller/game/game.js'
 import './controller/error.js'
 import './controller/game/actions.js'
 import "./helpers/copy.js"
+import './controller/game/spectactor.js'
 import { router } from './router/router.js'
 
 if (document.readyState === 'loading') {

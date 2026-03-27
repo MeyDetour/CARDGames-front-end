@@ -15,7 +15,7 @@ export function loosePage() {
     displayError("No current player found to display loose page");
     return null;
   }
-  if (currentPlayer.haswin.value) {
+ if (currentPlayer.haswin.value === true || currentPlayer.isSpectator.value == true) {
     return null;
   }
   // pas besoin de verifier que la partie soit finie
@@ -69,7 +69,7 @@ export function loosePage() {
 
      
         <div class="buttons">
-       ${gameData.data.state.value == "endOfGame" && gameData.admin.id == currentPlayer.id ? 
+       ${gameData.data.state.value == "endOfGame" && gameData.admin.id == currentPlayer.id && gameData.data.players>= 2? 
               // on affiche le boutton rejouer que si la partie est vraiment finie
             // le bouton rejouer va reinitialiser la partie et donc faire revenir 
             // tous les joueurs dans la salle d'attente, c'est pour ça que je veux 

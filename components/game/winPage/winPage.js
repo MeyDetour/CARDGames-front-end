@@ -14,7 +14,7 @@ export function winPage() {
     displayError("No current player found to display win page");
     return null;
   }
-  if (currentPlayer.haswin.value !== true) {
+  if (currentPlayer.haswin.value !== true || currentPlayer.isSpectator.value == true) {
     return null;
   }
 
@@ -58,7 +58,7 @@ export function winPage() {
 
 
         <div class="buttons">
-          ${gameData.data.state.value == "endOfGame" && gameData.admin.id == currentPlayer.id ? 
+          ${gameData.data.state.value == "endOfGame" && gameData.admin.id == currentPlayer.id  && gameData.data.players>= 2? 
             // on affiche le boutton rejouer que si la partie est vraiment finie
             // le bouton rejouer va reinitialiser la partie et donc faire revenir 
             // tous les joueurs dans la salle d'attente, c'est pour ça que je veux 
@@ -70,7 +70,7 @@ export function winPage() {
             // si la partie est pas finie alors on affiche pas le bouton regarder 
             // la partie, car ça n'aurait pas de sens de regarder une partie 
             // qui est déjà finie
-            button(null, null, null, "replay", "Regarder la partie", "", { gameId: gameData.roomInDb.id }) : ""}
+            button(null, null, null, "specTheGame", "Regarder la partie", "", ) : ""}
         </div>
         
         ${button(null, null, null, "navigateTo", "Revenir au menu", "linkApparence", { path: "/games" })}

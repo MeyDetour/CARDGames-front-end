@@ -29,20 +29,23 @@ import {
   gameplay_cardPile,
   reloadComposant_gameplayCardPile,
 } from "./cardPile/cardPile.js";
+import { reloadComposant_gameplaySpectatorBanniere , gameplay_spectatorBanniere} from "./spectatorBanniere/spectatorBanniere.js";
 
 export default function gameplayPage() {
   let currentPlayer = getCurrentPlayer();
   let gameData = getGameData();
   if (!gameData) {
     displayError("No game data found to display game");
-    return;
+    return "";
   }
   if (gameData.data.state.value !== "inProgress") {
-    return;
+    console.warn("room is not in progress");
+    return "";
   }
   if (!currentPlayer) {
     displayError("No current player found to display game");
-    return;
+    console.warn("No current player found");
+    return "";
   }
   let points = 45;
   let actions =
@@ -69,7 +72,7 @@ export default function gameplayPage() {
          ${gameplay_messageOfLoading(gameData.data.logs)}
          ${gameplay_globalValues({ ...gameData.data, ...gameData.data.globalValueStatic })}
          ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList)}
-         
+         ${gameplay_spectatorBanniere(currentPlayer)}
          
          ${gameplay_cardPile(
            cardParams,
@@ -108,7 +111,7 @@ export default function gameplayPage() {
              (a) => !a.actionOnDeck && !a.actionOnDiscardDeck,
            ),
            gameData.data.currentPlayerPosition.value === currentPlayer.position,
-           currentPlayer.id,
+           currentPlayer,
            gameData.roomId,
          )}
             ${gameplay_menu(gameData.data.players, currentPlayer)}
@@ -141,77 +144,75 @@ export function reloadComposant_gameplayPage() {
     console.log(gameData.data.state.value);
     return;
   }
- 
-    let content = document.querySelector("#gameplayPage");
-    if (!content) {
-      document.querySelector("#content").innerHTML = gameplayPage();
-      return;
-    }
 
-    let currentPlayer = getCurrentPlayer();
+  let content = document.querySelector("#gameplayPage");
+  if (!content) {
+    document.querySelector("#content").innerHTML = gameplayPage();
+    return;
+  }
 
-    if (!currentPlayer) {
-      displayError("No current player found to display game");
-      return;
-    }
+  let currentPlayer = getCurrentPlayer();
 
-    let playerActions = currentPlayer.actions.value;
-    let actionOnDeck = playerActions.find((action) => action.actionOnDeck);
-    let actionOnDiscardDeck = playerActions.find(
-      (action) => action.actionOnDiscardDeck,
-    );
+  if (!currentPlayer) {
+    displayError("No current player found to display game");
+    return;
+  }
 
-    reloadComposant_gameplayPlayers(content, gameData, currentPlayer);
-    reloadComposant_gameplayGlobalValues(content, {
-      ...gameData.data,
-      ...gameData.data.globalValueStatic,
-    });
-    reloadComposant_gameplayHanddeck(
-      content,
-      gameData.roomInDb.params.rendering.game.displayHandDeck,
-      currentPlayer.handDeck.value,
-      gameData.roomInDb.assets.cards,
-    );
-    reloadComposant_gameplayActionsButtons(
-      content,
-      playerActions.filter((a) => !a.actionOnDeck && !a.actionOnDiscardDeck),
-      gameData.data.currentPlayerPosition.value === currentPlayer.position,
-      currentPlayer.id,
-      gameData.roomId,
-    );
-    reloadComposant_gameplayCardPile(
-      content,
-      gameData.roomInDb.params.cards,
-      actionOnDeck
-        ? {
-            playerId: currentPlayer.id,
-            roomId: gameData.roomId,
-            action: actionOnDeck ? actionOnDeck.name : null,
-            actionType: actionOnDeck
-              ? actionOnDeck.type || "default"
-              : "default",
-          }
-        : null,
-      "deck",
-      "Pioche",
-    );
-    reloadComposant_gameplayCardPile(
-      content,
-      gameData.roomInDb.params.cards,
-      actionOnDiscardDeck
-        ? {
-            playerId: currentPlayer.id,
-            roomId: gameData.roomId,
-            action: actionOnDiscardDeck ? actionOnDiscardDeck.name : null,
-            actionType: actionOnDiscardDeck
-              ? actionOnDiscardDeck.type || "default"
-              : "default",
-          }
-        : null,
-      "discardDeck",
-      "Défausse",
-    );
- 
+  let playerActions = currentPlayer.actions.value;
+  let actionOnDeck = playerActions.find((action) => action.actionOnDeck);
+  let actionOnDiscardDeck = playerActions.find(
+    (action) => action.actionOnDiscardDeck,
+  );
+
+  reloadComposant_gameplayPlayers(content, gameData, currentPlayer);
+  reloadComposant_gameplayGlobalValues(content, {
+    ...gameData.data,
+    ...gameData.data.globalValueStatic,
+  });
+  reloadComposant_gameplaySpectatorBanniere(content, currentPlayer);
+  reloadComposant_gameplayHanddeck(
+    content,
+    gameData.roomInDb.params.rendering.game.displayHandDeck,
+    currentPlayer.handDeck.value,
+    gameData.roomInDb.assets.cards,
+  );
+  reloadComposant_gameplayActionsButtons(
+    content,
+    playerActions.filter((a) => !a.actionOnDeck && !a.actionOnDiscardDeck),
+    gameData.data.currentPlayerPosition.value === currentPlayer.position,
+    currentPlayer,
+    gameData.roomId,
+  );
+  reloadComposant_gameplayCardPile(
+    content,
+    gameData.roomInDb.params.cards,
+    actionOnDeck
+      ? {
+          playerId: currentPlayer.id,
+          roomId: gameData.roomId,
+          action: actionOnDeck ? actionOnDeck.name : null,
+          actionType: actionOnDeck ? actionOnDeck.type || "default" : "default",
+        }
+      : null,
+    "deck",
+    "Pioche",
+  );
+  reloadComposant_gameplayCardPile(
+    content,
+    gameData.roomInDb.params.cards,
+    actionOnDiscardDeck
+      ? {
+          playerId: currentPlayer.id,
+          roomId: gameData.roomId,
+          action: actionOnDiscardDeck ? actionOnDiscardDeck.name : null,
+          actionType: actionOnDiscardDeck
+            ? actionOnDiscardDeck.type || "default"
+            : "default",
+        }
+      : null,
+    "discardDeck",
+    "Défausse",
+  );
 }
 // ===============RELOAD PLAYERS==========
 

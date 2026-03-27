@@ -6,14 +6,12 @@ import { reloadComposant_gameplayPage } from "../../../components/game/game/game
     @param {string} action - The name of action being performed
     @param {string} actionType - The type of action (e.g., "askPlayer")
 */
-function doAction(params) {
-    let playerId = params.playerId;
-    let roomId = params.roomId;
+function doAction(params) {  
     let action = params.action;
     let actionType = params.actionType || "default";
     
-  console.log("Do Action :>> ", { playerId, roomId, action, actionType });
-   socket.emit("doAction", { playerId, roomId, action, actionType });
+  console.log("Do Action :>> ", {   action, actionType });
+   socket.emit("doAction", {  action, actionType });
 } 
 
 window.doAction = doAction; 

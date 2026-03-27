@@ -59,7 +59,7 @@ export function displayAskPlayerWidget(event, params, roomId) {
       console.log(obj.insertedValue);
       if (socket && obj && obj.insertedValue!=null && obj.insertedValue!=undefined) {
         console.log({ roomId, event, obj, params });
-        socket.emit("playerInsertedValue", { roomId, event, obj, params });
+        socket.emit("playerInsertedValue", {  event, obj, params });
         hideAskPlayerWidget();
       } else {
         console.warn("Dont find socket to send value of widget");

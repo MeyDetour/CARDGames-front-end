@@ -9,6 +9,7 @@ import {
   cleanMessageInput,
   addNewMessageInMessagerie,
 } from "../controller/game/messages.js";
+import { reloadComposant_winPage } from "../../components/game/winPage/winPage.js";
 import { reloadComposant_waitingPagePlayersBlock } from "../../components/game/waitingPage/waitingPagePlayersBlock/waitingPagePlayersBlock.js";
 import { reloadComposant_waitingPageCopyBlock } from "../../components/game/waitingPage/waitingPageCopyBlock/waitingPageCopyBlock.js";
 import {
@@ -30,7 +31,7 @@ export async function connectSocket() {
   window.socket = socket;
 
   //===============GAME MANAGEMENT=============
-
+ 
   socket.on("gameStarted", ({ gameData }) => {
     console.log("RECEIVE GAME START SIGNAL");
     storeGameData(gameData);
@@ -40,6 +41,12 @@ export async function connectSocket() {
     console.log("RECEIVE GAME END SIGNAL");
     storeGameData(gameData);
     reloadComposant_gamePage();
+  });
+  socket.on("playerWin", ({ gameData, player }) => {
+    console.log("=========RECEIVE PLAYER WIN SIGNAL========");
+    storeGameData(gameData);
+    storeDataOfPlayer(player);
+    reloadComposant_winPage();
   });
 
   //===============MESSAGERIE=============
@@ -70,6 +77,11 @@ export async function connectSocket() {
   });
 
   //===============UPDATES=============
+  socket.on("youAreSpectator", (currentPlayer) => {
+    console.log("RECEIVE YOU ARE SPECTATOR :>>", { currentPlayer })
+    storeDataOfPlayer(currentPlayer);
+    reloadComposant_gamePage();
+  })
 
   socket.on("playerData", (currentPlayer) => {
     console.log("RECEIVE PLAYER DATA :>>", { currentPlayer });

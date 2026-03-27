@@ -2,14 +2,10 @@ import { navigateTo } from "../../router/router.js";
 import { socket } from "../../websocket/connection.js";
 import { deleteAllGameVariablesSaved } from "./dataStorage.js";
 export function startGame(params) {
-  console.log("=========START ROOM======="); 
-  if (!params.roomId) {
-    console.warn("Provide room bitteschon");
-  }
-
-  let roomId = params.roomId;
+  console.log("=========START ROOM=======");  
+ 
   if (socket) {
-    socket.emit("startGame", { roomId });
+    socket.emit("startGame");
   } else {
     console.warn("Dont find socket to start game");
   }

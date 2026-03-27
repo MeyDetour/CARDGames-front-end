@@ -1415,7 +1415,7 @@ function changeGamePlayerVariable(id, playerId, room) {
         <!-- Actions -->
         <span>Actions  : ${player.actions.value.map(
           (a) =>
-            `<button onclick="doAction('${playerId}','${room.roomId}','${a.name}','${a.type}')">${a.name}</button>`,
+            `<button onclick="doAction('${a.name}','${a.type}')">${a.name}</button>`,
         )}</span>
 
 
@@ -1452,10 +1452,10 @@ function changeGamePlayerVariable(id, playerId, room) {
     console.warn("found #" + id);
   }
 }
-function doAction(playerId, roomId, action, actionType) {
+function doAction(  action, actionType) {
   console.log("change tour");
 
-  socket.emit("doAction", { playerId, roomId, action, actionType });
+  socket.emit("doAction", {   action, actionType });
 }
 
 function changeGameStat(room) {
