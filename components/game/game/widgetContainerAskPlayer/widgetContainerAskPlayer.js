@@ -4,7 +4,7 @@ import { button } from "../../../button/button.js";
 // et supprimer le composant
 
 
-function widgetContainer(
+function widgetContainerAskPlayer(
   title,
   message,
   buttonText,
@@ -66,7 +66,7 @@ export function displayAskPlayerWidget(event, params, roomId) {
       }
     };
 
-    let contenu = widgetContainer(
+    let contenu = widgetContainerAskPlayer(
       event.event.requiresInput.label,
       event.event.requiresInput.description,
       "Valider",

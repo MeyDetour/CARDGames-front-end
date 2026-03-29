@@ -40,21 +40,12 @@ export function winPage() {
        <div  class="particles-container">
       ${particlesHTML}
       </div>
-
-      
-      <div class="winContent">
-         <img src="/assets/images/spooky-victory.png" alt="Image de victoire" class="victoryImage">
-       
-
-        ${
-          gameData.data.winners && gameData.data.winners.length > 1
-            ? `<p>Gagnants : ${gameData.data.winners
-                .map((winner) => winner.pseudo)
-                .join(", ")}</p>`
-            : `<p>Gagnant : ${gameData.data.winners[0].pseudo}</p>`
-        }
-
-        
+      <img src="/assets/images/victory.png" alt="Victory" class="victory-image">
+      ${ gameData.data.winners && gameData.data.winners[0] ? `<img class="firstPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners[0]?.skin}.png" alt="Victory" class="victory-image">` : ""}
+      ${gameData.data.winners && gameData.data.winners[1] ? `<img class="secondPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners[1]?.skin}.png" alt="Victory" class="victory-image">` : ""}
+      ${gameData.data.winners && gameData.data.winners[2] ? `<img class="thirdPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners[2]?.skin}.png" alt="Victory" class="victory-image">` : ""}
+      <div class="buttonContainers">
+          
 
 
         <div class="buttons">

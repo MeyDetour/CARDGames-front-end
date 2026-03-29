@@ -13,8 +13,8 @@ export function gameplay_identityContainer(
             <div  data-player-id="${player.id}" class="player player${params.key} playerCount${params.totalPlayerCount}  ${params.isCurrentPlayerTurn ? "currentPlayerTurn" : ""} ${params.className ? params.className : ""}">               
                ${params.dislayCardCount ? /*html */ `<div class="cardCount-stat"><img src="/assets/cards-count.svg" alt="Cartes"> <span>${player.handDeck.value.length}</span></div>` : ""}
                    
-                <div class="playerImageContainer">
-                    <img src="/assets/images/template-player.png" alt="avatar" />
+                <div class="playerImageContainer ${player.skin ? "withSkin" : ""}">
+                    <img src="${player.skin ?"/assets/images/spooky-skins/"+ player.skin+".png" : "/assets/images/template-player.png"}" alt="avatar" />
                 </div>
                 <div class="globalValue">
                   ${Object.keys(player).map(key=>{

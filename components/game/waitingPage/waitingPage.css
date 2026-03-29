@@ -49,32 +49,7 @@
           align-items: start;
           padding: 20px;
           box-sizing: border-box;
-          .playerCard {
-            display: flex;
-            flex-direction: row;
-            justify-content: start;
-            align-items: start;
-            gap: 16px;
-            .letter {
-              width: 39px;
-              height: 39px;
-              background: var(--dark-blue);
-              border-radius: 50%;
-              color: white;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              align-items: center;
-            }
-            > div {
-              display: flex;
-              flex-direction: column;
-              align-items: start;
-              .pseudo {
-                color: var(--dark-blue);
-              }
-            }
-          }
+          
         }
       }
     }

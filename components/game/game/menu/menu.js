@@ -10,7 +10,7 @@ export function gameplay_menu(players, currentPlayer) {
     <div class="menu">
     <div class="actions">
         <h2>Menu</h2>
-        ${button(null, null, null, "letComment", "Laisser un commentaire", "linkApparence")}
+        ${button(null, null, null, "displayLetCommentWidget", "Laisser un commentaire", "linkApparence")}
      </div>
         ${button(null, null, "/", null, "Retourner au menu", "exitButton")}
      <div class="settings">

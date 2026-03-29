@@ -5,6 +5,9 @@ import './controller/error.js'
 import './controller/game/actions.js'
 import "./helpers/copy.js"
 import './controller/game/spectactor.js'
+import '../components/game/widgetLetCommentaire/widgetLetCommentaire.js'
+import './controller/game/players.js'
+
 import { router } from './router/router.js'
 
 if (document.readyState === 'loading') {

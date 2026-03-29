@@ -70,7 +70,7 @@ php -S localhost:8001 -t .
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50648 Accepted
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50590 [200]: GET /components/messageLog/messageLog.css
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50590 Closing
-[Mon Mar 16 15:28:42 2026] 127.0.0.1:50618 [200]: GET /components/game/game/widgetContainer/widgetContainer.css
+[Mon Mar 16 15:28:42 2026] 127.0.0.1:50618 [200]: GET /components/game/game/widgetContainerAskPlayer/widgetContainerAskPlayer.css
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50618 Closing
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50632 [200]: GET /src/router/router.js
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50632 Closing
@@ -149,7 +149,7 @@ php -S localhost:8001 -t .
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50864 Closing
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50880 Accepted
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50886 Accepted
-[Mon Mar 16 15:28:42 2026] 127.0.0.1:50886 [200]: GET /components/game/game/widgetContainer/widgetContainer.css
+[Mon Mar 16 15:28:42 2026] 127.0.0.1:50886 [200]: GET /components/game/game/widgetContainerAskPlayer/widgetContainerAskPlayer.css
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50888 Accepted
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50896 Accepted
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50886 Closing
@@ -246,7 +246,7 @@ php -S localhost:8001 -t .
 [Mon Mar 16 15:28:43 2026] 127.0.0.1:51182 Accepted
 [Mon Mar 16 15:28:43 2026] 127.0.0.1:51150 [200]: GET /components/game/waitingPage/waitingPagePlayersBlock/waitingPagePlayersBlock.js
 [Mon Mar 16 15:28:43 2026] 127.0.0.1:51160 [200]: GET /components/game/waitingPage/waitingPageCopyBlock/waitingPageCopyBlock.js
-[Mon Mar 16 15:28:43 2026] 127.0.0.1:51174 [200]: GET /components/game/game/widgetContainer/widgetContainer.js
+[Mon Mar 16 15:28:43 2026] 127.0.0.1:51174 [200]: GET /components/game/game/widgetContainerAskPlayer/widgetContainerAskPlayer.js
 [Mon Mar 16 15:28:43 2026] 127.0.0.1:51190 Accepted
 [Mon Mar 16 15:28:43 2026] 127.0.0.1:51182 [200]: GET /components/button/button.js
 [Mon Mar 16 15:28:43 2026] 127.0.0.1:51190 [200]: GET /components/header/header.js
@@ -274,7 +274,7 @@ php -S localhost:8001 -t .
 [Mon Mar 16 15:28:43 2026] 127.0.0.1:51252 Closing
 [Mon Mar 16 15:28:43 2026] 127.0.0.1:51268 Closing
 [Mon Mar 16 15:28:43 2026] 127.0.0.1:51270 Accepted
-[Mon Mar 16 15:28:43 2026] 127.0.0.1:51270 [200]: GET /components/game/game/widgetContainer/widgetContainer.js
+[Mon Mar 16 15:28:43 2026] 127.0.0.1:51270 [200]: GET /components/game/game/widgetContainerAskPlayer/widgetContainerAskPlayer.js
 [Mon Mar 16 15:28:43 2026] 127.0.0.1:51270 Closing
 [Mon Mar 16 15:28:43 2026] 127.0.0.1:51274 Accepted
 [Mon Mar 16 15:28:43 2026] 127.0.0.1:51274 [200]: GET /components/button/button.js
