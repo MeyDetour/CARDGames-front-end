@@ -43,10 +43,21 @@ export function deleteCardSort() {
   //console.log("ACTION : DELETE Carort");
   localStorage.setItem("CardSort", "");
 }
+export function storePlayerPlayedGame(id){
+  let playerPlayedGame = JSON.parse(localStorage.getItem("playerPlayedGame") || "[]");
+  if (!playerPlayedGame.includes(id)) {
+    playerPlayedGame.push(id);
+    localStorage.setItem("playerPlayedGame", JSON.stringify(playerPlayedGame));
+  }
+}
+export function deletePlayerPlayedGame(){
+  localStorage.setItem("playerPlayedGame", JSON.stringify([]));
+}
 
 
 export function deleteAllGameVariablesSaved(){
   storeRoomId("")
   storeGameData("")
   storeDataOfPlayer("")
+  deletePlayerPlayedGame()
 }

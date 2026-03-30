@@ -7,10 +7,10 @@ import { gamePage } from "../../pages/game/game.js";
 import { gameCodeErrorPage } from "../../pages/gameCodeError/gameCodeError.js";
 import { loadingPage } from "../../pages/loading/loading.js";
 import {
-  deleteRoomId, 
+  deleteRoomId,
   getRoomId,
-  deleteAllGameVariablesSaved
-} from "../controller/game/dataStorage.js"; 
+  deleteAllGameVariablesSaved,
+} from "../controller/game/dataStorage.js";
 import gameplayPage from "../../components/game/game/gameplayPage.js";
 import { verifyGameId } from "../controller/game/game.js";
 export async function loadRoute(params = {}) {
@@ -29,14 +29,13 @@ export async function loadRoute(params = {}) {
   // si on est deconnecter
   //  on peut refresh et revenir sur la partie
   // si on change de page on delete les data
-  if (route != "/" && route != "/game") { 
+  if (route != "/" && route != "/game") {
     deleteRoomId();
   }
-  
 
   //let roomId = getRoomId();
-  //if (roomId && route == "/") { 
-  //  verifyGameId({ roomId: roomId, result: null }); 
+  //if (roomId && route == "/") {
+  //  verifyGameId({ roomId: roomId, result: null });
   //  deleteRoomId();
   //  return;
   //}
@@ -49,36 +48,32 @@ export async function loadRoute(params = {}) {
       html = loadingPage(params);
       content.innerHTML = html;
       setTimeout(() => {
-        if (window.loadingAnimation) {
-          clearInterval(window.loadingAnimation);
-        }
         html = gamePage(params);
         content.innerHTML = html;
       }, 2000);
       return;
-    case "/choose-pseudo": 
+    case "/choose-pseudo":
       html = choosePseudoPage(params);
       break;
     case "/game-code-error":
       html = gameCodeErrorPage(params);
       break;
-    case "/enter-link": 
+    case "/enter-link":
       html = enterLinkPage(params);
       break;
     case "/games":
-      deleteAllGameVariablesSaved()
+      deleteAllGameVariablesSaved();
       html = await gamesPage(params);
       break;
     case "/":
-      deleteAllGameVariablesSaved()
+      deleteAllGameVariablesSaved();
       html = homePage(params);
       break;
     case "/gameplay":
-      html =  ` ${ gameplayPage()} 
+      html = ` ${gameplayPage()} 
                  <div id="widgetDiv"></div>
-        `
-        ;
-        console.log(html);
+        `;
+      console.log(html);
       break;
     default:
       html = homePage(params);

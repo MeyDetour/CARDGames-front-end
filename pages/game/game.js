@@ -16,8 +16,9 @@ import {
 import { displayError } from "../../src/controller/error.js";
 import {
   getCurrentPlayer,
-  getGameData,
+  getGameData
 } from "../../src/controller/game/dataStorage.js";
+import { incrementePlayerCount } from "../../src/controller/game/gameStatistics.js";
 
 export function gamePage(params = {}) {
   let currentPlayer = getCurrentPlayer();
@@ -69,6 +70,7 @@ export function reloadComposant_gamePage() {
       currentPlayer.haswin.value === true) &&
     currentPlayer.isSpectator.value !== true
   ) {
+    incrementePlayerCount(gameData.roomInDb.id);
     console.log("reload win/lose page");
     reloadComposant_winPage();
   }
@@ -77,6 +79,7 @@ export function reloadComposant_gamePage() {
       currentPlayer.hasloose.value === true) &&
     currentPlayer.isSpectator.value !== true
   ) {
+    incrementePlayerCount(gameData.roomInDb.id);
     console.log("reload win/lose page");
     reloadComposant_loosePage();
   }
