@@ -8,16 +8,18 @@ export function winPage() {
   let gameData = getGameData();
   if (!gameData) {
     displayError("No game data found to display win page");
-    return null;
+    return "";
   }
   if (!currentPlayer) {
     displayError("No current player found to display win page");
-    return null;
+    return "";
   }
   if (currentPlayer.haswin.value !== true || currentPlayer.isSpectator.value == true) {
-    return null;
+    return "";
   }
-
+ if ( !gameData.data?.winners?.value?.some((winner) => winner.id === currentPlayer.id) )   {
+    return "";
+  }
 
   // pas besoin de verifier que la partie soit finie
   // car certains joueuers peuvent gagner avant la fin 
@@ -41,9 +43,9 @@ export function winPage() {
       ${particlesHTML}
       </div>
       <img src="/assets/images/victory.png" alt="Victory" class="victory-image">
-      ${ gameData.data.winners && gameData.data.winners[0] ? `<img class="firstPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners[0]?.skin}.png" alt="Victory" class="victory-image">` : ""}
-      ${gameData.data.winners && gameData.data.winners[1] ? `<img class="secondPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners[1]?.skin}.png" alt="Victory" class="victory-image">` : ""}
-      ${gameData.data.winners && gameData.data.winners[2] ? `<img class="thirdPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners[2]?.skin}.png" alt="Victory" class="victory-image">` : ""}
+      ${ gameData.data.winners?.value && gameData.data.winners?.value[0] ? `<img class="firstPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners?.value[0]?.skin}.png" alt="Victory" class="victory-image">` : ""}
+      ${gameData.data.winners?.value && gameData.data.winners?.value[1] ? `<img class="secondPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners?.value[1]?.skin}.png" alt="Victory" class="victory-image">` : ""}
+      ${gameData.data.winners?.value && gameData.data.winners?.value[2] ? `<img class="thirdPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners?.value[2]?.skin}.png" alt="Victory" class="victory-image">` : ""}
       <div class="buttonContainers">
           
 

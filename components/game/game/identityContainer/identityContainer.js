@@ -44,7 +44,7 @@ export function gameplay_identityContainer(
                         ? player.roles.value
                             .map(
                               (role) =>
-                                /*html */ `<div class="role"><img src="${role.image ? role.image :"/assets/unknown-role.svg"}" alt="Role"><span >${role.nom}</span></div>`,
+                                /*html */ `<div class="role"><img src="${role.image ? role.image :"/assets/unknown-role.svg"}" alt="Role"><span >${role.name}</span></div>`,
                             )
                             .join("")
                         : ""

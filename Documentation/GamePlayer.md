@@ -1,7 +1,6 @@
 # Game Page Affichage
-```mermaid
 
-flowchart TB
+```mermaid
 flowchart TB
     A["Composant Game Page"] --> B@{ label: "Verifier l'etat de la partie" }
   

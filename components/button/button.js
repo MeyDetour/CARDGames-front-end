@@ -1,4 +1,4 @@
-import { serializeParams } from "../../src/helpers/serializer.js";
+import { serializeParams } from "../../src-shared/helpers/serializer.js";
 export function button(leftIcon, rightIcon, link, functionName, text, classname = "",params={}) {
   if (!link && !functionName) {
     return "PLEASE PROVIDE ACTION OR LINK FOR BUTTON";

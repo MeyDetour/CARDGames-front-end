@@ -1,6 +1,7 @@
 .defaultCardOfGame {
-  width: 78px;
-  height: 117px;
+
+    width: 78px;
+    aspect-ratio: 0.67 / 1;
   border: 1px solid grey;
   border-radius: 8px;
   background: white;

@@ -5,8 +5,8 @@ import { reloadComposant_gameplayPlayers } from "./players/players.js";
 import {
   getCurrentPlayer,
   getGameData,
-} from "../../../src/controller/game/dataStorage.js";
-import { displayError } from "../../../src/controller/error.js";
+} from "../../../src/controller/game/dataStorage.js"; 
+import { displayError } from "../../../src-shared/controller/error.js";
 import { removeMessageNotification } from "../../../src/controller/game/messages.js";
 import { messaegerieComponent } from "../../messagerie/messagerie.js";
 import { gameplay_messageOfLoading } from "./messageOfLoading/messageOfLoading.js";
@@ -29,7 +29,10 @@ import {
   gameplay_cardPile,
   reloadComposant_gameplayCardPile,
 } from "./cardPile/cardPile.js";
-import { reloadComposant_gameplaySpectatorBanniere , gameplay_spectatorBanniere} from "./spectatorBanniere/spectatorBanniere.js";
+import {
+  reloadComposant_gameplaySpectatorBanniere,
+  gameplay_spectatorBanniere,
+} from "./spectatorBanniere/spectatorBanniere.js";
 
 export default function gameplayPage() {
   let currentPlayer = getCurrentPlayer();
@@ -74,37 +77,38 @@ export default function gameplayPage() {
          ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList)}
          ${gameplay_spectatorBanniere(currentPlayer)}
          
-         ${gameplay_cardPile(
-           cardParams,
-           actionOnDeck
-             ? {
-                 playerId: currentPlayer.id,
-                 roomId: gameData.roomId,
-                 action: actionOnDeck ? actionOnDeck.name : null,
-                 actionType: actionOnDeck
-                   ? actionOnDeck.type || "default"
-                   : "default",
-               }
-             : null,
-           "deck",
-           "Pioche",
-         )}
-         ${gameplay_cardPile(
-           cardParams,
-           actionOnDiscardDeck
-             ? {
-                 playerId: currentPlayer.id,
-                 roomId: gameData.roomId,
-                 action: actionOnDiscardDeck ? actionOnDiscardDeck.name : null,
-                 actionType: actionOnDiscardDeck
-                   ? actionOnDiscardDeck.type || "default"
-                   : "default",
-               }
-             : null,
-           "discardDeck",
-           "Défausse",
-         )}
-         
+
+       ${gameplay_cardPile(
+                 cardParams,
+                 actionOnDeck
+                   ? {
+                       playerId: currentPlayer.id,
+                       roomId: gameData.roomId,
+                       action: actionOnDeck ? actionOnDeck.name : null,
+                       actionType: actionOnDeck
+                         ? actionOnDeck.type || "default"
+                         : "default",
+                     }
+                   : null,
+                 "deck",
+                 "Pioche",
+               )}
+          ${gameplay_cardPile(
+            cardParams,
+            actionOnDiscardDeck
+              ? {
+                  playerId: currentPlayer.id,
+                  roomId: gameData.roomId,
+                  action: actionOnDiscardDeck ? actionOnDiscardDeck.name : null,
+                  actionType: actionOnDiscardDeck
+                    ? actionOnDiscardDeck.type || "default"
+                    : "default",
+                }
+              : null,
+            "discardDeck",
+            "Défausse",
+          )}
+     
          
          ${gameplay_actionsButtons(
            playerActions.filter(

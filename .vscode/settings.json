@@ -1,0 +1,136 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#b59837",
+        "activityBar.background": "#b59837",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#b6e9dd",
+        "activityBarBadge.foreground": "#15202b",
+        "commandCenter.border": "#e7e7e799",
+        "sash.hoverBorder": "#b59837",
+        "statusBar.background": "#8e772b",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#b59837",
+        "statusBarItem.remoteBackground": "#8e772b",
+        "statusBarItem.remoteForeground": "#e7e7e7",
+        "titleBar.activeBackground": "#8e772b",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#8e772b99",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#8e772b",
+    "folder-color.pathColors": [
+        {
+            "folderPath": "CARDGames-front-end/test-app/",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/assets",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/components",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/data",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/pages",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src/controller/game",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src/controller/game/actions.js",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src/controller/game/cards.js",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src/controller/game/dataStorage.js",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src/controller/game/game.js",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src/controller/game/gameStatistics.js",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src/controller/game/louancher.js",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src/controller/game/players.js",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src/controller/game/spectactor.js",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src/helpers",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src/router",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src/websocket",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/main.js",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/src-shared",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/env.js",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/index.html",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/Makefile",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/README.md",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "filePath": "CARDGames-front-end/test-app/style.css",
+            "color": "foldercolorizer.color_8787ff"
+        },
+        {
+            "folderPath": "CARDGames-front-end/player-app/",
+            "color": "foldercolorizer.color_afaf87"
+        },
+        {
+            "folderPath": "CARDGames-front-end/src-shared/",
+            "color": "foldercolorizer.color_00d7ff"
+        }
+    ]
+}

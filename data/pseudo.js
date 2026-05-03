@@ -144,7 +144,6 @@ export const defaultsPseudo = [
     "SalamècheFroid",
     "TortankVide",
     "ZeldaPasLien",
-    "LaraCrotte",
     "PacManMangePas",
     "TetrisMalPlacé",
     "BombermanDoux",
