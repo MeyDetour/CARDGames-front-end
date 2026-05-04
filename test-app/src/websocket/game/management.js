@@ -1,6 +1,4 @@
-import { 
-  storeGameData,
-} from "../../controller/game/dataStorage.js"; 
+import { storeGameData } from "../../../../src-shared/controller/game/dataStorage.js";
 import { reloadComposant_winPage } from "../../../components/game/winPage/winPage.js";
 import { reloadComposant_StatPage } from "../../../components/game/statPage/statPage.js";
 

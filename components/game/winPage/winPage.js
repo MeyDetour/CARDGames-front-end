@@ -2,7 +2,7 @@ import { button } from "../../button/button.js";
 import {
   getCurrentPlayer,
   getGameData,
-} from "../../../src/controller/game/dataStorage.js";
+} from "../../../src-shared/controller/game/dataStorage.js";
 export function winPage() {
   let currentPlayer = getCurrentPlayer();
   let gameData = getGameData();

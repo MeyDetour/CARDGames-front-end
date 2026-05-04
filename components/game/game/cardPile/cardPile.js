@@ -1,5 +1,5 @@
 import { button } from "../../../button/button.js";
-import { serializeParams } from "../../../../src/helpers/serializer.js";
+import { serializeParams } from "../../../../src-shared/helpers/serializer.js";
 import { getGameData ,getCurrentPlayer} from "../../../../src-shared/controller/game/dataStorage.js";
 
 export function gameplay_cardPile(

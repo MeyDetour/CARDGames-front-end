@@ -1,5 +1,5 @@
 import { button } from "../../../button/button.js";
-import  { getGameData } from "../../../../src/controller/game/dataStorage.js";
+import  { getGameData } from "../../../../src-shared/controller/game/dataStorage.js";
 export function gameplay_spectatorBanniere( 
   currentPlayer
 ) {

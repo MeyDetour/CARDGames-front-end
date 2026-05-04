@@ -1,5 +1,5 @@
 
-import { displayAskPlayerWidget } from "../../../../../components/game/game/widgetContainerAskPlayer/widgetContainerAskPlayer.js";
+import { displayAskPlayerWidget } from "../../../components/game/game/widgetContainerAskPlayer/widgetContainerAskPlayer.js";
 
 export function gameActionsListen(socket) {
       socket.on("askPlayer", ({ event, params, roomId }) => {

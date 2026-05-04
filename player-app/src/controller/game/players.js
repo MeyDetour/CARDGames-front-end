@@ -1,5 +1,5 @@
 import { spookySkins } from "../../../../data/spookySkins.js";
-import { getGameData } from "./dataStorage.js";
+import { getGameData } from "../../../src-shared/controller/game/dataStorage.js";
 export function isPassifPlayer(player) {
   let gameData = getGameData();
   if (!gameData) {

@@ -1,4 +1,4 @@
-import { getGameData } from "../../../../src/controller/game/dataStorage.js";
+import { getGameData } from "../../../../src-shared/controller/game/dataStorage.js";
 import { playerCard } from "../../../playerCard/playerCard.js";
 
 export function waitingPagePlayersBlock() {

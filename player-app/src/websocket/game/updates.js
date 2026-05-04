@@ -1,5 +1,5 @@
  
-import { storeGameData ,storeDataOfPlayer } from "../../../../src-shared/controller/game/dataStorage.js";
+import { storeDataOfPlayer } from "../../../../src-shared/controller/game/dataStorage.js";
 import { reloadComposant_gamePage } from "../../../../pages/game/game.js";
 import { addMessageInLoadingMessage } from "../../../../../components/game/game/messageOfLoading/messageOfLoading.js";
 import { gameChanges } from "../../controller/game/game.js";

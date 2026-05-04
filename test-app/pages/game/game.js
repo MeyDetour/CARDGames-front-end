@@ -14,9 +14,7 @@ import { getPlayerOfCurrentView } from "../../../src/controller/game/players.js"
 import { displayError } from "../../src-shared/controller/error.js";
 import { 
   getGameData
-} from "../../src/controller/game/dataStorage.js";
-import { incrementePlayerCount } from "../../src-shared/controller/game/gameStatistics.js";
-import { loadRoute } from "../../src/router/router.js";
+} from "../../src-shared/controller/game/dataStorage.js"; import { loadRoute } from "../../src/router/router.js";
 
 export function gamePage(params = {}) {
   let currentPlayer = getPlayerOfCurrentView();
@@ -64,8 +62,7 @@ export function reloadComposant_gamePage() {
       currentPlayer.haswin.value === true) &&
     gameData.data.spectators.some(spectator => spectator.id === currentPlayer.id) !== true
   ) {
-    incrementePlayerCount(gameData.roomInDb.id);
-    console.log("reload win/lose page");
+ console.log("reload win/lose page");
     reloadComposant_winPage();
   }
   if (
@@ -73,7 +70,6 @@ export function reloadComposant_gamePage() {
       currentPlayer.hasloose.value === true) &&
     gameData.data.spectators.some(spectator => spectator.id === currentPlayer.id) !== true
   ) {
-    incrementePlayerCount(gameData.roomInDb.id);
     console.log("reload win/lose page");
     reloadComposant_loosePage();
   }

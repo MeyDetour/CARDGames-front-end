@@ -5,7 +5,7 @@ import { reloadComposant_gameplayPlayers } from "./players/players.js";
 import {
   getCurrentPlayer,
   getGameData,
-} from "../../../src/controller/game/dataStorage.js"; 
+} from "../../../src-shared/controller/game/dataStorage.js"; 
 import { displayError } from "../../../src-shared/controller/error.js";
 import { removeMessageNotification } from "../../../src/controller/game/messages.js";
 import { messaegerieComponent } from "../../messagerie/messagerie.js";

@@ -1,10 +1,10 @@
  
 import { gameManagementListen } from "./game/management.js";
 import { gameMessagerieListen } from "./game/messagerie.js";
-import { websocketErrorListen } from "./error/error.js";
+import { websocketErrorListen } from "../../src-shared/websocket/error/error.js";
 import { gameUpdatesListen } from "./game/updates.js";
 import { gameConnectionsListen } from "./game/connections.js";
-import { gameActionsListen } from "./game/action.js";
+import { gameActionsListen } from "../../src-shared/websocket/game/action.js";
 
 export let socket = null;
 export async function connectSocket() {

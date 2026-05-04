@@ -1,5 +1,5 @@
 import { button } from "../../components/button/button.js";
-import { getGameData } from "../../src/controller/game/dataStorage.js";
+import { getGameData } from "../../src-shared/controller/game/dataStorage.js";
 import { players } from "../../main.js";
 import { connectSocket } from "../../src/websocket/connection.js";
 export function testConfigPage(params = {}) {

@@ -1,4 +1,4 @@
-import { getCurrentPlayer } from "../../src/controller/game/dataStorage.js";
+import { getCurrentPlayer } from "../../src-shared/controller/game/dataStorage.js";
 
 export function playerCard(admin, player) {
   let currentPlayer = getCurrentPlayer();

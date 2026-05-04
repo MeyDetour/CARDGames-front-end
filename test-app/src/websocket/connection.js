@@ -1,14 +1,14 @@
 import { gameManagementListen } from "./game/management.js"; 
-import { websocketErrorListen } from "./error/error.js";
+import { websocketErrorListen } from "../../src-shared/websocket/error/error.js";
 import { gameUpdatesListen } from "./game/updates.js";
 import { gameConnectionsListen } from "./game/connections.js";
-import { gameActionsListen } from "./game/action.js";
+import { gameActionsListen } from "../../src-shared/websocket/game/action.js";
 import { env } from "../../../env.js";
 import { getRoomId } from "../../src-shared/controller/game/dataStorage.js";
 import { getGameId, getToken, initView } from "../controller/game/dataStorage.js";
 import { getRandomSkin } from "../controller/game/players.js";
 import { players } from "../../main.js";
-import { apiClient } from "../helpers/api.js";
+import { apiClient } from "../../src-shared/helpers/api.js";
 import { getView } from "../controller/game/dataStorage.js";
   
 export async function connectSocket(gameInDB={}) {

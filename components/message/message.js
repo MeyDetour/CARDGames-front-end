@@ -1,4 +1,4 @@
-import { getCurrentPlayer } from "../../src/controller/game/dataStorage.js";
+import { getCurrentPlayer } from "../../src-shared/controller/game/dataStorage.js";
 import { messageLogComponent } from "../messageLog/messageLog.js";
 
 export function messageComponent(message) {

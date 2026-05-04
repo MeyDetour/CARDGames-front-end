@@ -1,10 +1,6 @@
 import { players } from "../../../main.js";
 
-  
-export function getGameData() {
-  return window.gameData || null;
-} 
-
+   import { storeGameData } from "../../../../src-shared/controller/game/dataStorage.js";
  
   
 

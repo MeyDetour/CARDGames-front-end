@@ -17,8 +17,8 @@ import { displayError } from "../../src-shared/controller/error.js";
 import {
   getCurrentPlayer,
   getGameData
-} from "../../src/controller/game/dataStorage.js";
-import { incrementePlayerCount } from "../../src-shared/controller/game/gameStatistics.js";
+} from "../../src-shared/controller/game/dataStorage.js";
+import { incrementePlayerCount } from "../../src/controller/game/gameStatistics.js";
 
 export function gamePage(params = {}) {
   let currentPlayer = getCurrentPlayer();

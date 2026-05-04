@@ -3,7 +3,7 @@ import { customCard } from "../../../customCard/customCard.js";
 import {
   getCurrentPlayer,
   getGameData,
-} from "../../../../src/controller/game/dataStorage.js";
+} from "../../../../src-shared/controller/game/dataStorage.js";
 import { displayError } from "../../../../src-shared/controller/error.js";
 import { getCardSort } from "../../../../src-shared/controller/game/dataStorage.js"; 
 import { isPassifPlayer } from "../../../../src/controller/game/players.js";

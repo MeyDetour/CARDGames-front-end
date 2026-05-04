@@ -1,6 +1,6 @@
 import { headerComponent } from '../../components/header/header.js'
 import { button } from '../../components/button/button.js'
-import { apiClient } from '../../src/helpers/api.js';
+import { apiClient } from '../../src-shared/helpers/api.js';
 
 export async function gamesPage(params = {}) {
   let games = [];

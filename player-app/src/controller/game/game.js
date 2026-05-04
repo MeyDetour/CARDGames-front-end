@@ -1,12 +1,11 @@
 import { connectSocket, socket } from "../../websocket/connection.js";
 import { navigateTo } from "../../router/router.js";
 import { reloadComposant_gamePage } from "../../../../pages/game/game.js";
-import { 
-  storeGameData,
+import {  
   deleteAllGameVariablesSaved,
-} from "./dataStorage.js";
-import { storeDataOfPlayer } from "../../../../src-shared/controller/game/dataStorage.js";
-import { apiClient } from "../../helpers/api.js";
+} from "./dataStorage.js"; 
+import { storeDataOfPlayer,storeGameData } from "../../../../src-shared/controller/game/dataStorage.js";
+import { apiClient } from "../../../src-shared/helpers/api.js";
 import { reloadComposant_gameplayPage } from "../../../../components/game/game/gameplayPage.js";
 
 export async function gameLogin(params) {

@@ -1,6 +1,6 @@
 import { messageComponent } from "../../../../components/message/message.js";
 import { messageLogComponent } from "../../../../components/messageLog/messageLog.js";
-import { storeGameData } from "./dataStorage.js";
+import { storeGameData } from "../../../src-shared/controller/game/dataStorage.js";
 
 export function sendMessageInMessagerie() {
   let input = document.querySelector(".chat .send input");
@@ -16,7 +16,7 @@ export function sendMessageInMessagerie() {
       console.log("<<<EMIT MESSAGE : " + JSON.stringify(message) + ">>>");
       window.socket.emit("newMessageOnmessagerie", message);
     } else {
-      console.warn("cannot send message because window.socket in undefind");
+      console.warn("cannot send message because window.socket is undefined");
     }
   } else {
     console.warn("input not found");

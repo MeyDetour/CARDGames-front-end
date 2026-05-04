@@ -6,7 +6,7 @@ import "./src/controller/game/louancher.js";
 import "./src-shared/helpers/copy.js";
 import "./src/controller/game/spectactor.js";
 import "./src/controller/game/players.js";
-import { apiClient } from "./helpers/api.js";
+import { apiClient } from "../src-shared/helpers/api.js";
 import { env } from "../env.js";
 import { getRandomSkin } from "./src/controller/game/players.js";
 import { loadRoute } from "./src/router/router.js";
