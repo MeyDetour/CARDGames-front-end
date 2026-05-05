@@ -2,9 +2,17 @@ import { button } from "../../button/button.js";
 import {
   getCurrentPlayer,
   getGameData,
-} from "../../../src-shared/controller/game/dataStorage.js";
+} from "../../../src/controller/game/dataStorage.js";
+import { getPlayerOfCurrentView } from "../../../src/controller/game/players.js";
+import { environnement } from "../../../main.js";
 export function winPage() {
-  let currentPlayer = getCurrentPlayer();
+  let currentPlayer;
+  if (environnement == "player-app") {
+    currentPlayer = getCurrentPlayer();
+  }
+  if (environnement == "test-app") {
+    currentPlayer = getPlayerOfCurrentView();
+  }
   let gameData = getGameData();
   if (!gameData) {
     displayError("No game data found to display win page");
@@ -14,15 +22,29 @@ export function winPage() {
     displayError("No current player found to display win page");
     return "";
   }
-  if (currentPlayer.haswin.value !== true || currentPlayer.isSpectator.value == true) {
+ 
+  if (
+    currentPlayer.haswin.value !== true ||
+    currentPlayer.isSpectator.value == true
+  ) {
     return "";
   }
- if ( !gameData.data?.winners?.value?.some((winner) => winner.id === currentPlayer.id) )   {
+  if (currentPlayer.haswin.value !== true) {
+    return "";
+  }
+  if (gameData.data.winners.value.length == 0) {
+    return ""
+  }
+  if (
+    !gameData.data?.winners?.value?.some(
+      (winner) => winner.id === currentPlayer.id,
+    )
+  ) {
     return "";
   }
 
   // pas besoin de verifier que la partie soit finie
-  // car certains joueuers peuvent gagner avant la fin 
+  // car certains joueuers peuvent gagner avant la fin
   // de la partie
 
   let particlesHTML = "";
@@ -43,27 +65,43 @@ export function winPage() {
       ${particlesHTML}
       </div>
       <img src="/assets/images/victory.png" alt="Victory" class="victory-image">
-      ${ gameData.data.winners?.value && gameData.data.winners?.value[0] ? `<img class="firstPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners?.value[0]?.skin}.png" alt="Victory" class="victory-image">` : ""}
-      ${gameData.data.winners?.value && gameData.data.winners?.value[1] ? `<img class="secondPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners?.value[1]?.skin}.png" alt="Victory" class="victory-image">` : ""}
-      ${gameData.data.winners?.value && gameData.data.winners?.value[2] ? `<img class="thirdPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners?.value[2]?.skin}.png" alt="Victory" class="victory-image">` : ""}
+      ${gameData.data.winners?.value && gameData.data.winners?.value[0] ? `<img class="firstPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners?.value[0]?.skin.name}.png" alt="Victory" class="victory-image">` : ""}
+      ${gameData.data.winners?.value && gameData.data.winners?.value[1] ? `<img class="secondPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners?.value[1]?.skin.name}.png" alt="Victory" class="victory-image">` : ""}
+      ${gameData.data.winners?.value && gameData.data.winners?.value[2] ? `<img class="thirdPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners?.value[2]?.skin.name}.png" alt="Victory" class="victory-image">` : ""}
       <div class="buttonContainers">
           
 
 
         <div class="buttons">
-          ${gameData.data.state.value == "endOfGame" && gameData.admin.id == currentPlayer.id  && gameData.data.players>= 2? 
-            // on affiche le boutton rejouer que si la partie est vraiment finie
-            // le bouton rejouer va reinitialiser la partie et donc faire revenir 
-            // tous les joueurs dans la salle d'attente, c'est pour ça que je veux 
-            // pas l'afficher avant que la partie soit vraiment finie
-             button(null, null, null, "replay", "Rejouer", "darkBlueButton") : ""}
+          ${
+            gameData.data.state.value == "endOfGame" &&
+            gameData.admin.id == currentPlayer.id &&
+            gameData.data.players >= 2
+              ? // on affiche le boutton rejouer que si la partie est vraiment finie
+                // le bouton rejouer va reinitialiser la partie et donc faire revenir
+                // tous les joueurs dans la salle d'attente, c'est pour ça que je veux
+                // pas l'afficher avant que la partie soit vraiment finie
+                button(null, null, null, "replay", "Rejouer", "darkBlueButton")
+              : ""
+          }
           
         
-          ${gameData.roomInDb?.params?.globalGame?.autoriseSpectator && gameData.data.state.value != "endOfGame" ? 
-            // si la partie est pas finie alors on affiche pas le bouton regarder 
-            // la partie, car ça n'aurait pas de sens de regarder une partie 
-            // qui est déjà finie
-            button(null, null, null, "specTheGame", "Regarder la partie", "", ) : ""}
+          ${
+            gameData.roomInDb?.params?.globalGame?.autoriseSpectator &&
+            gameData.data.state.value != "endOfGame"
+              ? // si la partie est pas finie alors on affiche pas le bouton regarder
+                // la partie, car ça n'aurait pas de sens de regarder une partie
+                // qui est déjà finie
+                button(
+                  null,
+                  null,
+                  null,
+                  "specTheGame",
+                  "Regarder la partie",
+                  "",
+                )
+              : ""
+          }
         </div>
         
         ${button(null, null, null, "navigateTo", "Revenir au menu", "linkApparence", { path: "/games" })}
@@ -77,9 +115,13 @@ export function winPage() {
 }
 
 export function reloadComposant_winPage() {
-  let content = document.querySelector("#content");
-  let page = winPage(); 
+  let content = document.querySelector("#gameplayPage");
+  if (document.querySelector(".winPage")) {
+    document.querySelector(".winPage").remove();
+  }
+  let page = winPage();
   if (content && page) {
     content.innerHTML = page;
+    console.log("WIN PAGE LOADED");
   }
 }

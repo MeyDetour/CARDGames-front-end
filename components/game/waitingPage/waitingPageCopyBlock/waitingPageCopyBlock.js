@@ -1,7 +1,7 @@
 import {
   getCurrentPlayer,
   getGameData,
-} from "../../../../src-shared/controller/game/dataStorage.js";
+} from "../../../../src/controller/game/dataStorage.js";
 import { button } from "../../../button/button.js";
 export function waitingPageCopyBlock() {
   let currentPlayer = getCurrentPlayer();

@@ -1,0 +1,295 @@
+.statGamePage {
+  .left {
+    .statEventsDemonsWithValueSection {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+
+      height: 100%;
+      gap: 15px;
+      > .boxContainer {
+        gap: 0;
+        font-size: 18px;
+        text-align: start;
+        max-height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 100%;
+        gap: 12px;
+        .demonLine {
+          width: 100%;
+          text-align: center;
+          background: #ffffff;
+        }
+        .elementDetails {
+          background: #f9fafb;
+          border: 1px solid #e5e7eb;
+
+          width: 100%;
+          border-radius: 11px;
+          summary {
+            list-style: none;
+            display: flex;
+            position: relative;
+            flex-direction: row;
+            align-items: start;
+            justify-content: start;
+            gap: 4px;
+            padding: 10px;
+            cursor: pointer;
+            .tooltip {
+              font-size: 13px;
+              width: fit-content;
+              position: absolute;
+              right: 5px;
+              bottom: 5px;
+            }
+          }
+          .elementContent {
+            width: 100%;
+            padding: 10px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            box-sizing: border-box;
+            border-radius: 0 0 11px 11px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            > div {
+              display: flex;
+              flex-direction: column;
+              gap: 15px;
+              align-items: start;
+              .detailWrapper {
+                display: flex;
+                width: 100%;
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+                > .rowInWrapper {
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                  width: 100%;
+                  > span:last-child {
+                    font-size: 15px;
+                    max-width: 60%;
+                    overflow-wrap: break-word;
+                    text-align: end;
+                  }
+                }
+              }
+            }
+
+            .modificationDetail {
+              .detailWrapper {
+                .diffDetail {
+                  display: flex;
+                  width: 100%;
+                  flex-direction: column;
+                  align-items: start;
+                  background: #f6f6f6;
+                  padding: 10px;
+                  border-radius: 10px;
+                  gap: 11px;
+                  box-sizing: border-box;
+                  > span {
+                    color: black;
+                    width: 100%;
+                    overflow: none;
+                    overflow-wrap: break-word;
+                  }
+                  > div {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: start;
+                    justify-content: space-between;
+                    width: 100%;
+                    gap: 23px;
+                    > img {
+                      width: 20px;
+                    }
+                    p {
+                      margin: 0;
+                    }
+                    > span:first-child {
+                      color: #880101;
+                    }
+                    > span:last-child {
+                      color: green;
+                    }
+                    > span {
+                      max-width: 40%;
+                      overflow-wrap: break-word;
+                      height: fit-content;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        .statValueElement {
+          display: flex;
+          border: 1px solid #ededed;
+          flex-direction: column;
+          justify-content: space-between;
+          width: 100%;
+          align-items: start;
+          background: #f9fafb;
+          gap: 9px;
+          padding: 10px;
+          box-sizing: border-box;
+          border-radius: 17px;
+          .spanTop {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            span:first-child {
+              font-weight: bold;
+              color: black;
+            }
+            > span:last-child {
+              background: #eceef2;
+              color: black;
+              padding: 5px 14px;
+              border-radius: 50px;
+              font-size: 15px;
+            }
+          }
+          > span {
+            width: 100%;
+            background: white;
+            border: 1px solid #e2e2e2;
+            color: #a8a8a8;
+            border-radius: 7px;
+            padding: 5px;
+            box-sizing: border-box;
+          }
+        }
+      }
+      .statEventsDemonsWithValueSection-navigation {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        gap: 15px;
+        background: white;
+        width: fit-content;
+        padding: 5px;
+        border-radius: 19px;
+        span {
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          gap: 5px;
+          font-size: 17px;
+          color: #3b3b3b;
+          padding: 7px 16px;
+          border-radius: 25px;
+        }
+        span.selected {
+          background: #ffe1f8;
+        }
+      }
+      .statEventsDemonsWithValueSectionParamsSection-logs,
+      .statEventsDemonsWithValueSectionParamsSection-players {
+        cursor: pointer;
+        width: 100%;
+        border: 1px solid #ebebeb;
+        border-radius: 10px;
+        background: #fff3fe;
+        summary{
+          width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+        }
+        > div {
+
+        box-sizing: border-box;
+        padding: 15px;  
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+      .statEventsDemonsWithValueSectionParamsSection-logs {
+        > div {
+          gap: 0;
+        }
+      }
+      .statEventsDemonsWithValueSectionParamsSection-players {
+        .playerConfig {
+          width: 100%;
+          background: white;
+          border-radius: 13px;
+          display: flex;
+          flex-direction: column;
+          align-items: start;
+          padding: 10px;
+          box-sizing: border-box;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+
+          display: flex;
+          flex-direction: row;
+          align-items: start;
+          justify-content: start;
+          gap: 15px;
+          .imageContainer {
+            width: 48px;
+            aspect-ratio: 1 / 1;
+            border: 1px solid grey;
+            clip-path: border-box;
+            overflow: none;
+            border-radius: 50%;
+            position: relative;
+            img {
+              width: 132%;
+              object-fit: contain;
+              position: absolute;
+              left: 50%;
+              transform: translate(-50%);
+              top: 0;
+            }
+          }
+          > div {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            justify-content: center;
+            .linkApparence {
+              color: #ef2121;
+              font-size: 15px;
+            }
+          }
+        }
+        .addButton {
+          background: white;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          padding: 9px; 
+          text-align: center;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          border-radius: 10px;
+          width: 100%;
+          box-sizing: border-box;
+          gap: 23px;
+          font-size: 16px;
+          font-weight: normal;
+          color: black;
+          img {
+            width: 30px;
+            height: 30px;
+          }
+        }
+        .addButton:hover {
+          background: rgba(255, 255, 255, 0.836);
+        }
+      }
+    }
+  }
+}

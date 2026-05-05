@@ -11,10 +11,10 @@ import {
 } from "../../components/game/loosePage/loosePage.js";
 import { getPlayerOfCurrentView } from "../../../src/controller/game/players.js";
 
-import { displayError } from "../../src-shared/controller/error.js";
+import { displayError } from "../../src/controller/error.js";
 import { 
   getGameData
-} from "../../src-shared/controller/game/dataStorage.js"; import { loadRoute } from "../../src/router/router.js";
+} from "../../src/controller/game/dataStorage.js"; import { loadRoute } from "../../src/router/router.js";
 
 export function gamePage(params = {}) {
   let currentPlayer = getPlayerOfCurrentView();

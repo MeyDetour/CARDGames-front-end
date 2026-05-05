@@ -1,11 +1,12 @@
 import { button } from "../../../button/button.js";
 import { isPassifPlayer } from "../../../../src/controller/game/players.js";
+import { environnement } from "../../../../main.js";
 export function gameplay_actionsButtons(
   actions,
   isCurrentTurn,
-  currentPlayer,
-  roomId,
-) {
+  currentPlayer, 
+) { 
+
   if (isPassifPlayer(currentPlayer)) {
     return "";
   }
@@ -19,9 +20,10 @@ export function gameplay_actionsButtons(
 
         if (!mustAppear) return "";
 
-        return button(null, null, null, "doAction", action.name, "greyButton", {
+        return button(null, null, null, environnement == "player-app" ? "doAction" : "doActionForTestApp", action.name, "greyButton", {
           action: action.name,
           actionType: action.type || "default",
+          playerId : currentPlayer.id
         });
       })
       .join("")}

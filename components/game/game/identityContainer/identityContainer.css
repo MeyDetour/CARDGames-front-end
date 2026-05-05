@@ -65,11 +65,10 @@
         span {
           color: white;
         }
-        img{
-
-    width: 17px;
-    aspect-ratio: 1 / 1;
-    object-fit: contain;
+        img {
+          width: 17px;
+          aspect-ratio: 1 / 1;
+          object-fit: contain;
         }
       }
     }
@@ -85,9 +84,9 @@
       align-items: end;
       border-radius: 50%;
       border: 1px solid grey;
-            background: white;
-            overflow: hidden;
-            clip-path: border-box;
+      background: white;
+      overflow: hidden;
+      clip-path: border-box;
       img {
         object-fit: contain;
         width: 100%;
@@ -96,24 +95,24 @@
         border-radius: 50%;
       }
     }
-    .withSkin{ 
-       width: 39px;
-    height: 39px;
-    clip-path: border-box;
-    --webkit-clip-path: border-box;
-    position: relative;
-    border: 0.2px solid #acacac;
-    overflow: hidden;
-    border-radius: 50%;
-        img{
-    width: 63px;
-    height: 63px;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
-    top: -1px;
-        }
-  }
+    .withSkin {
+      width: 39px;
+      height: 39px;
+      clip-path: border-box;
+      --webkit-clip-path: border-box;
+      position: relative;
+      border: 0.2px solid #acacac;
+      overflow: hidden;
+      border-radius: 50%;
+      img {
+        width: 63px;
+        height: 63px;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+        top: -1px;
+      }
+    }
   }
   .currentPlayerTurn {
     .playerImageContainer::after {
@@ -123,9 +122,9 @@
       position: absolute;
       z-index: 2;
       border-radius: 50%;
- 
-            top: 0px;
-            left: 0px;
+
+      top: 0px;
+      left: 0px;
       border: 2px solid gold !important;
     }
   }

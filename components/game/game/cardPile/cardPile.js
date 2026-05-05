@@ -1,7 +1,11 @@
 import { button } from "../../../button/button.js";
-import { serializeParams } from "../../../../src-shared/helpers/serializer.js";
-import { getGameData ,getCurrentPlayer} from "../../../../src-shared/controller/game/dataStorage.js";
-
+import { serializeParams } from "../../../../src/helpers/serializer.js";
+import {
+  getGameData,
+  getCurrentPlayer,
+} from "../../../../src/controller/game/dataStorage.js";
+import { environnement } from "../../../../main.js";
+import { getPlayerOfCurrentView } from "../../../../src/controller/game/players.js";
 export function gameplay_cardPile(
   cardsParams,
   actionParams,
@@ -9,8 +13,15 @@ export function gameplay_cardPile(
   label,
   classname = "",
 ) {
-   let gameData = getGameData();
-  let currentPlayer = getCurrentPlayer();
+  let gameData = getGameData();
+
+  let currentPlayer;
+  if (environnement == "player-app") {
+    currentPlayer = getCurrentPlayer();
+  }
+  if (environnement == "test-app") {
+    currentPlayer = getPlayerOfCurrentView();
+  }
   if (
     gameData.data.spectators.some(
       (spectator) => spectator.id == currentPlayer.id,
@@ -26,7 +37,7 @@ export function gameplay_cardPile(
   }
 
   return /*html */ `
-   <div onclick="${actionParams && actionParams.action ? `doAction(${serializeParams(actionParams)})` : ""}" class="gameplayPile ${classname}" id="pile-type-${type}">
+   <div onclick="${actionParams && actionParams.action ? environnement == "player-app" ? `doAction(${serializeParams(actionParams)})` : `doActionForTestApp(${serializeParams(actionParams)})` : ""}" class="gameplayPile ${classname} ${environnement}" id="pile-type-${type}">
    <img src="/assets/images/cardBack.png">
   ${actionParams ? /*html */ `<span class="actionLabel">${actionParams.action}</span>` : ""}
  
@@ -43,9 +54,9 @@ export function reloadComposant_gameplayCardPile(
   label,
   classname = "",
 ) {
-  let actionsContainer = document.querySelector(`#pile-type-${type}`);
-  if (actionsContainer) {
-    actionsContainer.remove();
+  let pileContainer = document.querySelector(`#pile-type-${type}`);
+  if (pileContainer) {
+    pileContainer.remove();
   }
   content.innerHTML += gameplay_cardPile(
     cardsParams,

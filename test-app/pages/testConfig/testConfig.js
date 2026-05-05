@@ -1,7 +1,7 @@
 import { button } from "../../components/button/button.js";
-import { getGameData } from "../../src-shared/controller/game/dataStorage.js";
+import { getGameData } from "../../src/controller/game/dataStorage.js";
 import { players } from "../../main.js";
-import { connectSocket } from "../../src/websocket/connection.js";
+import { connectSocket } from "../../src/connection.js";
 export function testConfigPage(params = {}) {
   let gameData = getGameData();
   let players = gameData?.data?.players || [];

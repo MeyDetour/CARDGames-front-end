@@ -2,10 +2,17 @@ import { button } from "../../button/button.js";
 import {
   getCurrentPlayer,
   getGameData,
-} from "../../../src-shared/controller/game/dataStorage.js";
-
+} from "../../../src/controller/game/dataStorage.js";
+import {environnement} from "../../../main.js"
+import { getPlayerOfCurrentView } from "../../../src/controller/game/players.js";
 export function loosePage() {
-  let currentPlayer = getCurrentPlayer();
+  let currentPlayer;
+  if (environnement == "player-app") {
+    currentPlayer = getCurrentPlayer();
+  }
+  if (environnement == "test-app") {
+    currentPlayer = getPlayerOfCurrentView();
+  }
   let gameData = getGameData();
   if (!gameData) {
     displayError("No game data found to display win page");
@@ -15,13 +22,17 @@ export function loosePage() {
     displayError("No current player found to display loose page");
     return "";
   }
- if (currentPlayer.haswin.value === true || currentPlayer.isSpectator.value == true) {
+if (gameData.data.losers.value.length == 0) {
+    return ""
+  }
+  if (
+    !gameData.data?.losers?.value.some((loser) => loser.id === currentPlayer.id)
+  ) {
     return "";
   }
   // pas besoin de verifier que la partie soit finie
-  // car certains joueuers peuvent perdre avant la fin 
+  // car certains joueuers peuvent perdre avant la fin
   // de la partie
-
 
   return /*html*/ ` 
     <div class="loosePage"> 
@@ -69,19 +80,32 @@ export function loosePage() {
 
      
         <div class="buttons">
-       ${gameData.data.state.value == "endOfGame" && gameData.admin.id == currentPlayer.id && gameData.data.players>= 2? 
-              // on affiche le boutton rejouer que si la partie est vraiment finie
-            // le bouton rejouer va reinitialiser la partie et donc faire revenir 
-            // tous les joueurs dans la salle d'attente, c'est pour ça que je veux 
-            // pas l'afficher avant que la partie soit vraiment finie
-             button(null, null, null, "replay", "Rejouer", "darkBlueButton", { gameId: gameData.roomInDb.id }) : ""}
+       ${
+         gameData.data.state.value == "endOfGame" &&
+         gameData.admin.id == currentPlayer.id &&
+         gameData.data.players >= 2
+           ? // on affiche le boutton rejouer que si la partie est vraiment finie
+             // le bouton rejouer va reinitialiser la partie et donc faire revenir
+             // tous les joueurs dans la salle d'attente, c'est pour ça que je veux
+             // pas l'afficher avant que la partie soit vraiment finie
+             button(null, null, null, "replay", "Rejouer", "darkBlueButton", {
+               gameId: gameData.roomInDb.id,
+             })
+           : ""
+       }
           
         
-          ${gameData.roomInDb?.params?.globalGame?.autoriseSpectator && gameData.data.state.value != "endOfGame" ? 
-            // si la partie est pas finie alors on affiche pas le bouton regarder 
-            // la partie, car ça n'aurait pas de sens de regarder une partie 
-            // qui est déjà finie
-            button(null, null, null, "replay", "Regarder la partie", "", { gameId: gameData.roomInDb.id }) : ""}
+          ${
+            gameData.roomInDb?.params?.globalGame?.autoriseSpectator &&
+            gameData.data.state.value != "endOfGame"
+              ? // si la partie est pas finie alors on affiche pas le bouton regarder
+                // la partie, car ça n'aurait pas de sens de regarder une partie
+                // qui est déjà finie
+                button(null, null, null, "replay", "Regarder la partie", "", {
+                  gameId: gameData.roomInDb.id,
+                })
+              : ""
+          }
         </div>
         
         
@@ -94,7 +118,7 @@ export function loosePage() {
 
 export function reloadComposant_loosePage() {
   let content = document.querySelector("#content");
-  let page = loosePage(); 
+  let page = loosePage();
   if (content && page) {
     content.innerHTML = page;
   }

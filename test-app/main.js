@@ -1,13 +1,12 @@
-import "./src/websocket/connection.js";
+import "./src/connection.js";
 import "./src/controller/game/game.js";
-import "./src-shared/controller/error.js";
+import "./src/controller/error.js";
 import "./src/controller/game/actions.js";
-import "./src/controller/game/louancher.js"; 
-import "./src-shared/helpers/copy.js";
+import "./src/controller/game/louancher.js";
+import "./src/helpers/copy.js";
 import "./src/controller/game/spectactor.js";
 import "./src/controller/game/players.js";
-import { apiClient } from "../src-shared/helpers/api.js";
-import { env } from "../env.js";
+import { apiClient } from "../src/helpers/api.js"; 
 import { getRandomSkin } from "./src/controller/game/players.js";
 import { loadRoute } from "./src/router/router.js";
 import {
@@ -18,9 +17,13 @@ import {
   deleteToken,
   deleteGameId,
 } from "./src/controller/game/dataStorage.js";
+
+
 export let token = null;
 export let gameId = null;
 export let players = [];
+export const environnement = "test-app";
+
 localStorage.removeItem("askPlayer");
 const getGame = async () => {
   try {
@@ -43,7 +46,7 @@ const getGame = async () => {
 const disconnectAndReconnect = () => {
   if (window.opener) {
     // On prévient Studio que la session est morte
-    window.opener.postMessage("UNAUTHORIZED", env.CARD_STUDIO_FRONT_END_URL);
+    window.opener.postMessage("UNAUTHORIZED", environnement.CARD_STUDIO_FRONT_END_URL);
     // On ferme la fenêtre de test
     deleteToken();
     deleteGameId();
@@ -51,20 +54,20 @@ const disconnectAndReconnect = () => {
     //window.close();
   } else {
     // Si la fenêtre a été ouverte seule, on redirige juste
-      }
+  }
 };
 const redirectToCardStudio = () => {
-  window.location.href = env.CARD_STUDIO_FRONT_END_URL;
+  window.location.href = environnement.CARD_STUDIO_FRONT_END_URL;
 };
 const exit = () => {
   disconnectAndReconnect();
-  location.reload()
+  location.reload();
 };
 window.exit = exit;
 window.redirectToCardStudio = redirectToCardStudio;
 const handleMessage = (event) => {
   if (token || gameId) return;
-  if (event.origin !== env.CARD_STUDIO_FRONT_END_URL) {
+  if (event.origin !== environnement.CARD_STUDIO_FRONT_END_URL) {
     return;
   }
 
@@ -89,7 +92,7 @@ const initApp = async () => {
   console.log("add before unload");
   // 1 - response if card studio call test app
   if (window.opener && !token && !gameId) {
-    window.opener.postMessage("READY_FOR_TOKEN", env.CARD_STUDIO_FRONT_END_URL);
+    window.opener.postMessage("READY_FOR_TOKEN", environnement.CARD_STUDIO_FRONT_END_URL);
   }
 
   // 4 - if page is reloaded and token and gameId are already in localStorage, start the app

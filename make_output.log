@@ -80,7 +80,7 @@ php -S localhost:8001 -t .
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50602 Closing
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50658 Accepted
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50674 Accepted
-[Mon Mar 16 15:28:42 2026] 127.0.0.1:50674 [200]: GET /src/websocket/connection.js
+[Mon Mar 16 15:28:42 2026] 127.0.0.1:50674 [200]: GET /src/websocket/game/connection.js
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50674 Closing
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50658 [200]: GET /src/router/router.js
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50658 Closing
@@ -169,7 +169,7 @@ php -S localhost:8001 -t .
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50912 [200]: GET /pages/gameCodeError/gameCodeError.js
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50912 Closing
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50916 Accepted
-[Mon Mar 16 15:28:42 2026] 127.0.0.1:50916 [200]: GET /src/websocket/connection.js
+[Mon Mar 16 15:28:42 2026] 127.0.0.1:50916 [200]: GET /src/websocket/game/connection.js
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50916 Closing
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50920 Accepted
 [Mon Mar 16 15:28:42 2026] 127.0.0.1:50920 [200]: GET /pages/home/home.js

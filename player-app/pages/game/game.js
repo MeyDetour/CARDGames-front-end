@@ -13,11 +13,11 @@ import {
   loosePage,
   reloadComposant_loosePage,
 } from "../../components/game/loosePage/loosePage.js";
-import { displayError } from "../../src-shared/controller/error.js";
+import { displayError } from "../../src/controller/error.js";
 import {
   getCurrentPlayer,
   getGameData
-} from "../../src-shared/controller/game/dataStorage.js";
+} from "../../src/controller/game/dataStorage.js";
 import { incrementePlayerCount } from "../../src/controller/game/gameStatistics.js";
 
 export function gamePage(params = {}) {

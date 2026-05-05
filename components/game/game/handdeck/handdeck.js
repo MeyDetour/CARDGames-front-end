@@ -3,11 +3,12 @@ import { customCard } from "../../../customCard/customCard.js";
 import {
   getCurrentPlayer,
   getGameData,
-} from "../../../../src-shared/controller/game/dataStorage.js";
-import { displayError } from "../../../../src-shared/controller/error.js";
-import { getCardSort } from "../../../../src-shared/controller/game/dataStorage.js"; 
-import { isPassifPlayer } from "../../../../src/controller/game/players.js";
-
+} from "../../../../src/controller/game/dataStorage.js";
+import { displayError } from "../../../../src/controller/error.js";
+import { getCardSort } from "../../../../src/controller/game/dataStorage.js";
+import { isPassifPlayer } from "../../../../src/controller/game/players.js"; 
+import { getPlayerOfCurrentView } from "../../../../src/controller/game/players.js";
+import { environnement } from "../../../../main.js";
 
 // Separate component for the player's hand deck in the gameplay page
 // Separe les cartes du joueurs en plusieurs tas de 11 cartes
@@ -19,7 +20,14 @@ export function gameplay_handdeck(displayHandDeck, handDeck, cardList) {
   if (!handDeck || handDeck.length === 0) {
     return "";
   }
-  if (isPassifPlayer(getCurrentPlayer())) {
+  let currentPlayer;
+  if (environnement == "player-app") {
+    currentPlayer = getCurrentPlayer();
+  }
+  if (environnement == "test-app") {
+    currentPlayer = getPlayerOfCurrentView();
+  }
+  if (isPassifPlayer(currentPlayer)) {
     return "";
   }
   let sort = getCardSort();

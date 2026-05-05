@@ -77,11 +77,11 @@
             "color": "foldercolorizer.color_8787ff"
         },
         {
-            "filePath": "CARDGames-front-end/test-app/src/controller/game/players.js",
+            "filePath": "CARDGames-front-end/src/controller/game/players.js",
             "color": "foldercolorizer.color_8787ff"
         },
         {
-            "filePath": "CARDGames-front-end/test-app/src/controller/game/spectactor.js",
+            "filePath": "CARDGames-front-end/src/controller/game/spectactor.js",
             "color": "foldercolorizer.color_8787ff"
         },
         {
@@ -101,7 +101,7 @@
             "color": "foldercolorizer.color_8787ff"
         },
         {
-            "filePath": "CARDGames-front-end/test-app/src-shared",
+            "filePath": "CARDGames-front-end/test-app/src",
             "color": "foldercolorizer.color_8787ff"
         },
         {
@@ -129,7 +129,7 @@
             "color": "foldercolorizer.color_afaf87"
         },
         {
-            "folderPath": "CARDGames-front-end/src-shared/",
+            "folderPath": "CARDGames-front-end/src",
             "color": "foldercolorizer.color_00d7ff"
         }
     ]

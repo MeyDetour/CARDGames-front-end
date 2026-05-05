@@ -2,11 +2,14 @@ import { button } from "../../button/button.js";
 import { defaultCard } from "../../defaultCard/defaultCard.js";
 import { gameplay_identityContainer } from "./identityContainer/identityContainer.js";
 import { reloadComposant_gameplayPlayers } from "./players/players.js";
+import {environnement} from "../../../main.js"
+import { getPlayerOfCurrentView } from "../../../src/controller/game/players.js";
 import {
   getCurrentPlayer,
   getGameData,
-} from "../../../src-shared/controller/game/dataStorage.js"; 
-import { displayError } from "../../../src-shared/controller/error.js";
+} from "../../../src/controller/game/dataStorage.js"; 
+import{getView}from "../../../src/controller/game/dataStorage.js";
+import { displayError } from "../../../src/controller/error.js";
 import { removeMessageNotification } from "../../../src/controller/game/messages.js";
 import { messaegerieComponent } from "../../messagerie/messagerie.js";
 import { gameplay_messageOfLoading } from "./messageOfLoading/messageOfLoading.js";
@@ -35,7 +38,14 @@ import {
 } from "./spectatorBanniere/spectatorBanniere.js";
 
 export default function gameplayPage() {
-  let currentPlayer = getCurrentPlayer();
+  let currentPlayer;
+  let view;
+  if(environnement == "player-app"){
+    currentPlayer = getCurrentPlayer();
+  } if(environnement == "test-app"){
+   currentPlayer= getPlayerOfCurrentView();
+   view = getView()
+  } 
   let gameData = getGameData();
   if (!gameData) {
     displayError("No game data found to display game");
@@ -72,8 +82,9 @@ export default function gameplayPage() {
 
   return /*html */ `
         <div id="gameplayPage">
-         ${gameplay_messageOfLoading(gameData.data.logs)}
-         ${gameplay_globalValues({ ...gameData.data, ...gameData.data.globalValueStatic })}
+
+         ${environnement == "player-app" ? gameplay_messageOfLoading(gameData.data.logs) : "" }
+         ${environnement == "player-app" ? gameplay_globalValues({ ...gameData.data, ...gameData.data.globalValueStatic }) : ""}
          ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList)}
          ${gameplay_spectatorBanniere(currentPlayer)}
          
@@ -118,13 +129,13 @@ export default function gameplayPage() {
            currentPlayer,
            gameData.roomId,
          )}
-            ${gameplay_menu(gameData.data.players, currentPlayer)}
+            ${environnement == "player-app" ? gameplay_menu(gameData.data.players, currentPlayer) : ""}
                    
-            ${params.displayChat ? `<div class="gameplayMessagerie-container"> </div>` : ""}
-            <div class="headerButtons">
+            ${environnement == "player-app" && params.displayChat ? `<div class="gameplayMessagerie-container"> </div>` : ""}
+        ${  environnement == "player-app" ? `<div class="headerButtons">
                     ${params.displayChat ? button("chat", null, null, "gamePlayeToggleMessagerie", null, "whiteButton gameplayChatButton") : ""}
                     ${button("menu", null, null, "toggleGameplayMenu", null, "whiteButton gameplayMenuButton")}
-            </div>
+            </div>` : ""}
           
             ${gameplay_displayAllPlayers(gameData, currentPlayer)}  
 
@@ -143,9 +154,7 @@ export function reloadComposant_gameplayPage() {
     displayError("No game data found to display game");
     return;
   }
-  if (gameData.data.state.value !== "inProgress") {
-    console.log("room is not in progress");
-    console.log(gameData.data.state.value);
+  if (gameData.data.state.value !== "inProgress") { 
     return;
   }
 
@@ -155,8 +164,12 @@ export function reloadComposant_gameplayPage() {
     return;
   }
 
-  let currentPlayer = getCurrentPlayer();
-
+  let currentPlayer; 
+ if(environnement == "player-app"){
+    currentPlayer = getCurrentPlayer();
+  } if(environnement == "test-app"){
+   currentPlayer= getPlayerOfCurrentView(); 
+  } 
   if (!currentPlayer) {
     displayError("No current player found to display game");
     return;

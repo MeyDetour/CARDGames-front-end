@@ -1,5 +1,5 @@
 import { button } from "../../../button/button.js";
-import { storeCardSort,getCardSort } from "../../../../src-shared/controller/game/dataStorage.js";
+import { storeCardSort,getCardSort } from "../../../../src/controller/game/dataStorage.js";
 import {autoReloadComposant_gameplayHanddeck} from "../handdeck/handdeck.js";
 import { hideGamePlayMessagerie } from "../gameplayPage.js";
 

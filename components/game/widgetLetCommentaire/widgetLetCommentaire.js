@@ -1,7 +1,7 @@
-import { apiClient } from "../../../src-shared/helpers/api.js";
+import { apiClient } from "../../../src/helpers/api.js";
 import { button } from "../../button/button.js";
 import { rate } from "./rate/rate.js";
-import { getGameData } from "../../../src-shared/controller/game/dataStorage.js";
+import { getGameData } from "../../../src/controller/game/dataStorage.js";
 // obligé d'ajouter et de supprimer le composant et 
 // de la mettre dans la page de base car la gameplay page est rechargé
 // et supprimer le composant
