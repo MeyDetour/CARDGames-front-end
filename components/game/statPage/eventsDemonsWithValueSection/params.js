@@ -53,7 +53,20 @@ export default function statEventsDemonsWithValueSectionParamsSection(
                     null,
                     null,
                     "disconnectSocket",
-                    "Remove",
+                    "Supprimer",
+                    "linkApparence",
+                    { id: player.id },
+                  )
+                : ""
+            }
+               ${
+              gameData.admin.id !== player.id
+                ? button(
+                    null,
+                    null,
+                    null,
+                    "changeSpectatorToPlayer",
+                    "Changer en joueur",
                     "linkApparence",
                     { id: player.id },
                   )

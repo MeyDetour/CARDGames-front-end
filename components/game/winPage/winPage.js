@@ -5,6 +5,7 @@ import {
 } from "../../../src/controller/game/dataStorage.js";
 import { getPlayerOfCurrentView } from "../../../src/controller/game/players.js";
 import { environnement } from "../../../main.js";
+import { displayError } from "../../../src/controller/error.js";
 export function winPage() {
   let currentPlayer;
   if (environnement == "player-app") {

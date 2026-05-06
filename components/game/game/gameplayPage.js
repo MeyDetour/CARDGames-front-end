@@ -18,6 +18,7 @@ import {
   gameplay_middleCards,
   reloadComposant_gameplayMiddleCards,
 } from "./middleCards/middleCards.js";
+
 import {
   gameplay_handdeck,
   reloadComposant_gameplayHanddeck,
@@ -28,10 +29,12 @@ import {
 } from "./actionsButtons/actionsButtons.js";
 import { gameplay_menu, hideGameplayMenu } from "./menu/menu.js";
 import {
-  gameplay_globalValues,
+  gameplay_playerValues,
+  reloadComposant_gameplayPlayerValues,
+} from "./playerValues/playerValues.js";
+import { gameplay_globalValues,
   reloadComposant_gameplayGlobalValues,
 } from "./globalValues/globalValues.js";
-
 import {
   gameplay_cardPile,
   reloadComposant_gameplayCardPile,
@@ -75,6 +78,7 @@ export default function gameplayPage() {
       ? currentPlayer.handDeck.value
       : [];
   let cardList = gameData.roomInDb.assets.cards;
+  let gainList = gameData.roomInDb.assets.gains;
 
   let params = gameData.roomInDb.params.rendering.game;
   let cardParams = gameData.roomInDb.params.cards;
@@ -115,12 +119,18 @@ export default function gameplayPage() {
             </div>`
             : ""
         }
+        ${gameplay_playerValues(getPlayerOfCurrentView(), {
+          key: 0,
+          displayPoints: params.displayStatistics,
+          dislayCardCount: params.displayCountAdversaryHandDeck,
+          gainList: gainList, 
+        })}
           
 
             <div class="table">
 
             ${gameplay_middleCards(gameData)}  
-            ${gameplay_displayAllPlayers(gameData, currentPlayer)}  
+            ${gameplay_displayAllPlayers(gameData, currentPlayer, params)}  
             ${environnement == "player-app" ? gameplay_globalValues({ ...gameData.data, ...gameData.data.globalValueStatic }) : ""}
               
               <div class="center">
@@ -145,7 +155,9 @@ export default function gameplayPage() {
                     ? {
                         playerId: currentPlayer.id,
                         roomId: gameData.roomId,
-                        action: actionOnDiscardDeck ? actionOnDiscardDeck.name : null,
+                        action: actionOnDiscardDeck
+                          ? actionOnDiscardDeck.name
+                          : null,
                         actionType: actionOnDiscardDeck
                           ? actionOnDiscardDeck.type || "default"
                           : "default",
@@ -154,7 +166,8 @@ export default function gameplayPage() {
                   "discardDeck",
                   "Défausse",
                 )}
-                </div>
+               
+            </div>
             </div>
         </div>
     `;
@@ -179,13 +192,16 @@ export function reloadComposant_gameplayPage() {
     document.querySelector("#content").innerHTML = gameplayPage();
     return;
   }
-  let table = content.querySelector("#gameplayPage .table");
+  let table = content.querySelector(".table");
   if (!table) {
     return;
-  } let center = content.querySelector("#gameplayPage .table .center");
+  }
+  let center = table.querySelector(".center");
   if (!center) {
     return;
   }
+  let params = gameData.roomInDb.params.rendering.game;
+  let gainList = gameData.roomInDb.assets.gains;
 
   let currentPlayer;
   if (environnement == "player-app") {
@@ -212,6 +228,12 @@ export function reloadComposant_gameplayPage() {
   });
   reloadComposant_gameplayMiddleCards(table, {});
   reloadComposant_gameplaySpectatorBanniere(content, currentPlayer);
+  reloadComposant_gameplayPlayerValues(content ,getPlayerOfCurrentView(), {
+    key: 0,
+    displayPoints: params.displayStatistics,
+    dislayCardCount: params.displayCountAdversaryHandDeck,
+    gainList: gainList,  
+  });
   reloadComposant_gameplayHanddeck(
     content,
     gameData.roomInDb.params.rendering.game.displayHandDeck,

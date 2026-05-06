@@ -3,15 +3,19 @@ import {
   getCurrentPlayer,
   getGameData,
 } from "../../../src/controller/game/dataStorage.js";
-import {environnement} from "../../../main.js"
+import { environnement } from "../../../main.js";
+import { displayError } from "../../../src/controller/error.js";
 import { getPlayerOfCurrentView } from "../../../src/controller/game/players.js";
 export function loosePage() {
   let currentPlayer;
+  console.log(environnement);
   if (environnement == "player-app") {
     currentPlayer = getCurrentPlayer();
   }
   if (environnement == "test-app") {
+    console.log("test app get current player");
     currentPlayer = getPlayerOfCurrentView();
+    console.log(currentPlayer);
   }
   let gameData = getGameData();
   if (!gameData) {
@@ -22,8 +26,8 @@ export function loosePage() {
     displayError("No current player found to display loose page");
     return "";
   }
-if (gameData.data.losers.value.length == 0) {
-    return ""
+  if (gameData.data.losers.value.length == 0) {
+    return "";
   }
   if (
     !gameData.data?.losers?.value.some((loser) => loser.id === currentPlayer.id)

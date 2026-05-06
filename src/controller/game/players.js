@@ -67,7 +67,8 @@ export function getPlayerStat(player, gameData) {
   }
 
   return arrayOfStat;
-}export function getPlayerWhoHasToPlayer() {
+}
+export function getPlayerWhoHasToPlayer() {
   let gameData = getGameData();
   if (!gameData || !gameData.data || !gameData.data.players) {
     console.warn("Invalid gameData structure:", gameData);
@@ -77,7 +78,6 @@ export function getPlayerStat(player, gameData) {
     (player) => player.position === gameData.data.currentPlayerPosition.value,
   );
 }
-
 
 // change skin of player
 export function getRandomSkin() {
@@ -128,15 +128,21 @@ export function nextChangeSkin(parmas) {
 window.previousChangeSkin = previousChangeSkin;
 window.nextChangeSkin = nextChangeSkin;
 
-
 // use to get player of current view
 export function getPlayerOfCurrentView() {
   let gameData = getGameData();
-  let view = getView();
+  if (!gameData) {
+    console.warn("No game data found to get player of current view");
+    return null;
+  }
   if (!gameData || !gameData.data || !gameData.data.players) {
     console.warn("Invalid gameData structure:", gameData);
     return null;
   }
+  let view = getView();
+  console.log(view);
+  console.log(gameData);
+
   let player = gameData.data.players.find(
     (player) => player.position == view.playerView,
   );

@@ -16,3 +16,12 @@ function specTheGame() {
 
 }
 window.specTheGame = specTheGame;
+
+function changeSpectatorToPlayer(){
+    let currentPlayer = getPlayerOfCurrentView();
+    let socket = players.find(player => player.id == currentPlayer.id)?.socket || null;
+    if (socket){
+        socket.emit("changeSpectatorToPlayer" );
+    }
+}
+window.changeSpectatorToPlayer = changeSpectatorToPlayer;

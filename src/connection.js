@@ -61,7 +61,7 @@ export async function connectSocketForPlayerApp() {
 }
 
 export async function connectSocketForTestApp(gameInDB = {}) {
-  console.log("TRY TO CONNECT SOCKET");
+  console.log("TRY TO CONNECT SOCKET IN TEST APP");
 
   let socket = io(env.CARD_STUDIO_WEBSOCKET_URL);
 

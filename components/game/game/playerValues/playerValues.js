@@ -7,8 +7,12 @@
 */
 
 export function gameplay_playerValues(player, params) {
+  if (!player) {
+    console.warn("No player data found to display player values");
+    return "";
+  }
   return /*html */ `
-            <div  data-player-id="${player.id}" class="playerValues player${params.key} playerCount${params.totalPlayerCount}  ${params.isCurrentPlayerTurn ? "currentPlayerTurn" : ""} ${params.className ? params.className : ""}">               
+            <div  data-player-id="${player.id}" class="playerValues ">               
                ${params.dislayCardCount ? /*html */ `<div class="cardCount-stat"><img src="/assets/cards-count.svg" alt="Cartes"> <span>${player.handDeck.value.length}</span></div>` : ""}
                
               
@@ -48,3 +52,16 @@ export function gameplay_playerValues(player, params) {
                     }  
             </div>`;
 }
+
+export function reloadComposant_gameplayPlayerValues(
+  content,
+  player,
+  params,
+) {
+  let playerContainer = content.querySelector(`.playerValues `);
+  if (playerContainer) {
+    playerContainer.remove();
+  }
+  content.innerHTML += gameplay_playerValues(player, params);
+}
+ 

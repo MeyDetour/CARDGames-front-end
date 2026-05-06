@@ -78,7 +78,7 @@ export function testConfigPage(params = {}) {
                         null,
                         null,
                         null,
-                        "startGame",
+                        "startGameForTestApp",
                         "Lancer la partie",
                         "violetButton",
                       )

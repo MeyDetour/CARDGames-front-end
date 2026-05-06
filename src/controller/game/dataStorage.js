@@ -57,10 +57,11 @@ export function getRoomId() {
 }
 
 export function storeRoomId(roomId) {
-  //console.log("ACTION : STORE ROOM ID " + roomId);
+  console.log("ACTION : STORE ROOM ID " + roomId);
   localStorage.setItem("roomId", roomId);
 }
 export function deleteRoomId() {
+  console.log("delete room id");
   //console.log("ACTION : DELETE ROOM ID");
   localStorage.setItem("roomId", "");
 }
@@ -108,6 +109,10 @@ export function getView() {
       playerView: players.length > 0 ? players[0].position : "1",
     }
   );
+}export function setPlayerView(number) {
+  let view = getView();
+  view.playerView = number;
+  storeView(view);
 }
 export function initView() {
   console.log(players);

@@ -1,11 +1,12 @@
 import {
   getView,
-  storeView
-} from "../../../../src/controller/game/dataStorage.js";import {
-  
-  getGameData,
+  storeView,
 } from "../../../../src/controller/game/dataStorage.js";
-import { getPlayerOfCurrentView, getSocketOfPlayerOfCurrentView } from "../../../../src/controller/game/players.js";
+import { getGameData } from "../../../../src/controller/game/dataStorage.js";
+import {
+  getPlayerOfCurrentView,
+  getSocketOfPlayerOfCurrentView,
+} from "../../../../src/controller/game/players.js";
 import { getPlayerStat } from "../../../../src/controller/game/players.js";
 import { reloadComposant_gameplayPage } from "../../game/gameplayPage.js";
 import { button } from "../../../button/button.js";
@@ -19,7 +20,7 @@ export default function topRowPlayerInformations() {
   let currentPlayer = getPlayerOfCurrentView();
   let playersStat2 = getPlayerStat(currentPlayer, gameData);
   let playerStat1 = playersStat2.splice(Math.round(playersStat2.length / 2));
-if (!currentPlayer) {
+  if (!currentPlayer) {
     displayError("No current player found to display game");
     return "";
   }
@@ -41,12 +42,12 @@ if (!currentPlayer) {
                             )
                             .join("")} 
                              ${gameData.data.spectators
-                            .map(
-                              (player) => /*html*/ `
+                               .map(
+                                 (player) => /*html*/ `
                             <option ${player.position === view.playerView ? "selected" : ""} value="${player.position}">${player.pseudo} (Spectateur)</option>
                           `,
-                            )
-                            .join("")} 
+                               )
+                               .join("")} 
                         </select>
                 </div>
     
@@ -108,16 +109,16 @@ ${currentPlayer.actions.value
     `;
 }
 
-export function changeCurrentView(e) {
-  const position = e.target.value;
+export function changeCurrentView(eOrValue) {
+  const position = eOrValue?.target ? eOrValue.target.value : eOrValue;
   let view = getView();
   view.playerView = parseInt(position);
   storeView(view);
   reload_topRowPlayerInformations();
   reloadComposant_gameplayPage();
 
-    reloadComposant_winPage();
-    reloadComposant_loosePage();
+  reloadComposant_winPage();
+  reloadComposant_loosePage();
 }
 window.changePlayerView = changeCurrentView;
 
@@ -144,9 +145,10 @@ export function displayAskPlayerWidget(event, params) {
   );
   //submit the response
   window.sendAskPlayerValue = function () {
-    localStorage.removeItem("askPlayer"); 
-    const obj = { insertedValue: getValueOfAskPlayerWidget() };  let socket = getSocketOfPlayerOfCurrentView()
-      
+    localStorage.removeItem("askPlayer");
+    const obj = { insertedValue: getValueOfAskPlayerWidget() };
+    let socket = getSocketOfPlayerOfCurrentView();
+
     if (
       socket &&
       obj &&
@@ -154,7 +156,7 @@ export function displayAskPlayerWidget(event, params) {
       obj.insertedValue != undefined
     ) {
       console.log({ event, obj, params });
-     socket.emit("playerInsertedValue", { event, obj, params });
+      socket.emit("playerInsertedValue", { event, obj, params });
       hideAskPlayerWidget();
     } else {
       console.warn("Dont find socket to send value of widget");
@@ -181,7 +183,7 @@ export function displayAskPlayerWidget(event, params) {
            
       </div>`;
   }
-} 
+}
 // hide widget without any action
 export function hideAskPlayerWidget() {
   localStorage.removeItem("askPlayer");

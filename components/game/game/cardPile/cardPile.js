@@ -54,7 +54,7 @@ export function reloadComposant_gameplayCardPile(
   label,
   classname = "",
 ) {
-  let pileContainer = document.querySelector(`#pile-type-${type}`);
+  let pileContainer = content.querySelector(`#pile-type-${type}`);
   if (pileContainer) {
     pileContainer.remove();
   }

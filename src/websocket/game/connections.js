@@ -1,14 +1,19 @@
-import { storeGameData,
+import {
+  storeGameData,
   storeRoomId,
-  initView, storeDataOfPlayer  } from "../../controller/game/dataStorage.js"; 
+  initView,
+  setPlayerView,
+  storeDataOfPlayer,
+} from "../../controller/game/dataStorage.js";
 import { loadRoute } from "../../router/router.js";
 import { players } from "../../../main.js";
 import { connectSocket } from "../../connection.js";
-import {reloadComposant_waitingPagePlayersBlock} from "../../../components/game/waitingPage/waitingPagePlayersBlock/waitingPagePlayersBlock.js";
-import {reloadComposant_waitingPageCopyBlock} from "../../../components/game/waitingPage/waitingPageCopyBlock/waitingPageCopyBlock.js";
+import { reloadComposant_waitingPagePlayersBlock } from "../../../components/game/waitingPage/waitingPagePlayersBlock/waitingPagePlayersBlock.js";
+import { reloadComposant_waitingPageCopyBlock } from "../../../components/game/waitingPage/waitingPageCopyBlock/waitingPageCopyBlock.js";
 import { reloadComposant_StatPage } from "../../../components/game/statPage/statPage.js";
 import { joinRoom } from "../../controller/game/louancher.js";
-import {gameChanges} from "../../controller/game/game.js";
+import { gameChanges } from "../../controller/game/game.js";
+import { changeCurrentView } from "../../../components/game/statPage/topRowPlayerInformations/topRowPlayerInformations.js";
 
 // ============= TEST APP =============
 export function gameConnectionsListenForTestApp(socket) {
@@ -17,6 +22,7 @@ export function gameConnectionsListenForTestApp(socket) {
     storeGameData(gameData);
     storeRoomId(gameData.roomId);
     players.push({ id: player.id, socket: socket, position: player.position });
+
     initView();
     connectSocket();
     await loadRoute({ path: "/test-config" });
@@ -42,9 +48,14 @@ export function gameConnectionsListenForTestApp(socket) {
 
   socket.on("playerHasJoinedRoom", (gameData) => {
     storeGameData(gameData);
+    let newPlayer = gameData.data.players[gameData.data.players.length - 1];
+    setPlayerView(newPlayer.position);
+    changeCurrentView();
   });
-  socket.on("playerHasJoinedRoomAsSpectator", (gameData) => {
+  socket.on("playerHasJoinedRoomAsSpectator", (gameData, newPlayer) => {
     storeGameData(gameData);
+    setPlayerView(newPlayer.position);
+    changeCurrentView();
   });
 }
 // ============= Player  APP =============
@@ -54,6 +65,8 @@ export function gameConnectionsListen(socket) {
     storeDataOfPlayer(player);
     storeGameData(gameData);
     storeRoomId(gameData.roomId);
+    setPlayerView(0);
+    players.push(gameData.data.players[0]);
     joinRoom(gameData);
   });
 
@@ -62,6 +75,17 @@ export function gameConnectionsListen(socket) {
     storeRoomId(gameData.roomId);
     storeGameData(gameData);
     storeDataOfPlayer(player);
+    setPlayerView(player.position);
+    players.push(player);
+    joinRoom(gameData);
+  });
+  socket.on("changeSpectatorToPlayerValidation", ({ gameData, player }) => {
+    console.log("RECEIVE ROOM JOINED :>>", { gameData, player });
+    storeRoomId(gameData.roomId);
+    storeGameData(gameData);
+    storeDataOfPlayer(player);
+    setPlayerView(player.position);
+    players.push(player);
     joinRoom(gameData);
   });
   socket.on("roomJoinedAsSpectator", ({ gameData, player }) => {

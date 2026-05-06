@@ -25,9 +25,7 @@ export async function loadRoute(params = {}) {
   // si on est deconnecter
   //  on peut refresh et revenir sur la partie
   // si on change de page on delete les data
-  if (route != "/" && route != "/game") {
-    deleteRoomId();
-  }
+
 
   //let roomId = getRoomId();
   //if (roomId && route == "/") {
@@ -37,9 +35,13 @@ export async function loadRoute(params = {}) {
   //}
 
   if (environnement == "test-app") {
+    
    html = getPageForTestApp(route);
   }
   if (environnement == "player-app") { 
+      if (route != "/" && route != "/game" ) {
+    deleteRoomId();
+  }
     html = await getPage(route,params);
   }
   content.innerHTML = html;

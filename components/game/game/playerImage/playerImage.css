@@ -62,9 +62,9 @@
 
   /* user */
   .player0 {
-    bottom: -12%;
-    left: 50%;
-    transform: translate(-50%);
+        bottom: 10%;
+        left: 50%;
+        transform: translate(-50%, 100%);
   }
 
   /*player 1 at left when 3, 4, 5, 6 players */
