@@ -50,4 +50,14 @@ export function updateListOfMessages(messages) {
   storeGameData(gameData);
 }
 
+export function addMessageInLoadingMessage(message) {
+  let container = document.querySelector(".loadMessagesContainer");
+  if (container) {
+    let span = document.createElement("span");
+    span.textContent = message;
+    container.appendChild(span);
+  }
+}
+
+
 window.sendMessageInMessagerie = sendMessageInMessagerie;

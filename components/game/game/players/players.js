@@ -1,4 +1,4 @@
-import { gameplay_identityContainer } from "../identityContainer/identityContainer.js"; 
+import { gameplay_playerImage } from "../playerImage/playerImage.js"; 
 export function gameplay_displayAllPlayers(gameData, currentPlayer) {
   if (!gameData) {
     displayError("No game data found to display game");
@@ -13,7 +13,7 @@ export function gameplay_displayAllPlayers(gameData, currentPlayer) {
   let params = gameData.roomInDb.params.rendering.game;
 
   return /*html */ ` 
-        ${!gameData.data.spectators.some(spectator => spectator.id === currentPlayer.id) ? gameplay_identityContainer(currentPlayer, {
+        ${!gameData.data.spectators.some(spectator => spectator.id === currentPlayer.id) ? gameplay_playerImage(currentPlayer, {
           key: 0,
           displayPoints: params.displayStatistics,
           dislayCardCount: params.displayCountAdversaryHandDeck,
@@ -25,7 +25,7 @@ export function gameplay_displayAllPlayers(gameData, currentPlayer) {
         }) : ""}
             ${players
               .map((player, key) =>
-                gameplay_identityContainer(player, {
+                gameplay_playerImage(player, {
                   key: key + 1,
                   displayPoints: params.displayStatistics,
                   dislayCardCount: params.displayCountAdversaryHandDeck,

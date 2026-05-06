@@ -10,12 +10,3 @@ export function gameplay_messageOfLoading(messages) {
     </div>
   `;
 }
-
-export function addMessageInLoadingMessage(message) {
-  let container = document.querySelector(".loadMessagesContainer");
-  if (container) {
-    let span = document.createElement("span");
-    span.textContent = message;
-    container.appendChild(span);
-  }
-}

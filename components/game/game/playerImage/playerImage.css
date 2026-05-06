@@ -2,137 +2,69 @@
   position: relative;
   .player {
     position: absolute;
+    z-index: 2;
     font-size: 16px;
     display: flex;
-    flex-direction: row;
-    align-items: start;
+    flex-direction: column;
+    align-items: center;
     width: fit-content;
     gap: 11px;
     height: fit-content;
     border-radius: 7px;
     padding: 15px;
     box-sizing: border-box;
-    background: #1a313f;
-    color: white;
+    color: black;
+    text-shadow: 0 0 10.118px rgba(0, 0, 0, 0.97);
+    text-align: center;
 
-    .cardCount-stat {
-      position: absolute;
-      right: -24px;
-      transform: translate(100%);
-      width: 31px;
-      img {
-        height: 100%;
-        width: 100%;
-      }
-      span {
-        position: absolute;
-        text-align: right;
-        right: 5px;
-        top: 6px;
-        color: black;
-      }
-    }
-    .globalValue {
-      position: absolute;
-      right: -15px;
-      transform: translate(100%);
-      span {
-        background: #d08700;
-        padding: 10px 20px;
-        color: white;
-        border-radius: 50px;
-        font-weight: 500;
-      }
-    }
-    .rightStatContainer {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      width: fit-content;
-      gap: 6px;
-      align-items: start;
-      height: fit-content;
-      .pseudo {
-        color: white;
-        font-weight: bold;
-        font-size: 16px;
-      }
-      .role,
-      .gain {
-        display: flex;
-        flex-direction: row;
-        gap: 5px;
-        span {
-          color: white;
-        }
-        img {
-          width: 17px;
-          aspect-ratio: 1 / 1;
-          object-fit: contain;
-        }
-      }
-    }
-
-    .playerImageContainer {
-      width: 30px;
-      aspect-ratio: 1 / 1;
-      display: flex;
-      position: relative;
-
-      flex-direction: row;
-      justify-content: end;
-      align-items: end;
-      border-radius: 50%;
-      border: 1px solid grey;
-      background: white;
-      overflow: hidden;
-      clip-path: border-box;
-      img {
-        object-fit: contain;
-        width: 100%;
-        object-position: bottom;
-        aspect-ratio: 1/1;
-        border-radius: 50%;
-      }
+    .pseudo {
+   
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 0 0 10.118px rgb(89 89 89 / 97%);
+            -webkit-text-stroke-color: #ffffff;
+            -webkit-text-stroke-width: 0.4px;
+      font-family: Arimo;
+      font-size: 22px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
     }
     .withSkin {
-      width: 39px;
-      height: 39px;
+      width: 55px;
+      height: 55px;
+      background-color: white;
       clip-path: border-box;
-      --webkit-clip-path: border-box;
       position: relative;
       border: 0.2px solid #acacac;
       overflow: hidden;
-      border-radius: 50%;
+      border-radius: 18%;
+      border-radius: 15px;
+      border: 2.529px solid color(display-p3 0 0 0 / 0.62);
       img {
-        width: 63px;
-        height: 63px;
+        width: 150%;
+        aspect-ratio: 1/1;
+        height: 150%;
         position: absolute;
         left: 50%;
         transform: translate(-50%);
-        top: -1px;
+        top: -10%;
       }
     }
   }
   .currentPlayerTurn {
-    .playerImageContainer::after {
-      content: "";
-      width: calc(100% - 2px);
-      height: calc(100% - 2px);
-      position: absolute;
-      z-index: 2;
-      border-radius: 50%;
-
-      top: 0px;
-      left: 0px;
-      border: 2px solid gold !important;
+    .playerImageContainer{
+ 
+      border: 4px solid gold !important;
     }
   }
 
   /* user */
   .player0 {
-    bottom: 15px;
-    left: 15px;
+    bottom: -12%;
+    left: 50%;
+    transform: translate(-50%);
   }
 
   /*player 1 at left when 3, 4, 5, 6 players */

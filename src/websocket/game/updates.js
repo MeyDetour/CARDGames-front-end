@@ -1,7 +1,7 @@
 import { storeGameData } from "../../../../src/controller/game/dataStorage.js";
 import { reloadComposant_StatPage } from "../../../components/game/statPage/statPage.js"; 
-
-
+import { gameChanges } from "../../controller/game/game.js";
+import { addMessageInLoadingMessage } from "../../controller/game/messages.js";
 // ============= TEST APP =============
 export function gameUpdatesListenForTestApp(socket) {
 

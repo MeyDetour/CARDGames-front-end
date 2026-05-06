@@ -4,8 +4,11 @@ import { storeGameData,
 import { loadRoute } from "../../router/router.js";
 import { players } from "../../../main.js";
 import { connectSocket } from "../../connection.js";
+import {reloadComposant_waitingPagePlayersBlock} from "../../../components/game/waitingPage/waitingPagePlayersBlock/waitingPagePlayersBlock.js";
+import {reloadComposant_waitingPageCopyBlock} from "../../../components/game/waitingPage/waitingPageCopyBlock/waitingPageCopyBlock.js";
 import { reloadComposant_StatPage } from "../../../components/game/statPage/statPage.js";
 import { joinRoom } from "../../controller/game/louancher.js";
+import {gameChanges} from "../../controller/game/game.js";
 
 // ============= TEST APP =============
 export function gameConnectionsListenForTestApp(socket) {

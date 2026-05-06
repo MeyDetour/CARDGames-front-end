@@ -3,10 +3,7 @@
   position: absolute;
   left: 15px;
   border-radius: 10px;
-  background: rgba(13, 23, 45, 0.8);
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  background: transparent; 
   padding: 12px;
   box-sizing: border-box;
   font-size: 14px;
@@ -22,8 +19,9 @@
 
   height: 179px;
   max-height: 179px;
-  width: 200px;
-  max-width: 200px;
+
+    width: 20%;
+    max-width: 20%;
   h2{
    
     color: white;

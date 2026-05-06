@@ -1,6 +1,7 @@
 import { messageComponent } from "../message/message.js";
 import { getGameData } from "../../../src/controller/game/dataStorage.js";
 import { displayError } from "../../../src/controller/error.js";
+import {sendMessageInMessagerie} from "../../../src/controller/game/messages.js";
 // obligé d'ajouter et de supprimer le composant et 
 // de la mettre dans la page de base car la gameplay page est rechargé
 // et supprimer le composant

@@ -1,19 +1,23 @@
 import { button } from "../../button/button.js";
 import { defaultCard } from "../../defaultCard/defaultCard.js";
-import { gameplay_identityContainer } from "./identityContainer/identityContainer.js";
+import { gameplay_playerImage } from "./playerImage/playerImage.js";
 import { reloadComposant_gameplayPlayers } from "./players/players.js";
-import {environnement} from "../../../main.js"
+import { environnement } from "../../../main.js";
 import { getPlayerOfCurrentView } from "../../../src/controller/game/players.js";
 import {
   getCurrentPlayer,
   getGameData,
-} from "../../../src/controller/game/dataStorage.js"; 
-import{getView}from "../../../src/controller/game/dataStorage.js";
+} from "../../../src/controller/game/dataStorage.js";
+import { getView } from "../../../src/controller/game/dataStorage.js";
 import { displayError } from "../../../src/controller/error.js";
 import { removeMessageNotification } from "../../../src/controller/game/messages.js";
 import { messaegerieComponent } from "../../messagerie/messagerie.js";
 import { gameplay_messageOfLoading } from "./messageOfLoading/messageOfLoading.js";
 import { gameplay_displayAllPlayers } from "./players/players.js";
+import {
+  gameplay_middleCards,
+  reloadComposant_gameplayMiddleCards,
+} from "./middleCards/middleCards.js";
 import {
   gameplay_handdeck,
   reloadComposant_gameplayHanddeck,
@@ -40,12 +44,13 @@ import {
 export default function gameplayPage() {
   let currentPlayer;
   let view;
-  if(environnement == "player-app"){
+  if (environnement == "player-app") {
     currentPlayer = getCurrentPlayer();
-  } if(environnement == "test-app"){
-   currentPlayer= getPlayerOfCurrentView();
-   view = getView()
-  } 
+  }
+  if (environnement == "test-app") {
+    currentPlayer = getPlayerOfCurrentView();
+    view = getView();
+  }
   let gameData = getGameData();
   if (!gameData) {
     displayError("No game data found to display game");
@@ -81,44 +86,14 @@ export default function gameplayPage() {
   );
 
   return /*html */ `
-        <div id="gameplayPage">
+        <div id="gameplayPage" class="${environnement}">
 
-         ${environnement == "player-app" ? gameplay_messageOfLoading(gameData.data.logs) : "" }
-         ${environnement == "player-app" ? gameplay_globalValues({ ...gameData.data, ...gameData.data.globalValueStatic }) : ""}
-         ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList)}
+         ${environnement == "player-app" ? gameplay_messageOfLoading(gameData.data.logs) : ""}
+       ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList)}
          ${gameplay_spectatorBanniere(currentPlayer)}
          
 
-       ${gameplay_cardPile(
-                 cardParams,
-                 actionOnDeck
-                   ? {
-                       playerId: currentPlayer.id,
-                       roomId: gameData.roomId,
-                       action: actionOnDeck ? actionOnDeck.name : null,
-                       actionType: actionOnDeck
-                         ? actionOnDeck.type || "default"
-                         : "default",
-                     }
-                   : null,
-                 "deck",
-                 "Pioche",
-               )}
-          ${gameplay_cardPile(
-            cardParams,
-            actionOnDiscardDeck
-              ? {
-                  playerId: currentPlayer.id,
-                  roomId: gameData.roomId,
-                  action: actionOnDiscardDeck ? actionOnDiscardDeck.name : null,
-                  actionType: actionOnDiscardDeck
-                    ? actionOnDiscardDeck.type || "default"
-                    : "default",
-                }
-              : null,
-            "discardDeck",
-            "Défausse",
-          )}
+    
      
          
          ${gameplay_actionsButtons(
@@ -132,14 +107,55 @@ export default function gameplayPage() {
             ${environnement == "player-app" ? gameplay_menu(gameData.data.players, currentPlayer) : ""}
                    
             ${environnement == "player-app" && params.displayChat ? `<div class="gameplayMessagerie-container"> </div>` : ""}
-        ${  environnement == "player-app" ? `<div class="headerButtons">
+        ${
+          environnement == "player-app"
+            ? `<div class="headerButtons">
                     ${params.displayChat ? button("chat", null, null, "gamePlayeToggleMessagerie", null, "whiteButton gameplayChatButton") : ""}
                     ${button("menu", null, null, "toggleGameplayMenu", null, "whiteButton gameplayMenuButton")}
-            </div>` : ""}
+            </div>`
+            : ""
+        }
           
-            ${gameplay_displayAllPlayers(gameData, currentPlayer)}  
 
-            
+            <div class="table">
+
+            ${gameplay_middleCards(gameData)}  
+            ${gameplay_displayAllPlayers(gameData, currentPlayer)}  
+            ${environnement == "player-app" ? gameplay_globalValues({ ...gameData.data, ...gameData.data.globalValueStatic }) : ""}
+              
+              <div class="center">
+                  ${gameplay_cardPile(
+                    cardParams,
+                    actionOnDeck
+                      ? {
+                          playerId: currentPlayer.id,
+                          roomId: gameData.roomId,
+                          action: actionOnDeck ? actionOnDeck.name : null,
+                          actionType: actionOnDeck
+                            ? actionOnDeck.type || "default"
+                            : "default",
+                        }
+                      : null,
+                    "deck",
+                    "Pioche",
+                  )}
+                ${gameplay_cardPile(
+                  cardParams,
+                  actionOnDiscardDeck
+                    ? {
+                        playerId: currentPlayer.id,
+                        roomId: gameData.roomId,
+                        action: actionOnDiscardDeck ? actionOnDiscardDeck.name : null,
+                        actionType: actionOnDiscardDeck
+                          ? actionOnDiscardDeck.type || "default"
+                          : "default",
+                      }
+                    : null,
+                  "discardDeck",
+                  "Défausse",
+                )}
+                </div>
+            </div>
         </div>
     `;
 }
@@ -154,7 +170,7 @@ export function reloadComposant_gameplayPage() {
     displayError("No game data found to display game");
     return;
   }
-  if (gameData.data.state.value !== "inProgress") { 
+  if (gameData.data.state.value !== "inProgress") {
     return;
   }
 
@@ -163,13 +179,21 @@ export function reloadComposant_gameplayPage() {
     document.querySelector("#content").innerHTML = gameplayPage();
     return;
   }
+  let table = content.querySelector("#gameplayPage .table");
+  if (!table) {
+    return;
+  } let center = content.querySelector("#gameplayPage .table .center");
+  if (!center) {
+    return;
+  }
 
-  let currentPlayer; 
- if(environnement == "player-app"){
+  let currentPlayer;
+  if (environnement == "player-app") {
     currentPlayer = getCurrentPlayer();
-  } if(environnement == "test-app"){
-   currentPlayer= getPlayerOfCurrentView(); 
-  } 
+  }
+  if (environnement == "test-app") {
+    currentPlayer = getPlayerOfCurrentView();
+  }
   if (!currentPlayer) {
     displayError("No current player found to display game");
     return;
@@ -181,11 +205,12 @@ export function reloadComposant_gameplayPage() {
     (action) => action.actionOnDiscardDeck,
   );
 
-  reloadComposant_gameplayPlayers(content, gameData, currentPlayer);
-  reloadComposant_gameplayGlobalValues(content, {
+  reloadComposant_gameplayPlayers(table, gameData, currentPlayer);
+  reloadComposant_gameplayGlobalValues(table, {
     ...gameData.data,
     ...gameData.data.globalValueStatic,
   });
+  reloadComposant_gameplayMiddleCards(table, {});
   reloadComposant_gameplaySpectatorBanniere(content, currentPlayer);
   reloadComposant_gameplayHanddeck(
     content,
@@ -201,7 +226,7 @@ export function reloadComposant_gameplayPage() {
     gameData.roomId,
   );
   reloadComposant_gameplayCardPile(
-    content,
+    center,
     gameData.roomInDb.params.cards,
     actionOnDeck
       ? {
@@ -215,7 +240,7 @@ export function reloadComposant_gameplayPage() {
     "Pioche",
   );
   reloadComposant_gameplayCardPile(
-    content,
+    center,
     gameData.roomInDb.params.cards,
     actionOnDiscardDeck
       ? {

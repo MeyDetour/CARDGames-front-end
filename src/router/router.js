@@ -40,7 +40,7 @@ export async function loadRoute(params = {}) {
    html = getPageForTestApp(route);
   }
   if (environnement == "player-app") { 
-    html = await getPage(route);
+    html = await getPage(route,params);
   }
   content.innerHTML = html;
 }

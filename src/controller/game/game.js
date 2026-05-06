@@ -1,14 +1,8 @@
 // 1. WebSocket (src/websocket/game/connection.js)
 import { connectSocket, socket } from "../../connection.js";
-
-// 2. Router (src/router/router.js)
-import { navigateTo } from "../../router/router.js";
-
-// 3. Pages (src/pages/game/game.js)
+import {spookySkins} from "../../../data/spookySkins.js";
+import { navigateTo } from "../../router/router.js"; 
 import { reloadComposant_gamePage } from "../../../pages/game/game.js";
-
-// 4. DataStorage (Même dossier : src/controller/game/dataStorage.js)
-// Ici, on reste en relatif local, c'est plus propre
 import { 
     deleteAllGameVariablesSaved, 
     storeDataOfPlayer, 
@@ -31,9 +25,10 @@ export async function gameLogin(params) {
   let pseudo = document.querySelector("#pseudo")
     ? document.querySelector("#pseudo").value
     : null;
-  let skin = document.querySelector(".choose-skin-image")
+  let skinName = document.querySelector(".choose-skin-image")
     ? document.querySelector(".choose-skin-image").dataset.skin
     : null;
+let skin = spookySkins.find((s) => s.name === skinName);
   let gameId = params.gameId;
   let roomId = params.roomId;
 

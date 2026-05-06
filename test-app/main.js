@@ -17,6 +17,7 @@ import {
   deleteToken,
   deleteGameId,
 } from "./src/controller/game/dataStorage.js";
+import {env } from "./env.js";
 
 
 export let token = null;
@@ -46,7 +47,7 @@ const getGame = async () => {
 const disconnectAndReconnect = () => {
   if (window.opener) {
     // On prévient Studio que la session est morte
-    window.opener.postMessage("UNAUTHORIZED", environnement.CARD_STUDIO_FRONT_END_URL);
+    window.opener.postMessage("UNAUTHORIZED", env.CARD_STUDIO_FRONT_END_URL);
     // On ferme la fenêtre de test
     deleteToken();
     deleteGameId();
@@ -57,7 +58,7 @@ const disconnectAndReconnect = () => {
   }
 };
 const redirectToCardStudio = () => {
-  window.location.href = environnement.CARD_STUDIO_FRONT_END_URL;
+  window.location.href = env.CARD_STUDIO_FRONT_END_URL;
 };
 const exit = () => {
   disconnectAndReconnect();
@@ -67,13 +68,14 @@ window.exit = exit;
 window.redirectToCardStudio = redirectToCardStudio;
 const handleMessage = (event) => {
   if (token || gameId) return;
-  if (event.origin !== environnement.CARD_STUDIO_FRONT_END_URL) {
+  if (event.origin !== env.CARD_STUDIO_FRONT_END_URL) {
     return;
   }
 
   console.log("RECEIVE DATA FROM CARD STUDIO");
   token = event.data.token;
   gameId = event.data.gameId;
+  console.log( token,gameId);
 
   if (token) {
     setToken(token);
@@ -88,11 +90,10 @@ const initApp = async () => {
   // 3 - handle message from card studio with token and gameId to start the app
 
   // 2 - wait for message from card studio with token and gameId to start the app
-  window.addEventListener("message", handleMessage);
-  console.log("add before unload");
+  window.addEventListener("message", handleMessage); 
   // 1 - response if card studio call test app
   if (window.opener && !token && !gameId) {
-    window.opener.postMessage("READY_FOR_TOKEN", environnement.CARD_STUDIO_FRONT_END_URL);
+    window.opener.postMessage("READY_FOR_TOKEN", env.CARD_STUDIO_FRONT_END_URL);
   }
 
   // 4 - if page is reloaded and token and gameId are already in localStorage, start the app

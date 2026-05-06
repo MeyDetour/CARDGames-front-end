@@ -1,20 +1,19 @@
 import gameplayPage, {
   reloadComposant_gameplayPage,
-} from "../../components/game/game/gameplayPage.js";
+} from "../../../components/game/game/gameplayPage.js";
 import {
   winPage,
   reloadComposant_winPage,
-} from "../../components/game/winPage/winPage.js"; 
+} from "../../../components/game/winPage/winPage.js";
 import {
   loosePage,
   reloadComposant_loosePage,
-} from "../../components/game/loosePage/loosePage.js";
-import { getPlayerOfCurrentView } from "../../../src/controller/game/players.js";
+} from "../../../components/game/loosePage/loosePage.js";
+import { getPlayerOfCurrentView } from "../../src/controller/game/players.js";
 
-import { displayError } from "../../src/controller/error.js";
-import { 
-  getGameData
-} from "../../src/controller/game/dataStorage.js"; import { loadRoute } from "../../src/router/router.js";
+import { displayError } from "../../../src/controller/error.js";
+import { getGameData } from "../../../src/controller/game/dataStorage.js";
+import { loadRoute,navigateTo } from "../../../src/router/router.js";
 
 export function gamePage(params = {}) {
   let currentPlayer = getPlayerOfCurrentView();
@@ -35,7 +34,7 @@ export function gamePage(params = {}) {
     navigateTo({ path: "/games" });
     return;
   }
- 
+
   if (gameData.data.state.value == "inProgress") {
     return gameplayPage();
   }
@@ -51,7 +50,7 @@ export function reloadComposant_gamePage() {
     return;
   }
   if (gameData.data.state.value == "waitingPlayers") {
-    loadRoute({path: "test-config"});
+    loadRoute({ path: "test-config" });
   }
   if (gameData.data.state.value == "inProgress") {
     console.log("reload in progress");
@@ -60,15 +59,19 @@ export function reloadComposant_gamePage() {
   if (
     (gameData.data.state.value == "endOfGame" ||
       currentPlayer.haswin.value === true) &&
-    gameData.data.spectators.some(spectator => spectator.id === currentPlayer.id) !== true
+    gameData.data.spectators.some(
+      (spectator) => spectator.id === currentPlayer.id,
+    ) !== true
   ) {
- console.log("reload win/lose page");
+    console.log("reload win/lose page");
     reloadComposant_winPage();
   }
   if (
     (gameData.data.state.value == "endOfGame" ||
       currentPlayer.hasloose.value === true) &&
-    gameData.data.spectators.some(spectator => spectator.id === currentPlayer.id) !== true
+    gameData.data.spectators.some(
+      (spectator) => spectator.id === currentPlayer.id,
+    ) !== true
   ) {
     console.log("reload win/lose page");
     reloadComposant_loosePage();

@@ -1,7 +1,17 @@
-import { gameManagementListen } from "./websocket/game/management.js";
+import {
+  gameManagementListen,
+  gameManagementListenForTestApp,
+} from "./websocket/game/management.js";
 import { websocketErrorListen } from "./websocket/error/error.js";
-import { gameUpdatesListen } from "./websocket/game/updates.js";
-import { gameConnectionsListen } from "./websocket/game/connections.js";
+import {
+  gameUpdatesListen,
+  gameUpdatesListenForTestApp,
+} from "./websocket/game/updates.js";
+import { gameMessagerieListen } from "./websocket/game/messagerie.js";
+import {
+  gameConnectionsListen,
+  gameConnectionsListenForTestApp,
+} from "./websocket/game/connections.js";
 import { gameActionsListen } from "./websocket/game/action.js";
 import { env } from "../env.js";
 import { getRoomId } from ".//controller/game/dataStorage.js";
@@ -16,9 +26,9 @@ import { apiClient } from "../src/helpers/api.js";
 import { getView } from "./controller/game/dataStorage.js";
 import { environnement } from "../main.js";
 
-export function connectSocket() {
+export function connectSocket(game) {
   if (environnement === "test-app") {
-    connectSocketForTestApp();
+    connectSocketForTestApp(game);
   } else {
     connectSocketForPlayerApp();
   }
@@ -44,8 +54,9 @@ export async function connectSocketForPlayerApp() {
   //===============ROOM CONNECTION=============
 
   gameConnectionsListen(socket);
+  //===============Messages=============
+  gameMessagerieListen(socket);
   //===============ACTIONS=============
-
   gameActionsListen(socket);
 }
 

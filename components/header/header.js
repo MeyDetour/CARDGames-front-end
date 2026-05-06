@@ -5,9 +5,7 @@ export function headerComponent(page = "games") {
     <header class="headerGames"> 
      ${button("left-arrow-dark", null, "/", null, "Retour", "withoutborder")}
                    
-         
-           ${page == "games" ? button("link-dark", null, "/enter-link", null, "Entrer un lien", "greyBorderButton") : ""}
-                    
+          
         </header>
     `;
 }

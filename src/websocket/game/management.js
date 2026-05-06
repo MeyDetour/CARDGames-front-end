@@ -1,6 +1,7 @@
 import { storeGameData } from "../../../../src/controller/game/dataStorage.js";
 import { reloadComposant_winPage } from "../../../components/game/winPage/winPage.js";
 import { reloadComposant_StatPage } from "../../../components/game/statPage/statPage.js";
+import { reloadComposant_gamePage } from "../../../pages/game/game.js";
 
 // ============= TEST APP =============
 

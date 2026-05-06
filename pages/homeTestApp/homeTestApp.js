@@ -1,4 +1,4 @@
-import { button } from "../../components/button/button.js";
+import { button } from "../../../components/button/button.js";
 
 export function homePage() {
   return /*html*/ `  <div class="homePage">
