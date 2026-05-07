@@ -50,10 +50,8 @@ export function statPage() {
 }
 
 export function reloadComposant_StatPage() {
-  console.log("=====RELOAD STATT PAGE==========");
-  console.log(players);
-  let gameData = getGameData();
-  console.log(gameData);
+  console.log("=====RELOAD STATT PAGE=========="); 
+  let gameData = getGameData(); 
   if (!gameData) {
     displayError("No game data found to display game");
     return;

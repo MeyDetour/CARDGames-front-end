@@ -109,9 +109,9 @@ export function getView() {
       playerView: players.length > 0 ? players[0].position : "1",
     }
   );
-}export function setPlayerView(number) {
+}export function setPlayerView(nb) {
   let view = getView();
-  view.playerView = number;
+  view.playerView = nb;
   storeView(view);
 }
 export function initView() {

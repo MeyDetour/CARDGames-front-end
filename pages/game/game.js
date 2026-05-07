@@ -19,6 +19,7 @@ import {
   getGameData
 } from "../../src/controller/game/dataStorage.js";
 import { incrementePlayerCount } from "../../src/controller/game/gameStatistics.js";
+import { reloadComposant_StatPage } from "../../components/game/statPage/statPage.js";
 
 export function gamePage(params = {}) {
   let currentPlayer = getCurrentPlayer();
@@ -63,7 +64,12 @@ export function reloadComposant_gamePage() {
   }
   if (gameData.data.state.value == "inProgress") {
     console.log("reload in progress");
+    if (environnement == "player-app") {
     reloadComposant_gameplayPage();
+    }
+    if (environnement == "test-app") {
+      reloadComposant_StatPage();
+    }
   }
   if (
     (gameData.data.state.value == "endOfGame" ||

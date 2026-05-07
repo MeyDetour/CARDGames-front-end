@@ -1,6 +1,7 @@
 import {
   getView,
   storeView,
+  setPlayerView,
 } from "../../../../src/controller/game/dataStorage.js";
 import { getGameData } from "../../../../src/controller/game/dataStorage.js";
 import {
@@ -111,9 +112,7 @@ ${currentPlayer.actions.value
 
 export function changeCurrentView(eOrValue) {
   const position = eOrValue?.target ? eOrValue.target.value : eOrValue;
-  let view = getView();
-  view.playerView = parseInt(position);
-  storeView(view);
+ setPlayerView(position);
   reload_topRowPlayerInformations();
   reloadComposant_gameplayPage();
 

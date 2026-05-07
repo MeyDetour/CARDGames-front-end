@@ -1,3 +1,15 @@
+#gameplayPage.test-app {
+  .player {
+    .withSkin {
+      width: 40px;
+      height: 40px;
+      gap: 4px;
+    }
+    .pseudo {
+      font-size: 16px;
+    }
+  }
+}
 #gameplayPage {
   position: relative;
   .player {
@@ -11,20 +23,18 @@
     gap: 11px;
     height: fit-content;
     border-radius: 7px;
-    padding: 15px;
     box-sizing: border-box;
     color: black;
     text-shadow: 0 0 10.118px rgba(0, 0, 0, 0.97);
     text-align: center;
 
     .pseudo {
-   
-            color: #fff;
-            font-weight: bold;
-            text-align: center;
-            text-shadow: 0 0 10.118px rgb(89 89 89 / 97%);
-            -webkit-text-stroke-color: #ffffff;
-            -webkit-text-stroke-width: 0.4px;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 0 0 10.118px rgb(89 89 89 / 97%);
+      -webkit-text-stroke-color: #ffffff;
+      -webkit-text-stroke-width: 0.4px;
       font-family: Arimo;
       font-size: 22px;
       font-style: normal;
@@ -54,180 +64,539 @@
     }
   }
   .currentPlayerTurn {
-    .playerImageContainer{
- 
+    .playerImageContainer {
       border: 4px solid gold !important;
     }
   }
 
-  /* user */
+  /* user - always at bottom */
   .player0 {
-        bottom: 10%;
-        left: 50%;
-        transform: translate(-50%, 100%);
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, 100%);
   }
 
-  /*player 1 at left when 3, 4, 5, 6 players */
-  .player1.playerCount3,
-  .player1.playerCount4,
-  .player1.playerCount5,
-  .player1.playerCount6 {
-    top: 40%;
-    left: 15px;
-  }
-
-  /*==============2players==============*/
-  /*player 1 at top when 2 players*/
+  /*==============2 players==============*/
+  /* player 1 at top */
   .player1.playerCount2 {
-    top: 15px;
+    top: -15%;
     left: 50%;
-    transform: translate(-50%, 0);
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
   }
 
-  /*==============3players==============*/
-
-  /*player 1 at left when 3 players*/
-  /*player 2 at right when 3 players*/
+  /*==============3 players==============*/
+  /* player 1 at left */
+  .player1.playerCount3 {
+    top: 50%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 2 at right */
   .player2.playerCount3 {
-    top: 40%;
-    right: 15px;
-    flex-direction: row-reverse;
+    top: 50%;
+    right: -60px;
+    transform: translate(0, -50%);
   }
 
-  /*==============4players==============*/
-
-  /*player 1 at left when 4 players*/
-  /*player 2 at top when 4 players*/
+  /*==============4 players==============*/
+  /* player 1 at left */
+  .player1.playerCount4 {
+    top: 50%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 2 at top */
   .player2.playerCount4 {
-    top: 15px;
+    top: -15%;
     left: 50%;
-    transform: translate(-50%, 0);
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
   }
-  /*player 3 at right when4 players*/
+  /* player 3 at right */
   .player3.playerCount4 {
-    top: 40%;
-    right: 15px;
-    flex-direction: row-reverse;
+    top: 50%;
+    right: -60px;
+    transform: translate(0, -50%);
   }
 
-  /*==============5players==============*/
-
-  /*player 1 at left when 5 players*/
-  /*player 2 at top when 5 players*/
+  /*==============5 players==============*/
+  /* player 1 at left */
+  .player1.playerCount5 {
+    top: 50%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 2 at top-left */
   .player2.playerCount5 {
-    top: 15px;
-    left: 35%;
-  }
-  /*player 3 at top when 5 players*/
-  .player3.playerCount5 {
-    top: 15px;
-    right: 35%;
-  }
-  /*player 4 at right when 5 players*/
-  .player4.playerCount5 {
-    top: 40%;
-    right: 15px;
-    flex-direction: row-reverse;
-  }
-
-  /*==============6players==============*/
-
-  /*player 1 at left when 6 players*/
-  /*player 2 at top when 6 players*/
-  .player2.playerCount6 {
-    top: 15px;
-    left: 27%;
-  }
-  /*player 3 at top when 6 players*/
-  .player3.playerCount6 {
-    top: 15px;
-    right: 50%;
-  }
-  /*player 4 at top when 6 players*/
-  .player4.playerCount6 {
-    top: 15px;
-    right: 20%;
-  }
-
-  /*player 5 at top when 6 players*/
-  .player5.playerCount6 {
-    top: 40%;
-    right: 15px;
-    flex-direction: row-reverse;
-  }
-  /*==============7players==============*/
-
-  /*player 1 at left when 7 players*/
-  .player1.playerCount7 {
-    top: 60%;
-    left: 21px;
-  }
-  /*player 2 at left when 7 players*/
-  .player2.playerCount7 {
-    top: 35%;
-    left: 21px;
-  }
-  /*player 3 at top when 7 players*/
-  .player3.playerCount7 {
-    top: 15px;
+    top: -15%;
     left: 33%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
   }
-  /*player 4 at top when 7 players*/
-  .player4.playerCount7 {
-    top: 15px;
-    right: 33%;
+  /* player 3 at top-right */
+  .player3.playerCount5 {
+    top: -15%;
+    left: 67%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
   }
-
-  /*player 5 at top when 7 players*/
-  .player5.playerCount7 {
-    top: 35%;
-    right: 15px;
-    flex-direction: row-reverse;
-  } /*player 6 at top when 7 players*/
-  .player6.playerCount7 {
-    top: 60%;
-    right: 15px;
-    flex-direction: row-reverse;
+  /* player 4 at right */
+  .player4.playerCount5 {
+    top: 50%;
+    right: -60px;
+    transform: translate(0, -50%);
   }
 
-  /*==============8players==============*/
-
-  /*player 1 at left when 8 players*/
-  .player1.playerCount8 {
-    top: 60%;
-    left: 21px;
+  /*==============6 players==============*/
+  /* player 1 at left */
+  .player1.playerCount6 {
+    top: 50%;
+    left: -60px;
+    transform: translate(0, -50%);
   }
-  /*player 2 at left when 8 players*/
-  .player2.playerCount8 {
-    top: 35%;
-    left: 21px;
+  /* player 2 at top-left */
+  .player2.playerCount6 {
+    top: -15%;
+    left: 25%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
   }
-  /*player 3 at top when 8 players*/
-  .player3.playerCount8 {
-    top: 15px;
-    left: 27%;
-  }
-  /*player 4 at top when 8 players*/
-  .player4.playerCount8 {
-    top: 15px;
+  /* player 3 at top-center */
+  .player3.playerCount6 {
+    top: -15%;
     left: 50%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 4 at top-right */
+  .player4.playerCount6 {
+    top: -15%;
+    left: 75%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 5 at right */
+  .player5.playerCount6 {
+    top: 50%;
+    right: -60px;
+    transform: translate(0, -50%);
   }
 
-  /*player 5 at top when 8 players*/
+  /*==============7 players==============*/
+  /* player 1 at left-top */
+  .player1.playerCount7 {
+    top: 30%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 2 at left-bottom */
+  .player2.playerCount7 {
+    top: 70%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 3 at top-left */
+  .player3.playerCount7 {
+    top: -15%;
+    left: 33%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 4 at top-right */
+  .player4.playerCount7 {
+    top: -15%;
+    left: 67%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 5 at right-top */
+  .player5.playerCount7 {
+    top: 30%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 6 at right-bottom */
+  .player6.playerCount7 {
+    top: 70%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+
+  /*==============8 players==============*/
+  /* player 1 at left-top */
+  .player1.playerCount8 {
+    top: 30%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 2 at left-bottom */
+  .player2.playerCount8 {
+    top: 70%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 3 at top-left */
+  .player3.playerCount8 {
+    top: -15%;
+    left: 25%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 4 at top-center */
+  .player4.playerCount8 {
+    top: -15%;
+    left: 50%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 5 at top-right */
   .player5.playerCount8 {
-    top: 15px;
-    right: 21%;
+    top: -15%;
+    left: 75%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 6 at right-top */
+  .player6.playerCount8 {
+    top: 30%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 7 at right-bottom */
+  .player7.playerCount8 {
+    top: 70%;
+    right: -60px;
+    transform: translate(0, -50%);
   }
 
-  /*player 6 at top when 8 players*/
-  .player6.playerCount8 {
-    top: 35%;
-    right: 15px;
-    flex-direction: row-reverse;
-  } /*player 7 at top when 8 players*/
-  .player7.playerCount8 {
+  /*==============9 players==============*/
+  /* player 1 at left-top */
+  .player1.playerCount9 {
+    top: 20%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 2 at left-bottom */
+  .player2.playerCount9 {
+    top: 80%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 3 at top-1 */
+  .player3.playerCount9 {
+    top: -15%;
+    left: 20%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 4 at top-2 */
+  .player4.playerCount9 {
+    top: -15%;
+    left: 40%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 5 at top-3 */
+  .player5.playerCount9 {
+    top: -15%;
+    left: 60%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 6 at top-4 */
+  .player6.playerCount9 {
+    top: -15%;
+    left: 80%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 7 at right-top */
+  .player7.playerCount9 {
+    top: 20%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 8 at right-bottom */
+  .player8.playerCount9 {
+    top: 80%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+
+  /*==============10 players==============*/
+  /* player 1 at left-top */
+  .player1.playerCount10 {
+    top: 25%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 2 at left-center */
+  .player2.playerCount10 {
+    top: 50%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 3 at left-bottom */
+  .player3.playerCount10 {
+    top: 75%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 4 at top-left */
+  .player4.playerCount10 {
+    top: -15%;
+    left: 25%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 5 at top-center */
+  .player5.playerCount10 {
+    top: -15%;
+    left: 50%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 6 at top-right */
+  .player6.playerCount10 {
+    top: -15%;
+    left: 75%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 7 at right-top */
+  .player7.playerCount10 {
+    top: 25%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 8 at right-center */
+  .player8.playerCount10 {
+    top: 50%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 9 at right-bottom */
+  .player9.playerCount10 {
+    top: 75%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+
+  /*==============11 players==============*/
+  /* player 1 at left-top */
+  .player1.playerCount11 {
+    top: 25%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 2 at left-center */
+  .player2.playerCount11 {
+    top: 50%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 3 at left-bottom */
+  .player3.playerCount11 {
+    top: 75%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 4 at top-1 */
+  .player4.playerCount11 {
+    top: -15%;
+    left: 20%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 5 at top-2 */
+  .player5.playerCount11 {
+    top: -15%;
+    left: 40%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 6 at top-3 */
+  .player6.playerCount11 {
+    top: -15%;
+    left: 60%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 7 at top-4 */
+  .player7.playerCount11 {
+    top: -15%;
+    left: 80%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 8 at right-top */
+  .player8.playerCount11 {
+    top: 25%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 9 at right-center */
+  .player9.playerCount11 {
+    top: 50%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 10 at right-bottom */
+  .player10.playerCount11 {
+    top: 75%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+
+  /*==============12 players==============*/
+  /* player 1 at left-top */
+  .player1.playerCount12 {
+    top: 25%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 2 at left-center */
+  .player2.playerCount12 {
+    top: 50%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 3 at left-bottom */
+  .player3.playerCount12 {
+    top: 75%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 4 at top-1 */
+  .player4.playerCount12 {
+    top: -15%;
+    left: 17%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 5 at top-2 */
+  .player5.playerCount12 {
+    top: -15%;
+    left: 33%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 6 at top-3 */
+  .player6.playerCount12 {
+    top: -15%;
+    left: 50%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 7 at top-4 */
+  .player7.playerCount12 {
+    top: -15%;
+    left: 67%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 8 at top-5 */
+  .player8.playerCount12 {
+    top: -15%;
+    left: 83%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 9 at right-top */
+  .player9.playerCount12 {
+    top: 25%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 10 at right-center */
+  .player10.playerCount12 {
+    top: 50%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 11 at right-bottom */
+  .player11.playerCount12 {
+    top: 75%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+
+  /*==============13 players==============*/
+  /* player 1 at left-1 */
+  .player1.playerCount13 {
+    top: 20%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 2 at left-2 */
+  .player2.playerCount13 {
+    top: 40%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 3 at left-3 */
+  .player3.playerCount13 {
     top: 60%;
-    right: 15px;
-    flex-direction: row-reverse;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 4 at left-4 */
+  .player4.playerCount13 {
+    top: 80%;
+    left: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 5 at top-1 */
+  .player5.playerCount13 {
+    top: -15%;
+    left: 20%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 6 at top-2 */
+  .player6.playerCount13 {
+    top: -15%;
+    left: 40%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 7 at top-3 */
+  .player7.playerCount13 {
+    top: -15%;
+    left: 60%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 8 at top-4 */
+  .player8.playerCount13 {
+    top: -15%;
+    left: 80%;
+    flex-direction: column-reverse;
+    transform: translate(-50%, -50%);
+  }
+  /* player 9 at right-1 */
+  .player9.playerCount13 {
+    top: 20%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 10 at right-2 */
+  .player10.playerCount13 {
+    top: 40%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 11 at right-3 */
+  .player11.playerCount13 {
+    top: 60%;
+    right: -60px;
+    transform: translate(0, -50%);
+  }
+  /* player 12 at right-4 */
+  .player12.playerCount13 {
+    top: 80%;
+    right: -60px;
+    transform: translate(0, -50%);
   }
 }

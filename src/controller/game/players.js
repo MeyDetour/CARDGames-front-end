@@ -139,19 +139,21 @@ export function getPlayerOfCurrentView() {
     console.warn("Invalid gameData structure:", gameData);
     return null;
   }
-  let view = getView();
-  console.log(view);
-  console.log(gameData);
-
+  let view = getView(); 
   let player = gameData.data.players.find(
     (player) => player.position == view.playerView,
   );
   if (player) return player;
-  return (
+  player =
     gameData.data.spectators.find(
       (spectator) => spectator.position == view.playerView,
-    ) || null
-  );
+    ) 
+  if (player) return player;
+
+  console.warn("No player found for current view:", view.playerView);
+  console.log(gameData.data.players);
+  console.log(gameData.data.spectators);
+  return null;
 }
 export function getSocketOfPlayerOfCurrentView() {
   let gameData = getGameData();

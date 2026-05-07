@@ -6,14 +6,19 @@ import {
 } from "../../../../src/controller/game/dataStorage.js";
 import { displayError } from "../../../../src/controller/error.js";
 import { getCardSort } from "../../../../src/controller/game/dataStorage.js";
-import { isPassifPlayer } from "../../../../src/controller/game/players.js"; 
+import { isPassifPlayer } from "../../../../src/controller/game/players.js";
 import { getPlayerOfCurrentView } from "../../../../src/controller/game/players.js";
 import { environnement } from "../../../../main.js";
 
 // Separate component for the player's hand deck in the gameplay page
 // Separe les cartes du joueurs en plusieurs tas de 11 cartes
 // maximum pour éviter les problèmes d'affichage et de superposition
-export function gameplay_handdeck(displayHandDeck, handDeck, cardList) {
+export function gameplay_handdeck(
+  displayHandDeck,
+  handDeck,
+  cardList,
+  paramsPlayerHand,
+) {
   if (!displayHandDeck) {
     return "";
   }
@@ -30,74 +35,114 @@ export function gameplay_handdeck(displayHandDeck, handDeck, cardList) {
   if (isPassifPlayer(currentPlayer)) {
     return "";
   }
-  let sort = getCardSort();
-  let sortedHandDeck = [...handDeck];
-  if (sort === "value") {
-    sortedHandDeck.sort((a, b) => {
-      const cardA = cardList[a];
-      const cardB = cardList[b];
+ 
+  if (
+    paramsPlayerHand?.template
+      ? paramsPlayerHand.template.includes("grid")
+      : false
+  ) {
+    const rows = parseInt(
+      paramsPlayerHand.template.split("grid")[1].split("x")[0],
+    ); // Extrait le nombre de colonnes du template
+    const cols = parseInt(
+      paramsPlayerHand.template.split("grid")[1].split("x")[1],
+    ); // Extrait le nombre de lignes du template 
+    let html = `<div class="handDeck handDeck-grid" style="grid-template-rows: repeat(${rows}, 1fr); grid-template-columns: repeat(${cols}, 1fr);">`;
+    for (let i = 0; i < handDeck.length; i++) {
+      const cardId = handDeck[i];
+      let carElt = cardList[cardId];
+      carElt.faceUp = true;
+      carElt.hoverable = true;
+      if (carElt.type == "french_standard") {
+        const suits = {
+          coeur: "hearts",
+          carreau: "diamonds",
+          trefle: "clubs",
+          pique: "spades",
+        };
 
-      if (!cardA || !cardB) return 0;
+        carElt.suit = suits[carElt.addedAttributs.couleur] || "";
 
-      if (
-        cardA.value === cardB.value &&
-        cardA.type == "french_standard" &&
-        cardB.type == "french_standard"
-      ) {
-        const colorOrder = { coeur: 1, carreau: 2, trefle: 3, pique: 4 };
-        return (
-          (colorOrder[cardA.addedAttributs.couleur] || 0) -
-          (colorOrder[cardB.addedAttributs.couleur] || 0)
-        );
+        html += defaultCard(carElt);
+      } else {
+        html += customCard(carElt);
       }
-
-      return (cardA.value || 0) - (cardB.value || 0);
-    });
+    }
+    html += `</div>`; 
+    return html;
   }
 
-  if (sort === "color") {
-    const colorOrder = {
-      coeur: 1,
-      carreau: 2,
-      trefle: 3,
-      pique: 4,
-    };
+  if (paramsPlayerHand?.template == "linear") {
+    let sort = getCardSort();
+    let sortedHandDeck = [...handDeck];
 
-    sortedHandDeck.sort((a, b) => {
-      const cardA = cardList[a];
-      const cardB = cardList[b];
+    // TRI PAR COULEUR
+    if (sort === "value") {
+      sortedHandDeck.sort((a, b) => {
+        const cardA = cardList[a];
+        const cardB = cardList[b];
 
-      if (cardA.type != "french_standard" || cardB.type != "french_standard")
-        return 0;
-      if (!cardA || !cardB) return 0;
+        if (!cardA || !cardB) return 0;
 
-      const orderA = colorOrder[cardA.addedAttributs.couleur] || 0;
-      const orderB = colorOrder[cardB.addedAttributs.couleur] || 0;
+        if (
+          cardA.value === cardB.value &&
+          cardA.type == "french_standard" &&
+          cardB.type == "french_standard"
+        ) {
+          const colorOrder = { coeur: 1, carreau: 2, trefle: 3, pique: 4 };
+          return (
+            (colorOrder[cardA.addedAttributs.couleur] || 0) -
+            (colorOrder[cardB.addedAttributs.couleur] || 0)
+          );
+        }
 
-      // Si les couleurs sont les mêmes, on trie par valeur
-      if (orderA === orderB) {
         return (cardA.value || 0) - (cardB.value || 0);
-      }
+      });
+    }
 
-      return orderA - orderB;
-    });
+    // TRI PAR VALEUR
+    if (sort === "color") {
+      const colorOrder = {
+        coeur: 1,
+        carreau: 2,
+        trefle: 3,
+        pique: 4,
+      };
+
+      sortedHandDeck.sort((a, b) => {
+        const cardA = cardList[a];
+        const cardB = cardList[b];
+
+        if (cardA.type != "french_standard" || cardB.type != "french_standard")
+          return 0;
+        if (!cardA || !cardB) return 0;
+
+        const orderA = colorOrder[cardA.addedAttributs.couleur] || 0;
+        const orderB = colorOrder[cardB.addedAttributs.couleur] || 0;
+
+        // Si les couleurs sont les mêmes, on trie par valeur
+        if (orderA === orderB) {
+          return (cardA.value || 0) - (cardB.value || 0);
+        }
+
+        return orderA - orderB;
+      });
+    }
+
+    // AFFICHAGE DES CARTES LIMITÉES À 11 PAR RANGÉE
+    let html = "";
+    const chunkSize = 11;
+    const indexMax = Math.ceil(sortedHandDeck.length / chunkSize);
+    for (let i = 0; i < sortedHandDeck.length; i += chunkSize) {
+      const chunk = sortedHandDeck.slice(i, i + chunkSize);
+      const index = Math.floor(i / chunkSize) + 1;
+      html += getHandDeckLine(chunk, cardList, index, indexMax);
+    }
+    return html;
   }
-
-  let html = "";
-  const chunkSize = 11;
-  const indexMax = Math.ceil(sortedHandDeck.length / chunkSize);
-
-  for (let i = 0; i < sortedHandDeck.length; i += chunkSize) {
-    const chunk = sortedHandDeck.slice(i, i + chunkSize);
-    const index = Math.floor(i / chunkSize) + 1;
-
-    html += getHandDeck(chunk, cardList, index, indexMax);
-  }
-
-  return html;
 }
 // affiche une rangée de carte
-function getHandDeck(cards, cardList, index, max) {
+function getHandDeckLine(cards, cardList, index, max) {
   return /*html */ `
     <div class="handDeck handDeck-${index}" style="z-index: ${max - index}; transform: translate(-50%,-${index * 40}px);">
                       ${cards
@@ -150,6 +195,7 @@ export function autoReloadComposant_gameplayHanddeck() {
     gameData.roomInDb.params.rendering.game.displayHandDeck,
     currentPlayer.handDeck.value,
     gameData.roomInDb.assets.cards,
+    gameData.roomInDb.params.rendering.playerHand,
   );
 }
 
@@ -159,8 +205,9 @@ export function reloadComposant_gameplayHanddeck(
   displayHandDeck,
   handDeck,
   cardList,
+  playerHandParams,
 ) {
   document.querySelectorAll(".handDeck").forEach((elt) => elt.remove());
 
-  content.innerHTML += gameplay_handdeck(displayHandDeck, handDeck, cardList);
+  content.innerHTML += gameplay_handdeck(displayHandDeck, handDeck, cardList, playerHandParams);
 }

@@ -13,4 +13,8 @@
       box-shadow: 0 -4px 14px 1px #8080806b;
     }
   } 
+  .handDeck-grid {
+    display: grid;
+    gap: 8px;
+  }
 }

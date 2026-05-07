@@ -88,12 +88,12 @@ export default function gameplayPage() {
   let actionOnDiscardDeck = playerActions.find(
     (action) => action.actionOnDiscardDeck,
   );
-
+ 
   return /*html */ `
         <div id="gameplayPage" class="${environnement}">
 
          ${environnement == "player-app" ? gameplay_messageOfLoading(gameData.data.logs) : ""}
-       ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList)}
+       ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList,gameData.roomInDb.params.rendering.playerHand)}
          ${gameplay_spectatorBanniere(currentPlayer)}
          
 
@@ -239,6 +239,7 @@ export function reloadComposant_gameplayPage() {
     gameData.roomInDb.params.rendering.game.displayHandDeck,
     currentPlayer.handDeck.value,
     gameData.roomInDb.assets.cards,
+    gameData.roomInDb.params.rendering.playerHand
   );
   reloadComposant_gameplayActionsButtons(
     content,
