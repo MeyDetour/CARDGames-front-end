@@ -23,8 +23,7 @@ export function gameplay_displayAllPlayers(gameData, currentPlayer, params) {
     }
   }
   let players = [...nextPlayers, ...beforePlayers];
-
-  console.log(players);
+ 
   // on doit séparé le joueur actuel, ca permet d'avoir player1 player2 pour les autres joueurs sans sauté une valeur à cause du joueur actuel
 
   return /*html */ ` 
@@ -78,6 +77,5 @@ export function reloadComposant_gameplayPlayers(
       "beforeend",
       gameplay_displayAllPlayers(gameData, currentPlayer),
     );
-  }
-  console.log(el);
+  } 
 }

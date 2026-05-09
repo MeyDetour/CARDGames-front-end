@@ -7,15 +7,12 @@ import { environnement } from "../../../main.js";
 import { displayError } from "../../../src/controller/error.js";
 import { getPlayerOfCurrentView } from "../../../src/controller/game/players.js";
 export function loosePage() {
-  let currentPlayer;
-  console.log(environnement);
+  let currentPlayer; 
   if (environnement == "player-app") {
     currentPlayer = getCurrentPlayer();
   }
-  if (environnement == "test-app") {
-    console.log("test app get current player");
-    currentPlayer = getPlayerOfCurrentView();
-    console.log(currentPlayer);
+  if (environnement == "test-app") { 
+    currentPlayer = getPlayerOfCurrentView(); 
   }
   let gameData = getGameData();
   if (!gameData) {

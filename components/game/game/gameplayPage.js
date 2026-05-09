@@ -97,7 +97,13 @@ export default function gameplayPage() {
         <div id="gameplayPage" class="${environnement}">
 
        ${gameplay_messageOfLoading(gameData.data.logs)}
-       ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList, gameData.roomInDb.params.rendering.playerHand)}
+       ${gameplay_handdeck(
+         params.displayHandDeck,
+         handDeck,
+         cardList,
+         gameData.roomInDb.params.rendering.playerHand,
+         gameData.roomInDb.params.cards,
+       )}
          ${gameplay_spectatorBanniere(currentPlayer)}
          
 
@@ -230,7 +236,11 @@ export function reloadComposant_gameplayPage() {
   );
 
   reloadComposant_gameplayMessageOfLoading("#gameplayPage", gameData.data.logs);
-  reloadComposant_gameplayPlayers("#gameplayPage .table", gameData, currentPlayer);
+  reloadComposant_gameplayPlayers(
+    "#gameplayPage .table",
+    gameData,
+    currentPlayer,
+  );
   reloadComposant_gameplayGlobalValues("#gameplayPage .table", {
     ...gameData.data,
     ...gameData.data.globalValueStatic,
@@ -249,6 +259,7 @@ export function reloadComposant_gameplayPage() {
     currentPlayer.handDeck.value,
     gameData.roomInDb.assets.cards,
     gameData.roomInDb.params.rendering.playerHand,
+    gameData.roomInDb.params.cards,
   );
   reloadComposant_gameplayActionsButtons(
     content,
@@ -299,12 +310,11 @@ export function testAppOpenLargeScreen() {
     ".gameplayPageContainer #gameplayPage .headerButtons .gameplayScreenButton img",
   );
   if (img) {
-    let newImage =
-      img.src.includes("/assets/scale-white.svg")
-        ? "/assets/unscale-white.svg"
-        : "/assets/scale-white.svg";
+    let newImage = img.src.includes("/assets/scale-white.svg")
+      ? "/assets/unscale-white.svg"
+      : "/assets/scale-white.svg";
     img.src = newImage;
-  }else{
+  } else {
     console.warn("No image found to change in testAppOpenLargeScreen");
   }
 }

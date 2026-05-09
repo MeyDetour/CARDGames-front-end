@@ -149,10 +149,7 @@ export function getPlayerOfCurrentView() {
       (spectator) => spectator.position == view.playerView,
     ) 
   if (player) return player;
-
-  console.warn("No player found for current view:", view.playerView);
-  console.log(gameData.data.players);
-  console.log(gameData.data.spectators);
+ 
   return null;
 }
 export function getSocketOfPlayerOfCurrentView() {

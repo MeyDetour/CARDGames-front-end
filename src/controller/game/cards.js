@@ -19,6 +19,6 @@ export function getTextualValueOfCard(card) {
     };
     return `${card.value}${symbol(card)}`;
   }else{
-    return "Unknown Card";
+    return card.name??"No name";
   }
 }

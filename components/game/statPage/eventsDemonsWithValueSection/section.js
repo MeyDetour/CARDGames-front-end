@@ -18,10 +18,10 @@ export default function gameplay_statEventsDemonsWithValueSection(
 ) {
   return /*html*/ `
     <div class="statEventsDemonsWithValueSection-navigation">
-                   <span class="span" onclick="changeSubpageOfStatEventsDemonsWithValueSection('value')" class="${view.statEventsDemonsWithValue == "value" ? "selected" : ""}">Variable</span>
-                   <span class="span" onclick="changeSubpageOfStatEventsDemonsWithValueSection('events')" class="${view.statEventsDemonsWithValue == "events" ? "selected" : ""}">Événements</span>
-                   <span class="span" onclick="changeSubpageOfStatEventsDemonsWithValueSection('demons')" class="${view.statEventsDemonsWithValue == "demons" ? "selected" : ""}">Démons</span>
-                   <span class="span" onclick="changeSubpageOfStatEventsDemonsWithValueSection('params')" class="${view.statEventsDemonsWithValue == "params" ? "selected" : ""}">Paramètres</span>
+                   <span class="span ${ view.statEventsDemonsWithValue == "value" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('value')" class="${view.statEventsDemonsWithValue == "value" ? "selected" : ""}">Variable</span>
+                   <span class="span ${ view.statEventsDemonsWithValue == "events" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('events')" class="${view.statEventsDemonsWithValue == "events" ? "selected" : ""}">Événements</span>
+                   <span class="span ${ view.statEventsDemonsWithValue == "demons" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('demons')" class="${view.statEventsDemonsWithValue == "demons" ? "selected" : ""}">Démons</span>
+                   <span class="span ${ view.statEventsDemonsWithValue == "params" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('params')" class="${view.statEventsDemonsWithValue == "params" ? "selected" : ""}">Paramètres</span>
                 </div>
                 <div class="boxContainer">
                         ${

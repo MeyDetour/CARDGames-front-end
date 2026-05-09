@@ -18,6 +18,7 @@ export function gameplay_handdeck(
   handDeck,
   cardList,
   paramsPlayerHand,
+    cardsParams,
 ) {
   if (!displayHandDeck) {
     return "";
@@ -65,14 +66,12 @@ export function gameplay_handdeck(
 
         html += defaultCard(carElt);
       } else {
-        html += customCard(carElt);
+        html += customCard(carElt,cardsParams);
       }
     }
     html += `</div>`; 
     return html;
-  }
-
-  if (paramsPlayerHand?.template == "linear") {
+  }else {
     let sort = getCardSort();
     let sortedHandDeck = [...handDeck];
 
@@ -136,13 +135,13 @@ export function gameplay_handdeck(
     for (let i = 0; i < sortedHandDeck.length; i += chunkSize) {
       const chunk = sortedHandDeck.slice(i, i + chunkSize);
       const index = Math.floor(i / chunkSize) + 1;
-      html += getHandDeckLine(chunk, cardList, index, indexMax);
+      html += getHandDeckLine(chunk, cardList, index, indexMax, cardsParams);
     }
     return html;
   }
 }
 // affiche une rangée de carte
-function getHandDeckLine(cards, cardList, index, max) {
+function getHandDeckLine(cards, cardList, index, max,cardsParams) {
   return /*html */ `
     <div class="handDeck handDeck-${index}" style="z-index: ${max - index}; transform: translate(-50%,-${index * 40}px);">
                       ${cards
@@ -163,7 +162,7 @@ function getHandDeckLine(cards, cardList, index, max) {
 
                             return defaultCard(carElt);
                           } else {
-                            return customCard(carElt);
+                            return customCard(carElt, cardsParams);
                           }
                         })
                         .join("")}
