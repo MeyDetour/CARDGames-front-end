@@ -24,6 +24,7 @@ export function gameplay_displayAllPlayers(gameData, currentPlayer, params) {
   }
   let players = [...nextPlayers, ...beforePlayers];
 
+  console.log(players);
   // on doit séparé le joueur actuel, ca permet d'avoir player1 player2 pour les autres joueurs sans sauté une valeur à cause du joueur actuel
 
   return /*html */ ` 
@@ -57,12 +58,26 @@ export function gameplay_displayAllPlayers(gameData, currentPlayer, params) {
 }
 
 export function reloadComposant_gameplayPlayers(
-  content,
+  selector,
   gameData,
   currentPlayer,
 ) {
-  document.querySelectorAll("#gameplayPage .player").forEach((playerElt) => {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  el.querySelectorAll(".player").forEach((playerElt) => {
     playerElt.remove();
   });
-  content.innerHTML += gameplay_displayAllPlayers(gameData, currentPlayer);
+  const anchor = el.querySelector(".gameplayGlobalValues, .center");
+  if (anchor) {
+    anchor.insertAdjacentHTML(
+      "beforebegin",
+      gameplay_displayAllPlayers(gameData, currentPlayer),
+    );
+  } else {
+    el.insertAdjacentHTML(
+      "beforeend",
+      gameplay_displayAllPlayers(gameData, currentPlayer),
+    );
+  }
+  console.log(el);
 }

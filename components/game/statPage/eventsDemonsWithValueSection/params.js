@@ -23,7 +23,7 @@ export default function statEventsDemonsWithValueSectionParamsSection(
               <img src="/assets/images/spooky-skins/${player.skin.name}.png"/>
           </div>
           <div>
-            <h4>${player.pseudo}</h4>
+            <h4 class="h4">${player.pseudo}</h4>
             ${
               gameData.admin.id !== player.id
                 ? button(
@@ -45,7 +45,7 @@ export default function statEventsDemonsWithValueSectionParamsSection(
               <img src="/assets/images/spooky-skins/${player.skin.name}.png"/>
           </div>
           <div>
-            <h4>${player.pseudo} (Spectateur)</h4>
+            <h4 class="h4">${player.pseudo} (Spectateur)</h4>
             ${
               gameData.admin.id !== player.id
                 ? button(
@@ -81,7 +81,7 @@ export default function statEventsDemonsWithValueSectionParamsSection(
   <details class="statEventsDemonsWithValueSectionParamsSection-players">
     <summary>Paramètres définis</summary>
     <div class="wrapper"> 
-      <span>Autorise les spectacteurs : ${gameData.roomInDb.params.globalGame.autoriseSpectator}</span>
+      <span class="span">Autorise les spectacteurs : ${gameData.roomInDb.params.globalGame.autoriseSpectator}</span>
     </div>  
   </details>
   `

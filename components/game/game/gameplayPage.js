@@ -12,7 +12,10 @@ import { getView } from "../../../src/controller/game/dataStorage.js";
 import { displayError } from "../../../src/controller/error.js";
 import { removeMessageNotification } from "../../../src/controller/game/messages.js";
 import { messaegerieComponent } from "../../messagerie/messagerie.js";
-import { gameplay_messageOfLoading } from "./messageOfLoading/messageOfLoading.js";
+import {
+  gameplay_messageOfLoading,
+  reloadComposant_gameplayMessageOfLoading,
+} from "./messageOfLoading/messageOfLoading.js";
 import { gameplay_displayAllPlayers } from "./players/players.js";
 import {
   gameplay_middleCards,
@@ -32,7 +35,8 @@ import {
   gameplay_playerValues,
   reloadComposant_gameplayPlayerValues,
 } from "./playerValues/playerValues.js";
-import { gameplay_globalValues,
+import {
+  gameplay_globalValues,
   reloadComposant_gameplayGlobalValues,
 } from "./globalValues/globalValues.js";
 import {
@@ -88,12 +92,12 @@ export default function gameplayPage() {
   let actionOnDiscardDeck = playerActions.find(
     (action) => action.actionOnDiscardDeck,
   );
- 
+
   return /*html */ `
         <div id="gameplayPage" class="${environnement}">
 
-         ${environnement == "player-app" ? gameplay_messageOfLoading(gameData.data.logs) : ""}
-       ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList,gameData.roomInDb.params.rendering.playerHand)}
+       ${gameplay_messageOfLoading(gameData.data.logs)}
+       ${gameplay_handdeck(params.displayHandDeck, handDeck, cardList, gameData.roomInDb.params.rendering.playerHand)}
          ${gameplay_spectatorBanniere(currentPlayer)}
          
 
@@ -108,22 +112,20 @@ export default function gameplayPage() {
            currentPlayer,
            gameData.roomId,
          )}
-            ${environnement == "player-app" ? gameplay_menu(gameData.data.players, currentPlayer) : ""}
+        ${gameplay_menu(gameData.data.players, currentPlayer)} 
                    
-            ${environnement == "player-app" && params.displayChat ? `<div class="gameplayMessagerie-container"> </div>` : ""}
-        ${
-          environnement == "player-app"
-            ? `<div class="headerButtons">
+            ${params.displayChat ? `<div class="gameplayMessagerie-container"> </div>` : ""}
+         
+          <div class="headerButtons">
+                    ${environnement == "test-app" ? button("scale-white", null, null, "testAppOpenLargeScreen", null, "whiteButton gameplayScreenButton") : ""}
                     ${params.displayChat ? button("chat", null, null, "gamePlayeToggleMessagerie", null, "whiteButton gameplayChatButton") : ""}
                     ${button("menu", null, null, "toggleGameplayMenu", null, "whiteButton gameplayMenuButton")}
-            </div>`
-            : ""
-        }
+            </div>
         ${gameplay_playerValues(getPlayerOfCurrentView(), {
           key: 0,
           displayPoints: params.displayStatistics,
           dislayCardCount: params.displayCountAdversaryHandDeck,
-          gainList: gainList, 
+          gainList: gainList,
         })}
           
 
@@ -189,7 +191,13 @@ export function reloadComposant_gameplayPage() {
 
   let content = document.querySelector("#gameplayPage");
   if (!content) {
-    document.querySelector("#content").innerHTML = gameplayPage();
+    if (environnement == "test-app") {
+      document.querySelector("#gamePlayPageContainer").innerHTML =
+        gameplayPage();
+      return;
+    } else {
+      document.querySelector("#content").innerHTML = gameplayPage();
+    }
     return;
   }
   let table = content.querySelector(".table");
@@ -221,25 +229,26 @@ export function reloadComposant_gameplayPage() {
     (action) => action.actionOnDiscardDeck,
   );
 
-  reloadComposant_gameplayPlayers(table, gameData, currentPlayer);
-  reloadComposant_gameplayGlobalValues(table, {
+  reloadComposant_gameplayMessageOfLoading("#gameplayPage", gameData.data.logs);
+  reloadComposant_gameplayPlayers("#gameplayPage .table", gameData, currentPlayer);
+  reloadComposant_gameplayGlobalValues("#gameplayPage .table", {
     ...gameData.data,
     ...gameData.data.globalValueStatic,
   });
-  reloadComposant_gameplayMiddleCards(table, {});
+  reloadComposant_gameplayMiddleCards("#gameplayPage .table", {});
   reloadComposant_gameplaySpectatorBanniere(content, currentPlayer);
-  reloadComposant_gameplayPlayerValues(content ,getPlayerOfCurrentView(), {
+  reloadComposant_gameplayPlayerValues(content, getPlayerOfCurrentView(), {
     key: 0,
     displayPoints: params.displayStatistics,
     dislayCardCount: params.displayCountAdversaryHandDeck,
-    gainList: gainList,  
+    gainList: gainList,
   });
   reloadComposant_gameplayHanddeck(
     content,
     gameData.roomInDb.params.rendering.game.displayHandDeck,
     currentPlayer.handDeck.value,
     gameData.roomInDb.assets.cards,
-    gameData.roomInDb.params.rendering.playerHand
+    gameData.roomInDb.params.rendering.playerHand,
   );
   reloadComposant_gameplayActionsButtons(
     content,
@@ -279,7 +288,27 @@ export function reloadComposant_gameplayPage() {
     "Défausse",
   );
 }
-// ===============RELOAD PLAYERS==========
+// ===============TEST APP - SCALE SCREEN==========
+
+export function testAppOpenLargeScreen() {
+  console.log("Open large screen");
+  document
+    .querySelector(".gameplayPageContainer")
+    .classList.toggle("fullScreen");
+  let img = document.querySelector(
+    ".gameplayPageContainer #gameplayPage .headerButtons .gameplayScreenButton img",
+  );
+  if (img) {
+    let newImage =
+      img.src.includes("/assets/scale-white.svg")
+        ? "/assets/unscale-white.svg"
+        : "/assets/scale-white.svg";
+    img.src = newImage;
+  }else{
+    console.warn("No image found to change in testAppOpenLargeScreen");
+  }
+}
+window.testAppOpenLargeScreen = testAppOpenLargeScreen;
 
 // ===============MESSAGERIE=============
 export function gamePlayeToggleMessagerie() {

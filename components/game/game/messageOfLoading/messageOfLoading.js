@@ -10,3 +10,13 @@ export function gameplay_messageOfLoading(messages) {
     </div>
   `;
 }
+
+export function reloadComposant_gameplayMessageOfLoading(selector, messages) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  const oldComposant = el.querySelector(".loadMessagesContainer");
+  if (oldComposant) {
+    oldComposant.remove();
+  }
+  el.insertAdjacentHTML("afterbegin", gameplay_messageOfLoading(messages));
+}

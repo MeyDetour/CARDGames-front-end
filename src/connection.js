@@ -25,6 +25,8 @@ import { players } from "../main.js";
 import { apiClient } from "../src/helpers/api.js";
 import { getView } from "./controller/game/dataStorage.js";
 import { environnement } from "../main.js";
+import { loadRoute } from "./router/router.js";
+
 
 export function connectSocket(game) {
   if (environnement === "test-app") {
@@ -37,8 +39,15 @@ export function connectSocket(game) {
 export let socket = null;
 export async function connectSocketForPlayerApp() {
   if (socket) return;
-  socket = io("ws://localhost:8008");
+  socket = io(env.CARD_STUDIO_WEBSOCKET_URL);
 
+setTimeout(() => {
+  if (!socket || !socket.connected) {
+    console.error("Failed to connect to the server.");
+    displayError("Failed to connect to the server.");
+    return;
+  }
+}, 5000);
   console.log("CONNECTED TO SOCKET SERVER");
   // expose on window so other legacy code can access it
   window.socket = socket;
@@ -64,7 +73,13 @@ export async function connectSocketForTestApp(gameInDB = {}) {
   console.log("TRY TO CONNECT SOCKET IN TEST APP");
 
   let socket = io(env.CARD_STUDIO_WEBSOCKET_URL);
-
+ setTimeout(() => {
+  if (!socket || !socket.connected) {
+    console.error("Failed to connect to the server.");
+   loadRoute({ path: "/page-500" });
+    return;
+  }
+}, 5000);
   if (players.length === 0) {
     console.log("CREATE ROOM");
     socket.emit("createRoom", {

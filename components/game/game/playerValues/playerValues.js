@@ -12,7 +12,8 @@ export function gameplay_playerValues(player, params) {
     return "";
   }
   return /*html */ `
-            <div  data-player-id="${player.id}" class="playerValues ">               
+            <div  data-player-id="${player.id}" class="playerValues ">        
+            <h2>${player.pseudo}</h2>       
                ${params.dislayCardCount ? /*html */ `<div class="cardCount-stat"><img src="/assets/cards-count.svg" alt="Cartes"> <span>${player.handDeck.value.length}</span></div>` : ""}
                
               

@@ -16,10 +16,17 @@ export function gameplay_globalValues(data) {
     `;
 }
 
-export function reloadComposant_gameplayGlobalValues(content, data) {
-  let globalValuesContainer = document.querySelector(".gameplayGlobalValues");
+export function reloadComposant_gameplayGlobalValues(selector, data) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  const globalValuesContainer = el.querySelector(".gameplayGlobalValues");
   if (globalValuesContainer) {
     globalValuesContainer.remove();
   }
-  content.innerHTML += gameplay_globalValues(data);
+  const center = el.querySelector(".center");
+  if (center) {
+    center.insertAdjacentHTML("beforebegin", gameplay_globalValues(data));
+  } else {
+    el.insertAdjacentHTML("beforeend", gameplay_globalValues(data));
+  }
 }

@@ -20,6 +20,7 @@ import {
 } from "../../src/controller/game/dataStorage.js";
 import { incrementePlayerCount } from "../../src/controller/game/gameStatistics.js";
 import { reloadComposant_StatPage } from "../../components/game/statPage/statPage.js";
+import { environnement } from "../../main.js";
 
 export function gamePage(params = {}) {
   let currentPlayer = getCurrentPlayer();

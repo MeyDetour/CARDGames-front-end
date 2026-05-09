@@ -2,10 +2,11 @@ import { apiClient } from "../../../src/helpers/api.js";
 import { button } from "../../button/button.js";
 import { rate } from "./rate/rate.js";
 import { getGameData } from "../../../src/controller/game/dataStorage.js";
+// IMPORTANT
 // obligé d'ajouter et de supprimer le composant et 
 // de la mettre dans la page de base car la gameplay page est rechargé
 // et supprimer le composant
-
+import { environnement } from "../../../main.js";
 
 function widgetLetCommentaire( 
   buttonFunctionName, 
@@ -53,6 +54,10 @@ function getRateInCommentInput() {
   return parseInt(checked.value);
 }
 export function displayLetCommentWidget( ) {
+  if(environnement == "test-app"){
+    console.warn("displayLetCommentWidget is not available in test-app environment");
+    return;
+  }
   let gameData = getGameData();
   if (!gameData) {
     console.warn("No game data found to display let comment widget");

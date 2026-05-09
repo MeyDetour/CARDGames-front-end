@@ -21,7 +21,7 @@ body {
   -webkit-user-select: none;
   user-select: none;
 }
-h1 {
+.h1 {
   background: linear-gradient(90deg, #a600ff 0%, #db00e6 100%);
   font-weight: bold;
   font-size: 83px;
@@ -30,7 +30,7 @@ h1 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2 {
+.h2 {
   background: linear-gradient(90deg, #a600ff 0%, #db00e6 100%);
 
     font-weight: bold;
@@ -41,17 +41,17 @@ h2 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h4{
+.h4{
 
     margin: 0;
 }
 
-p {
+.p {
   text-align: center;
   color: #475567;
 }
 
-span {
+.span {
   color: var(--tertiary);
 }
 

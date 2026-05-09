@@ -12,11 +12,11 @@ export function testConfigPage(params = {}) {
 
   return /*html*/ `  <div class="testConfigPage">
           <div class="head" >
-              <h2>${gameData.roomInDb.name}</h2> 
+              <h2 class="h2">${gameData.roomInDb.name}</h2> 
           </div> 
           <div class="row">
             <div class="left">
-              <h3>Joueurs (${players.length})</h3>
+              <h3 class="h3">Joueurs (${players.length})</h3>
                 <div class="playerWrapper">
                   ${players
                     .map((player, index) => {
@@ -27,7 +27,7 @@ export function testConfigPage(params = {}) {
                                 <img src="/assets/images/spooky-skins/${player.skin.name}.png"/>
                             </div>
                             <div>
-                              <h4>${player.pseudo}</h4>
+                              <h4 class="h4">${player.pseudo}</h4>
                               ${
                                 gameData.admin.id !== player.id
                                   ? button(
@@ -63,9 +63,9 @@ export function testConfigPage(params = {}) {
                 </div>
             </div>
             <div class="right">
-            <h3>Paramètres du jeu</h3>
+            <h3 class="h3">Paramètres du jeu</h3>
               <div class="explicationSection">
-                <p>
+                <p class="p">
                   Max : ${gameData.roomInDb.params.globalGame.maxPlayer}
                   Min : ${gameData.roomInDb.params.globalGame.minPlayer}
 

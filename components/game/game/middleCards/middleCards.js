@@ -7,10 +7,17 @@ export function gameplay_middleCards(data) {
     `;
 }
 
-export function reloadComposant_gameplayMiddleCards(content, data) {
-  let middleCardsContainer = document.querySelector(".gamePlayMiddleCardsContainer");
+export function reloadComposant_gameplayMiddleCards(selector, data) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  const middleCardsContainer = el.querySelector(".gamePlayMiddleCardsContainer");
   if (middleCardsContainer) {
     middleCardsContainer.remove();
   }
-  content.innerHTML += gameplay_middleCards(data);
+  const anchor = el.querySelector(".player, .gameplayGlobalValues, .center");
+  if (anchor) {
+    anchor.insertAdjacentHTML("beforebegin", gameplay_middleCards(data));
+  } else {
+    el.insertAdjacentHTML("beforeend", gameplay_middleCards(data));
+  }
 }

@@ -14,6 +14,13 @@
     ),
     color(display-p3 1 1 1);
 
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    padding: 0;
+  }
   .gameplayMessagerie-container {
     position: absolute;
     display: none;
@@ -21,7 +28,8 @@
     top: 65px;
     width: 40%;
     z-index: 5;
-    height: 537px;
+        height: 537px;
+        max-height: 80%;
     .chat {
       .wrapper {
         padding: 10px !important;
@@ -47,11 +55,11 @@
       }
     }
   }
-
   .headerButtons {
     position: absolute;
     top: 10px;
     right: 10px;
+    z-index: 5;
 
     position: absolute;
     top: 10px;
@@ -59,8 +67,7 @@
     display: flex;
     flex-direction: row;
     gap: 7px;
-    .gameplayChatButton,
-    .gameplayMenuButton {
+    button {
       aspect-ratio: 1 / 1;
       padding: 9px;
       text-align: center;
@@ -107,15 +114,14 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    .center{
-
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-    padding-inline: 8%;
-    box-sizing: border-box;
+    .center {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
+      padding-inline: 8%;
+      box-sizing: border-box;
     }
   }
   .table::after {
@@ -128,10 +134,8 @@
     content: "";
     border-radius: 77.687px;
     border: 18.279px solid #a5dab2;
-          box-shadow: 0 0 28px 12px rgba(0, 0, 0, 0.25) inset, 0 0 14.471px 0 rgba(0, 0, 0, 0.25);
+    box-shadow:
+      0 0 28px 12px rgba(0, 0, 0, 0.25) inset,
+      0 0 14.471px 0 rgba(0, 0, 0, 0.25);
   }
-}
-
-#gameplayPage.test-app {
-  border-radius: 15px;
 }

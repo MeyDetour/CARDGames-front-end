@@ -21,7 +21,7 @@ export function statPage() {
   return /*html*/ `
 <div class="statGamePage">
     <div class="head" >
-              <h2>${gameData.roomInDb.name}</h2> 
+              <h2 class="h2">${gameData.roomInDb.name}</h2> 
               <div>
                 ${button(null, null, null, "replay", "Relancer", "greyBorderButton")}
                 ${button(null, null, null, "exit", "Quitter", "greyBorderButton")}
@@ -41,7 +41,7 @@ export function statPage() {
          ${topRowPlayerInformations()}
             
         </div>  
-            <div id="gameplayPage">
+            <div class="gameplayPageContainer">
            ${gameplayPage()}
             </div>
           </div>

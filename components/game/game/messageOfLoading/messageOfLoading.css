@@ -3,8 +3,7 @@
   position: absolute;
   left: 15px;
   border-radius: 10px;
-  background: transparent; 
-  padding: 12px;
+  background: transparent;
   box-sizing: border-box;
   font-size: 14px;
   display: flex;
@@ -20,16 +19,15 @@
   height: 179px;
   max-height: 179px;
 
-    width: 20%;
-    max-width: 20%;
-  h2{
-   
+  width: 20%;
+  max-width: 20%;
+  h2 {
     color: white;
     margin-block: -4px;
     text-transform: capitalize;
   }
-  span{
-      color: #d2d2d2 !important;
+  span {
+    color: #d2d2d2 !important;
   }
 }
 .loadMessagesContainer::-webkit-scrollbar {

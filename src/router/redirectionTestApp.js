@@ -1,7 +1,9 @@
-import {testConfigPage} from "../../../pages/testConfig/testConfig.js";
-import {homePage} from "../../../pages/homeTestApp/homeTestApp.js";
-import {page401} from "../../pages/page401/page401.js"; 
- export  function getPageForTestApp(route,params) {
+import { testConfigPage } from "../../../pages/testConfig/testConfig.js";
+import { homePage } from "../../../pages/homeTestApp/homeTestApp.js";
+import { page401 } from "../../pages/page401/page401.js";
+import { page500 } from "../../pages/page500/page500.js";
+export function getPageForTestApp(route, params) {
+  console.log("redirection in test app to "+route);
   let html;
   switch (route) {
     case "/test-config":
@@ -12,6 +14,9 @@ import {page401} from "../../pages/page401/page401.js";
       break;
     case "/page-401":
       html = page401();
+      break;
+    case "/page-500":
+      html = page500();
       break;
     default:
       html = homePage();

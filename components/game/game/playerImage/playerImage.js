@@ -9,7 +9,7 @@
 
 export function gameplay_playerImage(
   player,params
-) { 
+) {  
   return /*html */ `
             <div  data-player-id="${player.id}" class="player player${params.key} playerCount${params.totalPlayerCount}  ${params.isCurrentPlayerTurn ? "currentPlayerTurn" : ""} ${params.className ? params.className : ""}">               
             
