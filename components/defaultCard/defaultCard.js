@@ -1,4 +1,6 @@
-export function defaultCard(card) {
+import { serializeParams} from "../../src/helpers/serializer.js";
+import {doActionFromHandDeck } from "../../src/controller/game/actions.js";
+export function defaultCard(card,canDoACtion) {
  
   //  { id: "1", suit: "hearts", value: "9", faceUp: true },
  
@@ -31,7 +33,7 @@ export function defaultCard(card) {
   let suit = getSuitSymbol(card.suit);
   let color = getSuitColor(card.suit);
   return /*html */ ` 
-    <div class="defaultCardOfGame ${card.hoverable ? "hoverable" : ""}">
+    <div onclick="()=>{canDoACtion ? doActionFromHandDeck(${serializeParams(card)}) : null}" class="defaultCardOfGame ${card.hoverable ? "hoverable" : ""} ${canDoACtion ? "blink" : ""}">
         <span class="leftValue">${card.value}</span> 
         <span class="leftSuit ${color}">${suit}</span> 
         <span class="suit ${color}">${suit}</span> 

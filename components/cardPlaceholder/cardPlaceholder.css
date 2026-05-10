@@ -1,0 +1,5 @@
+.cardPlaceholder {
+  width: 100%;
+  aspect-ratio: 0.67 / 1;
+  border: 2px solid #ffffff;
+}

@@ -79,7 +79,7 @@
   /*==============2 players==============*/
   /* player 1 at top */
   .player1.playerCount2 {
-    top: -15%;
+    top: -44px;
     left: 50%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -108,7 +108,7 @@
   }
   /* player 2 at top */
   .player2.playerCount4 {
-    top: -15%;
+    top: -44px;
     left: 50%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -129,14 +129,14 @@
   }
   /* player 2 at top-left */
   .player2.playerCount5 {
-    top: -15%;
+    top: -44px;
     left: 33%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 3 at top-right */
   .player3.playerCount5 {
-    top: -15%;
+    top: -44px;
     left: 67%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -157,21 +157,21 @@
   }
   /* player 2 at top-left */
   .player2.playerCount6 {
-    top: -15%;
+    top: -44px;
     left: 25%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 3 at top-center */
   .player3.playerCount6 {
-    top: -15%;
+    top: -44px;
     left: 50%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 4 at top-right */
   .player4.playerCount6 {
-    top: -15%;
+    top: -44px;
     left: 75%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -198,14 +198,14 @@
   }
   /* player 3 at top-left */
   .player3.playerCount7 {
-    top: -15%;
+    top: -44px;
     left: 33%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 4 at top-right */
   .player4.playerCount7 {
-    top: -15%;
+    top: -44px;
     left: 67%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -238,21 +238,21 @@
   }
   /* player 3 at top-left */
   .player3.playerCount8 {
-    top: -15%;
+    top: -44px;
     left: 25%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 4 at top-center */
   .player4.playerCount8 {
-    top: -15%;
+    top: -44px;
     left: 50%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 5 at top-right */
   .player5.playerCount8 {
-    top: -15%;
+    top: -44px;
     left: 75%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -285,28 +285,28 @@
   }
   /* player 3 at top-1 */
   .player3.playerCount9 {
-    top: -15%;
+    top: -44px;
     left: 20%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 4 at top-2 */
   .player4.playerCount9 {
-    top: -15%;
+    top: -44px;
     left: 40%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 5 at top-3 */
   .player5.playerCount9 {
-    top: -15%;
+    top: -44px;
     left: 60%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 6 at top-4 */
   .player6.playerCount9 {
-    top: -15%;
+    top: -44px;
     left: 80%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -345,21 +345,21 @@
   }
   /* player 4 at top-left */
   .player4.playerCount10 {
-    top: -15%;
+    top: -44px;
     left: 25%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 5 at top-center */
   .player5.playerCount10 {
-    top: -15%;
+    top: -44px;
     left: 50%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 6 at top-right */
   .player6.playerCount10 {
-    top: -15%;
+    top: -44px;
     left: 75%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -404,28 +404,28 @@
   }
   /* player 4 at top-1 */
   .player4.playerCount11 {
-    top: -15%;
+    top: -44px;
     left: 20%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 5 at top-2 */
   .player5.playerCount11 {
-    top: -15%;
+    top: -44px;
     left: 40%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 6 at top-3 */
   .player6.playerCount11 {
-    top: -15%;
+    top: -44px;
     left: 60%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 7 at top-4 */
   .player7.playerCount11 {
-    top: -15%;
+    top: -44px;
     left: 80%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -470,35 +470,35 @@
   }
   /* player 4 at top-1 */
   .player4.playerCount12 {
-    top: -15%;
+    top: -44px;
     left: 17%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 5 at top-2 */
   .player5.playerCount12 {
-    top: -15%;
+    top: -44px;
     left: 33%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 6 at top-3 */
   .player6.playerCount12 {
-    top: -15%;
+    top: -44px;
     left: 50%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 7 at top-4 */
   .player7.playerCount12 {
-    top: -15%;
+    top: -44px;
     left: 67%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 8 at top-5 */
   .player8.playerCount12 {
-    top: -15%;
+    top: -44px;
     left: 83%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -549,28 +549,28 @@
   }
   /* player 5 at top-1 */
   .player5.playerCount13 {
-    top: -15%;
+    top: -44px;
     left: 20%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 6 at top-2 */
   .player6.playerCount13 {
-    top: -15%;
+    top: -44px;
     left: 40%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 7 at top-3 */
   .player7.playerCount13 {
-    top: -15%;
+    top: -44px;
     left: 60%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 8 at top-4 */
   .player8.playerCount13 {
-    top: -15%;
+    top: -44px;
     left: 80%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);

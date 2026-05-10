@@ -1,9 +1,16 @@
 .gameplayPile {
   width: 80px;
   height: fit-content;
-  position: relative; 
+  position: relative;
   cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
   img {
+    width: 100%;
+  }
+  .customCardOfGame {
     width: 100%;
   }
   .actionLabel,
@@ -39,4 +46,21 @@
 }
 .gameplayPile.test-app {
   width: 44px;
-} 
+}
+
+.gameplayPile.blink {
+  
+    border: 1px solid var(--jaune);
+    animation: blinkAnimation 1s infinite;
+}
+@keyframes blinkAnimation {
+  0% {
+    border-color: var(--jaune);
+  }
+  50% {
+    border-color: transparent;
+  }
+  100% {
+    border-color: var(--jaune);
+  }
+}

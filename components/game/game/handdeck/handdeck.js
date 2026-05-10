@@ -19,6 +19,7 @@ export function gameplay_handdeck(
   cardList,
   paramsPlayerHand,
     cardsParams,
+    canDoAction,
 ) {
   if (!displayHandDeck) {
     return "";
@@ -36,6 +37,7 @@ export function gameplay_handdeck(
   if (isPassifPlayer(currentPlayer)) {
     return "";
   }
+  console.log(canDoAction);
  
   if (
     paramsPlayerHand?.template
@@ -64,9 +66,9 @@ export function gameplay_handdeck(
 
         carElt.suit = suits[carElt.addedAttributs.couleur] || "";
 
-        html += defaultCard(carElt);
+        html += defaultCard(carElt,canDoAction);
       } else {
-        html += customCard(carElt,cardsParams);
+        html += customCard(carElt,cardsParams, canDoAction);
       }
     }
     html += `</div>`; 
@@ -135,13 +137,13 @@ export function gameplay_handdeck(
     for (let i = 0; i < sortedHandDeck.length; i += chunkSize) {
       const chunk = sortedHandDeck.slice(i, i + chunkSize);
       const index = Math.floor(i / chunkSize) + 1;
-      html += getHandDeckLine(chunk, cardList, index, indexMax, cardsParams);
+      html += getHandDeckLine(chunk, cardList, index, indexMax, cardsParams,canDoAction);
     }
     return html;
   }
 }
 // affiche une rangée de carte
-function getHandDeckLine(cards, cardList, index, max,cardsParams) {
+function getHandDeckLine(cards, cardList, index, max,cardsParams,canDoAction) {
   return /*html */ `
     <div class="handDeck handDeck-${index}" style="z-index: ${max - index}; transform: translate(-50%,-${index * 40}px);">
                       ${cards
@@ -160,9 +162,9 @@ function getHandDeckLine(cards, cardList, index, max,cardsParams) {
                             carElt.suit =
                               suits[carElt.addedAttributs.couleur] || "";
 
-                            return defaultCard(carElt);
+                            return defaultCard(carElt,canDoAction);
                           } else {
-                            return customCard(carElt, cardsParams);
+                            return customCard(carElt, cardsParams, canDoAction);
                           }
                         })
                         .join("")}
@@ -205,8 +207,10 @@ export function reloadComposant_gameplayHanddeck(
   handDeck,
   cardList,
   playerHandParams,
+  cardsParams,
+  canDoAction,
 ) {
   document.querySelectorAll(".handDeck").forEach((elt) => elt.remove());
 
-  content.innerHTML += gameplay_handdeck(displayHandDeck, handDeck, cardList, playerHandParams);
+  content.innerHTML += gameplay_handdeck(displayHandDeck, handDeck, cardList, playerHandParams, cardsParams, canDoAction);
 }

@@ -113,7 +113,7 @@
           background: #1a3a32; /* Fond vert sombre (selon ton image) */
           border-radius: 10px;
           /* Astuce pour la couleur jaune à gauche sous Chrome */
-          background-image: linear-gradient(#ffba00, #ffba00);
+          background-image: linear-gradient(var(--jaune), var(--jaune));
           background-size: var(--progress, 50%) 100%;
           background-repeat: no-repeat;
         }
@@ -127,7 +127,7 @@
         }
 
         input[type="range"]::-moz-range-progress {
-          background-color: #ffba00;
+          background-color: var(--jaune);
           height: 6px;
           border-radius: 10px;
         }
@@ -141,7 +141,7 @@
           width: 16px;
           border-radius: 50%;
           background: #ffffff; /* Blanc */
-          border: 2px solid #ffba00; /* Bordure jaune */
+          border: 2px solid var(--jaune); /* Bordure jaune */
           margin-top: -5px; /* (Track height / 2) - (Thumb height / 2) */
           box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
         }
@@ -152,7 +152,7 @@
           width: 14px;
           border-radius: 50%;
           background: #ffffff;
-          border: 2px solid #ffba00;
+          border: 2px solid var(--jaune);
         }
       }
     }

@@ -21,3 +21,19 @@
   cursor: pointer;
   transform: scale(1.05);
 }
+.customCardOfGame.blink{
+  
+    border: 1px solid var(--jaune);
+    animation: blinkAnimation 1s infinite;
+}
+@keyframes blinkAnimation {
+  0% {
+    border-color: var(--jaune);
+  }
+  50% {
+    border-color: transparent;
+  }
+  100% {
+    border-color: var(--jaune);
+  }
+}

@@ -61,21 +61,18 @@ export default function topRowPlayerInformations() {
                             </h4> 
                     </div>
                         <div class="actionWrapper">
-${currentPlayer.actions.value
-  .map((elt) => {
-    const actionData = JSON.stringify({
-      action: elt.name,
-      actionType: elt.type || "default",
-      playerId: currentPlayer.id,
-    }).replace(/"/g, "&quot;");
-    return /*html*/ `<button onclick="doActionForTestApp(${actionData})">${elt.name}</button>`;
-  })
-  .join("")}
-                            
-                           
+                          ${currentPlayer.actions.value
+                            .map((elt) => {
+                              const actionData = JSON.stringify({
+                                action: elt.name,
+                                actionType: elt.type || "default",
+                                playerId: currentPlayer.id,
+                              }).replace(/"/g, "&quot;");
+                              return /*html*/ `<button onclick="doAction(${actionData})">${elt.name}</button>`;
+                            })
+                            .join("")} 
                         </div> 
-                </div>
-                     
+                </div> 
             </div>
             <div class="boxContainer playerSection">
                   <div class="titleContainer">
@@ -84,7 +81,7 @@ ${currentPlayer.actions.value
                         </h4> 
                   </div>
                   <div class="row">
-                  <div class="detailWrapper">
+                  <div class="detailWrapper detailWrapper1">
                        ${playerStat1
                          .map(
                            (stat) => `
@@ -94,7 +91,7 @@ ${currentPlayer.actions.value
                          .join("")}  
                   </div> 
                   <div class="separator"></div>
-                    <div class="detailWrapper">
+                    <div class="detailWrapper detailWrapper2">
                        ${playersStat2
                          .map(
                            (stat) => `
@@ -112,7 +109,7 @@ ${currentPlayer.actions.value
 
 export function changeCurrentView(eOrValue) {
   const position = eOrValue?.target ? eOrValue.target.value : eOrValue;
- setPlayerView(position);
+  setPlayerView(position);
   reload_topRowPlayerInformations();
   reloadComposant_gameplayPage();
 

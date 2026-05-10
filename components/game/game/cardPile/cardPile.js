@@ -6,13 +6,17 @@ import {
 } from "../../../../src/controller/game/dataStorage.js";
 import { environnement } from "../../../../main.js";
 import { getPlayerOfCurrentView } from "../../../../src/controller/game/players.js";
+import { cardPlaceholder } from "../../../cardPlaceholder/cardPlaceholder.js";
+import { customCard } from "../../../customCard/customCard.js";
 export function gameplay_cardPile(
   cardsParams,
   actionParams,
   type,
   label,
+  isVisibile=false,
+  cards,
   classname = "",
-) {
+) { 
   let gameData = getGameData();
 
   let currentPlayer;
@@ -35,12 +39,22 @@ export function gameplay_cardPile(
   if (type == "discardDeck" && !cardsParams?.discard?.activation) {
     return "";
   }
+  if (isVisibile) {
+     
+    return /*html */ `
+   <div onclick="${actionParams && actionParams.action ?  `doAction(${serializeParams(actionParams)})` : ""}" class="gameplayPile ${actionParams ? "blink" : ""} ${classname} ${environnement}" id="pile-type-${type}">
+        ${!cards || cards.length === 0 ? cardPlaceholder() : customCard(cards[0])}
+        ${actionParams ? /*html */ `<span class="actionLabel">${actionParams.action}</span>` : ""}
+        ${label ? /*html */ `<span class="pileLabel">${label}</span>` : ""}
+   </div>
+     `;
+  }
+
 
   return /*html */ `
-   <div onclick="${actionParams && actionParams.action ? environnement == "player-app" ? `doAction(${serializeParams(actionParams)})` : `doActionForTestApp(${serializeParams(actionParams)})` : ""}" class="gameplayPile ${classname} ${environnement}" id="pile-type-${type}">
+   <div onclick="${actionParams && actionParams.action ? `doAction(${serializeParams(actionParams)})` : ""}" class="gameplayPile ${classname} ${actionParams ? "blink" : ""} ${environnement}" id="pile-type-${type}">
    <img src="/assets/images/cardBack.png">
   ${actionParams ? /*html */ `<span class="actionLabel">${actionParams.action}</span>` : ""}
- 
    ${label ? /*html */ `<span class="pileLabel">${label}</span>` : ""}
    </div>
      `;
@@ -52,6 +66,8 @@ export function reloadComposant_gameplayCardPile(
   actionParams,
   type,
   label,
+  isVisibile,
+  cards,
   classname = "",
 ) {
   let pileContainer = content.querySelector(`#pile-type-${type}`);
@@ -63,6 +79,8 @@ export function reloadComposant_gameplayCardPile(
     actionParams,
     type,
     label,
+    isVisibile,
+    cards,
     classname,
   );
 }

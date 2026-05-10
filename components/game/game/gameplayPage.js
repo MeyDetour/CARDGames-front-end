@@ -47,6 +47,7 @@ import {
   reloadComposant_gameplaySpectatorBanniere,
   gameplay_spectatorBanniere,
 } from "./spectatorBanniere/spectatorBanniere.js";
+import { serializeParams } from "../../../src/helpers/serializer.js";
 
 export default function gameplayPage() {
   let currentPlayer;
@@ -89,9 +90,10 @@ export default function gameplayPage() {
 
   let playerActions = currentPlayer.actions.value;
   let actionOnDeck = playerActions.find((action) => action.actionOnDeck);
+  let actionOnHand = playerActions.find((action) => action.actionOnHand);
   let actionOnDiscardDeck = playerActions.find(
     (action) => action.actionOnDiscardDeck,
-  );
+  ); 
 
   return /*html */ `
         <div id="gameplayPage" class="${environnement}">
@@ -103,6 +105,8 @@ export default function gameplayPage() {
          cardList,
          gameData.roomInDb.params.rendering.playerHand,
          gameData.roomInDb.params.cards,
+         actionOnHand
+
        )}
          ${gameplay_spectatorBanniere(currentPlayer)}
          
@@ -156,6 +160,11 @@ export default function gameplayPage() {
                       : null,
                     "deck",
                     "Pioche",
+                    gameData.roomInDb.params.cards.deck
+                      .renderTheNextDeckCard,
+                    gameData.data.deck.value.map((cardId) => {
+                      return gameData.data.cards[cardId];
+                    }),
                   )}
                 ${gameplay_cardPile(
                   cardParams,
@@ -173,6 +182,12 @@ export default function gameplayPage() {
                     : null,
                   "discardDeck",
                   "Défausse",
+                  gameData.roomInDb.params.cards.discard
+                    .renderTheLastDiscardedCard,
+                  gameData.data.discardDeck.value.map((cardId) => {
+                      return gameData.data.cards[cardId];
+                    }),
+
                 )}
                
             </div>
@@ -230,11 +245,12 @@ export function reloadComposant_gameplayPage() {
   }
 
   let playerActions = currentPlayer.actions.value;
+  let actionOnHand = playerActions.find((action) => action.actionOnHand);
   let actionOnDeck = playerActions.find((action) => action.actionOnDeck);
   let actionOnDiscardDeck = playerActions.find(
     (action) => action.actionOnDiscardDeck,
   );
-
+ 
   reloadComposant_gameplayMessageOfLoading("#gameplayPage", gameData.data.logs);
   reloadComposant_gameplayPlayers(
     "#gameplayPage .table",
@@ -260,6 +276,7 @@ export function reloadComposant_gameplayPage() {
     gameData.roomInDb.assets.cards,
     gameData.roomInDb.params.rendering.playerHand,
     gameData.roomInDb.params.cards,
+    actionOnHand
   );
   reloadComposant_gameplayActionsButtons(
     content,
@@ -281,6 +298,10 @@ export function reloadComposant_gameplayPage() {
       : null,
     "deck",
     "Pioche",
+    gameData.roomInDb.params.cards.deck.renderTheNextDeckCard,
+    gameData.data.deck.value.map((cardId) => {
+      return gameData.data.cards[cardId];
+    }),
   );
   reloadComposant_gameplayCardPile(
     center,
@@ -297,6 +318,10 @@ export function reloadComposant_gameplayPage() {
       : null,
     "discardDeck",
     "Défausse",
+    gameData.roomInDb.params.cards.discard.renderTheLastDiscardedCard,
+    gameData.data.discardDeck.value.map((cardId) => {
+      return gameData.data.cards[cardId];
+    }),
   );
 }
 // ===============TEST APP - SCALE SCREEN==========
