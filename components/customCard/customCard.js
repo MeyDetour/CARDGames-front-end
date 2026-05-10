@@ -19,7 +19,7 @@ export function customCard(card, cardParams, action, origine = "hand") {
 let actionToDo = ""
   if (action) {
     if (action.numberOfCardToSelectMax > 1) {
-      actionToDo = `selectCardForAction(${serializeParams(card)},${serializeParams(action)})`
+      actionToDo = `selectCardForAction(${serializeParams(card)})`
     } else {
       actionToDo = `doActionFromHandDeck(${serializeParams(card)})`
     }
@@ -27,6 +27,7 @@ let actionToDo = ""
 
   return /*html */ ` 
     <div 
+    data-card-id="${card.id}"
     onclick="${actionToDo ? actionToDo : "void(0)"}"
     style="border-radius: ${calculatedRadius}px;"
      class=" ${action ? "blink" : ""} customCardOfGame ${card.hoverable ? "hoverable" : ""}">

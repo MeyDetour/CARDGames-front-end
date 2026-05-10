@@ -53,6 +53,9 @@
     border: 1px solid var(--jaune);
     animation: blinkAnimation 1s infinite;
 }
+.defaultCardOfGame.selected  {
+    margin-bottom: 10px;
+}
 @keyframes blinkAnimation {
   0% {
     border-color: var(--jaune);

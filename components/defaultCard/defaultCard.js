@@ -33,7 +33,8 @@ export function defaultCard(card,canDoACtion) {
   let suit = getSuitSymbol(card.suit);
   let color = getSuitColor(card.suit);
   return /*html */ ` 
-    <div onclick="()=>{canDoACtion ? doActionFromHandDeck(${serializeParams(card)}) : null}" class="defaultCardOfGame ${card.hoverable ? "hoverable" : ""} ${canDoACtion ? "blink" : ""}">
+    <div 
+    data-card-id="${card.id}" onclick="()=>{canDoACtion ? doActionFromHandDeck(${serializeParams(card)}) : null}" class="defaultCardOfGame ${card.hoverable ? "hoverable" : ""} ${canDoACtion ? "blink" : ""}">
         <span class="leftValue">${card.value}</span> 
         <span class="leftSuit ${color}">${suit}</span> 
         <span class="suit ${color}">${suit}</span> 

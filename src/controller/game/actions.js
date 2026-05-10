@@ -15,6 +15,10 @@ import { getGameData } from "./dataStorage.js";
 */
 function doAction(params) {
   let action = params.action;
+  if (action.askValueToPlayThisAction){
+      displayAskPlayerWidget(event, params, roomId);
+      return
+  }
   let actionType = params.actionType || "default";
   let id = params.playerId;
   console.log("Do Action :>> ", { action, actionType });
@@ -45,7 +49,9 @@ export function doActionFromHandDeck(card) {
   }
   if (environnement == "test-app") {
     currentPlayer = getPlayerOfCurrentView();
-    socketToDoAction = players.find((player) => player.id == currentPlayer.id).socket;
+    socketToDoAction = players.find(
+      (player) => player.id == currentPlayer.id,
+    ).socket;
   }
   let actionOnHand = currentPlayer.actions.value.find(
     (action) => action.actionOnHand,
@@ -62,7 +68,6 @@ export function doActionFromHandDeck(card) {
   console.log("Do Action :>> ");
   console.log(card);
   console.log(action);
-  console.log(actionType);
 
   // socketToDoAction.emit("doAction", { action, actionType });
 }
@@ -70,7 +75,21 @@ export function doActionFromHandDeck(card) {
 window.doActionFromHandDeck = doActionFromHandDeck;
 
 export function selectCardForAction(card) {
-  card = JSON.parse(card);
-  console.log("Select Card For Action :>> ", card);
+  console.log("SELECT ON CARD", card);
+
+  // Si c'est déjà un objet, on ne parse pas
+  const cardObj = typeof card === "string" ? JSON.parse(card) : card;
+
+  console.log("Card ID:", cardObj.id);
+  if (!card) {
+    console.error("No card data provided for action from hand/deck");
+    displayError("No card data provided for action from hand/deck");
+    return;
+  }
+  let cardElement = document.querySelector(`[data-card-id="${cardObj.id}"]`);
+  if (cardElement) {
+    cardElement.classList.add("selected");
+  }
 }
+
 window.selectCardForAction = selectCardForAction;

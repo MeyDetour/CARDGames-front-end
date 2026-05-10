@@ -195,7 +195,9 @@
         }
       }
       .statEventsDemonsWithValueSectionParamsSection-logs,
-      .statEventsDemonsWithValueSectionParamsSection-players {
+      .statEventsDemonsWithValueSectionParamsSection-players,
+      .statEventsDemonsWithValueSectionParamsSection-params,
+      .statEventsDemonsWithValueSectionParamsSection-actions {
         cursor: pointer;
         width: 100%;
         border: 1px solid #ebebeb;
@@ -289,6 +291,21 @@
         .addButton:hover {
           background: rgba(255, 255, 255, 0.836);
         }
+      }
+      .statEventsDemonsWithValueSectionParamsSection-actions{
+         .actionConfig {
+          width: 100%;
+          background: white;
+          border-radius: 13px;
+          display: flex;
+          flex-direction: column;
+          align-items: start;
+          padding: 10px;
+          box-sizing: border-box;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+ 
+          gap: 5px;
+         }
       }
     }
   }

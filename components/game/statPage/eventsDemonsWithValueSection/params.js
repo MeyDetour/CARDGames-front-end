@@ -86,7 +86,7 @@ export default function statEventsDemonsWithValueSectionParamsSection(
     </div>  
   </details>
    
-  <details class="statEventsDemonsWithValueSectionParamsSection-players">
+  <details class="statEventsDemonsWithValueSectionParamsSection-params">
     <summary>Paramètres définis</summary>
     <div class="wrapper"> 
       <span class="span">Pioche : ${gameData.roomInDb.params.cards.deck.activation}</span>
@@ -99,6 +99,46 @@ export default function statEventsDemonsWithValueSectionParamsSection(
       <span class="span">Visibilité de la main du joueur : ${gameData.roomInDb.params.cards.hand.renderAllHandCards}</span>
 
       <span class="span">Autorise les spectacteurs : ${gameData.roomInDb.params.globalGame.autoriseSpectator}</span>
+    </div>  
+  </details> 
+   <details class="statEventsDemonsWithValueSectionParamsSection-actions">
+    <summary>Actions</summary>
+    <div class="wrapper"> 
+    ${gameData.roomInDb.params?.tours?.actions
+      .map(
+        (action) => /*html */ `
+      <div class="actionConfig">
+        <span class="span">Id : ${action.id}</span>
+        <span class="span">Name : ${action.name}</span>
+        <span class="span">Condition : ${action.condition}</span>
+        <span class="span">Apparition au tour: ${action.appearAtPlayerTurn ? "Oui" : "Non"}</span>
+        <span class="span">S'applique sur les cartes : ${action.actionOnHand ? "Oui" : "Non"}</span>
+       ${
+         action.actionOnHand
+           ? `
+            <span class="span">Condition de selection d'une carte: ${action.conditionOfCardSelection}</span>
+            <span class="span">Selection minimale : ${action.numberOfCardToSelectMin}</span>
+            <span class="span">Selection maximale : ${action.numberOfCardToSelectMax}</span>
+          `
+           : ""
+       }
+        <span class="span">S'applique sur la défausse : ${action.actionOnDiscardDeck ? "Oui" : "Non"}</span>
+        <span class="span">S'applique sur le deck : ${action.actionOnDeck ? "Oui" : "Non"}</span>
+        <span class="span">Demande une valeur : ${action.askValueToPlayThisAction ? "Oui" : "Non"}</span>
+        ${
+          action.askValueToPlayThisAction
+            ? `
+            <span class="span">Type de valeur : ${action.askValueType}</span>
+            <span class="span">Valeur minimale : ${action.askValueMin}</span>
+            <span class="span">Valeur maximale : ${action.askValueMax}</span>
+          `
+            : ""
+        }
+      </div>
+    `,
+      )
+      .join("")}
+        
     </div>  
   </details>
   `;

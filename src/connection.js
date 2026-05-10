@@ -47,6 +47,7 @@ setTimeout(() => {
     displayError("Failed to connect to the server.");
     return;
   }
+  
 }, 5000);
   console.log("CONNECTED TO SOCKET SERVER");
   // expose on window so other legacy code can access it
