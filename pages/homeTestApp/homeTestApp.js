@@ -1,7 +1,8 @@
 import { button } from "../../../components/button/button.js";
+import {gameplay_playerImage} from "../../../components/game/game/playerImage/playerImage.js"
 
 export function homePage() {
-  return /*html*/ `  <div class="homePage">
+  return /*html*/ `  <div class="homePage ">
 
         <main> 
             <h1 class="h1">CARD Studio Tester</h1> 
@@ -13,8 +14,7 @@ export function homePage() {
         <div class="loader"></div>
         <span class="span">Connexion en cours...</span>
         </div>
-      
-      
+       
     </div>
     `;
 }

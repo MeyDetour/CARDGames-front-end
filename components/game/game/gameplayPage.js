@@ -160,8 +160,7 @@ export default function gameplayPage() {
                       : null,
                     "deck",
                     "Pioche",
-                    gameData.roomInDb.params.cards.deck
-                      .renderTheNextDeckCard,
+                    gameData.roomInDb.params?.cards?.deck?.renderTheNextDeckCard,
                     gameData.data.deck.value.map((cardId) => {
                       return gameData.data.cards[cardId];
                     }),
@@ -298,7 +297,7 @@ export function reloadComposant_gameplayPage() {
       : null,
     "deck",
     "Pioche",
-    gameData.roomInDb.params.cards.deck.renderTheNextDeckCard,
+    gameData.roomInDb.params?.cards?.deck?.renderTheNextDeckCard,
     gameData.data.deck.value.map((cardId) => {
       return gameData.data.cards[cardId];
     }),

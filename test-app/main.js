@@ -104,7 +104,7 @@ const initApp = async () => {
       console.log("CONNECT WITH STORAGE");
       token = getToken();
       gameId = getGameId();
-      getGame();
+       getGame();
       return;
     }
   }, 3000);

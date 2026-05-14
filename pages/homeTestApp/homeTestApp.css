@@ -5,9 +5,13 @@
   flex-direction: column;
   justify-content: start;
   padding-top: 21vh;
+  position: relative;
   align-items: center;
   padding-inline: 12%;
   box-sizing: border-box;
+  .player{
+    bottom:50%!important;
+  }
   
 }
 .homePage::after {

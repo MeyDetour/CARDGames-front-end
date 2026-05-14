@@ -38,14 +38,14 @@ export default function topRowPlayerInformations() {
                           ${gameData.data.players
                             .map(
                               (player) => /*html*/ `
-                            <option ${player.position === view.playerView ? "selected" : ""} value="${player.position}">${player.pseudo}</option>
+                            <option ${player.position === parseInt(view.playerView) ? "selected" : ""} value="${player.position}">${player.pseudo}</option>
                           `,
                             )
                             .join("")} 
                              ${gameData.data.spectators
                                .map(
                                  (player) => /*html*/ `
-                            <option ${player.position === view.playerView ? "selected" : ""} value="${player.position}">${player.pseudo} (Spectateur)</option>
+                            <option ${player.position === parseInt(view.playerView) ? "selected" : ""} value="${player.position}">${player.pseudo} (Spectateur)</option>
                           `,
                                )
                                .join("")} 

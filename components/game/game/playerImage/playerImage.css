@@ -64,10 +64,60 @@
     }
   }
   .currentPlayerTurn {
-    .playerImageContainer {
-      border: 4px solid gold !important;
+    .withSkin {
+      border: 3px solid #ffb225; 
     }
-  }
+    &::after {
+      box-shadow: 0 0 42px 28px #ffc06e;
+      content: "";
+      position: absolute;
+      top: 25px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 0%;
+      height: 6%;
+      z-index: -1;
+      rotate: 0deg;
+      animation: imageBoxShadowRotation 2s linear infinite;
+    }
+    [class^="light-"] {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      position: absolute;
+      z-index: -1; /* Derrière l'avatar */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      filter: blur(1px);
+      opacity: 0;
+    } /* Variations pour les 15 bulles */
+    /* On varie les directions, les délais et les couleurs (doré, blanc, violet magique) */
+  /* 15 Variations avec délais décalés et trajectoires uniques */
+/* Zone HAUT */
+.light-1  { --size: 3px; --scale: 2;   --tx: 20%;  --ty: 10%;  animation: magicFloat 2.2s 0.0s infinite; box-shadow: 0 0 5px #e7c482; }
+.light-2  { --size: 5px; --scale: 1.2; --tx: 50%;  --ty: -5%;  animation: magicFloat 2.2s 0.13s infinite; box-shadow: 0 0 8px #fff; }
+.light-3  { --size: 2px; --scale: 3;   --tx: 100%; --ty: -20%; animation: magicFloat 2.2s 0.26s infinite; box-shadow: 0 0 4px #a066ff; }
+.light-4  { --size: 4px; --scale: 1.8; --tx: 40%;  --ty: 20%;  animation: magicFloat 2.2s 0.39s infinite; box-shadow: 0 0 6px #e7c482; }
+
+/* Zone MILIEU / COTÉS */
+.light-5  { --size: 3px; --scale: 2.2; --tx: -10%; --ty: 50%;  animation: magicFloat 2.2s 0.52s infinite; box-shadow: 0 0 5px #fff; }
+.light-6  { --size: 6px; --scale: 1;   --tx: 110%; --ty: 50%;  animation: magicFloat 2.2s 0.65s infinite; box-shadow: 0 0 10px #e7c482; }
+.light-7  { --size: 2px; --scale: 2.5; --tx: 95%;  --ty: 40%;  animation: magicFloat 2.2s 0.78s infinite; box-shadow: 0 0 4px #a066ff; }
+.light-8  { --size: 4px; --scale: 1.5; --tx: 5%;   --ty: 60%;  animation: magicFloat 2.2s 0.91s infinite; box-shadow: 0 0 7px #fff; }
+
+/* Zone BAS */
+.light-9  { --size: 3px; --scale: 2;   --tx: 65%;  --ty: 85%;  animation: magicFloat 2.2s 1.04s infinite; box-shadow: 0 0 5px #e7c482; }
+.light-10 { --size: 5px; --scale: 1.3; --tx: 30%;  --ty: -15%; animation: magicFloat 2.2s 1.17s infinite; box-shadow: 0 0 8px #fff; }
+.light-11 { --size: 2px; --scale: 3;   --tx: 10%;  --ty: -20%; animation: magicFloat 2.2s 1.30s infinite; box-shadow: 0 0 4px #a066ff; }
+.light-12 { --size: 4px; --scale: 1.9; --tx: 90%;  --ty: 90%;  animation: magicFloat 2.2s 1.43s infinite; box-shadow: 0 0 6px #e7c482; }
+
+/* Mix bonus aléatoire */
+.light-13 { --size: 3px; --scale: 2.1; --tx: 50%;  --ty: 105%; animation: magicFloat 2.2s 1.56s infinite; box-shadow: 0 0 5px #fff; }
+.light-14 { --size: 6px; --scale: 1.1; --tx: 0%;   --ty: 20%;  animation: magicFloat 2.2s 1.69s infinite; box-shadow: 0 0 9px #a066ff; }
+.light-15 { --size: 2px; --scale: 2.8; --tx: 100%; --ty: 15%;  animation: magicFloat 2.2s 1.82s infinite; box-shadow: 0 0 4px #e7c482; }
+ }
 
   /* user - always at bottom */
   .player0 {
@@ -79,7 +129,7 @@
   /*==============2 players==============*/
   /* player 1 at top */
   .player1.playerCount2 {
-    top: -44px;
+    top: -15px;
     left: 50%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -108,7 +158,7 @@
   }
   /* player 2 at top */
   .player2.playerCount4 {
-    top: -44px;
+    top: -15px;
     left: 50%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -129,14 +179,14 @@
   }
   /* player 2 at top-left */
   .player2.playerCount5 {
-    top: -44px;
+    top: -15px;
     left: 33%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 3 at top-right */
   .player3.playerCount5 {
-    top: -44px;
+    top: -15px;
     left: 67%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -157,21 +207,21 @@
   }
   /* player 2 at top-left */
   .player2.playerCount6 {
-    top: -44px;
+    top: -15px;
     left: 25%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 3 at top-center */
   .player3.playerCount6 {
-    top: -44px;
+    top: -15px;
     left: 50%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 4 at top-right */
   .player4.playerCount6 {
-    top: -44px;
+    top: -15px;
     left: 75%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -198,14 +248,14 @@
   }
   /* player 3 at top-left */
   .player3.playerCount7 {
-    top: -44px;
+    top: -15px;
     left: 33%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 4 at top-right */
   .player4.playerCount7 {
-    top: -44px;
+    top: -15px;
     left: 67%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -238,21 +288,21 @@
   }
   /* player 3 at top-left */
   .player3.playerCount8 {
-    top: -44px;
+    top: -15px;
     left: 25%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 4 at top-center */
   .player4.playerCount8 {
-    top: -44px;
+    top: -15px;
     left: 50%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 5 at top-right */
   .player5.playerCount8 {
-    top: -44px;
+    top: -15px;
     left: 75%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -285,28 +335,28 @@
   }
   /* player 3 at top-1 */
   .player3.playerCount9 {
-    top: -44px;
+    top: -15px;
     left: 20%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 4 at top-2 */
   .player4.playerCount9 {
-    top: -44px;
+    top: -15px;
     left: 40%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 5 at top-3 */
   .player5.playerCount9 {
-    top: -44px;
+    top: -15px;
     left: 60%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 6 at top-4 */
   .player6.playerCount9 {
-    top: -44px;
+    top: -15px;
     left: 80%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -345,21 +395,21 @@
   }
   /* player 4 at top-left */
   .player4.playerCount10 {
-    top: -44px;
+    top: -15px;
     left: 25%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 5 at top-center */
   .player5.playerCount10 {
-    top: -44px;
+    top: -15px;
     left: 50%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 6 at top-right */
   .player6.playerCount10 {
-    top: -44px;
+    top: -15px;
     left: 75%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -404,28 +454,28 @@
   }
   /* player 4 at top-1 */
   .player4.playerCount11 {
-    top: -44px;
+    top: -15px;
     left: 20%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 5 at top-2 */
   .player5.playerCount11 {
-    top: -44px;
+    top: -15px;
     left: 40%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 6 at top-3 */
   .player6.playerCount11 {
-    top: -44px;
+    top: -15px;
     left: 60%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 7 at top-4 */
   .player7.playerCount11 {
-    top: -44px;
+    top: -15px;
     left: 80%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -470,35 +520,35 @@
   }
   /* player 4 at top-1 */
   .player4.playerCount12 {
-    top: -44px;
+    top: -15px;
     left: 17%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 5 at top-2 */
   .player5.playerCount12 {
-    top: -44px;
+    top: -15px;
     left: 33%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 6 at top-3 */
   .player6.playerCount12 {
-    top: -44px;
+    top: -15px;
     left: 50%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 7 at top-4 */
   .player7.playerCount12 {
-    top: -44px;
+    top: -15px;
     left: 67%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 8 at top-5 */
   .player8.playerCount12 {
-    top: -44px;
+    top: -15px;
     left: 83%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -549,28 +599,28 @@
   }
   /* player 5 at top-1 */
   .player5.playerCount13 {
-    top: -44px;
+    top: -15px;
     left: 20%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 6 at top-2 */
   .player6.playerCount13 {
-    top: -44px;
+    top: -15px;
     left: 40%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 7 at top-3 */
   .player7.playerCount13 {
-    top: -44px;
+    top: -15px;
     left: 60%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
   }
   /* player 8 at top-4 */
   .player8.playerCount13 {
-    top: -44px;
+    top: -15px;
     left: 80%;
     flex-direction: column-reverse;
     transform: translate(-50%, -50%);
@@ -598,5 +648,23 @@
     top: 80%;
     right: -60px;
     transform: translate(0, -50%);
+  }
+}
+@keyframes magicFloat {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    20% { opacity: 1; }
+    100% { 
+        top: var(--ty); 
+        left: var(--tx); 
+        transform: translate(-50%, -50%) scale(var(--scale, 1.5)); 
+        opacity: 0; 
+    }
+}
+@keyframes imageBoxShadowRotation {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
   }
 }
