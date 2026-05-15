@@ -59,6 +59,13 @@
   background: #38a93f;
   color: white;
 }
+.button.blueButton{
+
+    background: #1a313f;
+    border: 1px solid #45556c;
+    border-radius: 23px;
+    color:#0d172d
+}
 .button.whiteButton {
   text-decoration: none;
   color: black;

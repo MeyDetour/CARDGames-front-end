@@ -28,6 +28,7 @@ import {
 } from "./handdeck/handdeck.js";
 import {
   gameplay_actionsButtons,
+  gameplay_actionButton,
   reloadComposant_gameplayActionsButtons,
 } from "./actionsButtons/actionsButtons.js";
 import { gameplay_menu, hideGameplayMenu } from "./menu/menu.js";
@@ -93,7 +94,7 @@ export default function gameplayPage() {
   let actionOnHand = playerActions.find((action) => action.actionOnHand);
   let actionOnDiscardDeck = playerActions.find(
     (action) => action.actionOnDiscardDeck,
-  ); 
+  );
 
   return /*html */ `
         <div id="gameplayPage" class="${environnement}">
@@ -105,8 +106,7 @@ export default function gameplayPage() {
          cardList,
          gameData.roomInDb.params.rendering.playerHand,
          gameData.roomInDb.params.cards,
-         actionOnHand
-
+         actionOnHand,
        )}
          ${gameplay_spectatorBanniere(currentPlayer)}
          
@@ -114,7 +114,7 @@ export default function gameplayPage() {
     
      
          
-         ${gameplay_actionsButtons(
+         ${gameplay_actionButton(
            playerActions.filter(
              (a) => !a.actionOnDeck && !a.actionOnDiscardDeck,
            ),
@@ -160,7 +160,8 @@ export default function gameplayPage() {
                       : null,
                     "deck",
                     "Pioche",
-                    gameData.roomInDb.params?.cards?.deck?.renderTheNextDeckCard,
+                    gameData.roomInDb.params?.cards?.deck
+                      ?.renderTheNextDeckCard,
                     gameData.data.deck.value.map((cardId) => {
                       return gameData.data.cards[cardId];
                     }),
@@ -184,9 +185,8 @@ export default function gameplayPage() {
                   gameData.roomInDb.params.cards.discard
                     .renderTheLastDiscardedCard,
                   gameData.data.discardDeck.value.map((cardId) => {
-                      return gameData.data.cards[cardId];
-                    }),
-
+                    return gameData.data.cards[cardId];
+                  }),
                 )}
                
             </div>
@@ -249,7 +249,7 @@ export function reloadComposant_gameplayPage() {
   let actionOnDiscardDeck = playerActions.find(
     (action) => action.actionOnDiscardDeck,
   );
- 
+
   reloadComposant_gameplayMessageOfLoading("#gameplayPage", gameData.data.logs);
   reloadComposant_gameplayPlayers(
     "#gameplayPage .table",
@@ -275,7 +275,7 @@ export function reloadComposant_gameplayPage() {
     gameData.roomInDb.assets.cards,
     gameData.roomInDb.params.rendering.playerHand,
     gameData.roomInDb.params.cards,
-    actionOnHand
+    actionOnHand,
   );
   reloadComposant_gameplayActionsButtons(
     content,

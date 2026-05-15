@@ -6,6 +6,9 @@ import { serializeParams } from "../../helpers/serializer.js";
 import { getPlayerOfCurrentView } from "./players.js";
 import { socket } from "../../connection.js";
 import { getGameData } from "./dataStorage.js";
+import {gameplay_actionsButtons_toggle_widget} from "../../../components/game/game/actionsButtons/actionsButtons.js";
+import { displayAskPlayerWidget } from "../../../components/game/game/widgetContainerAskPlayer/widgetContainerAskPlayer.js";
+import { displayError } from "../error.js";
 
 /* Function to handle player actions in the game
     @param {string} playerId - The ID of the player performing the action
@@ -14,6 +17,7 @@ import { getGameData } from "./dataStorage.js";
     @param {string} actionType - The type of action (e.g., "askPlayer")
 */
 function doAction(params) {
+  gameplay_actionsButtons_toggle_widget();
   let action = params.action;
   if (action.askValueToPlayThisAction){
       displayAskPlayerWidget(event, params, roomId);
