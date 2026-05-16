@@ -17,18 +17,14 @@ export function customCard(card, cardParams, action, origine = "hand") {
   const calculatedRadius = cardParams?.radius * (origine == "hand" ? 78 : environnement == "player-app" ? 80 : 44)/ 200 ?? 0;
  
 let actionToDo = ""
-  if (action) {
-    if (action.numberOfCardToSelectMax > 1) {
+  if (action) { 
       actionToDo = `selectCardForAction(${serializeParams(card)})`
-    } else {
-      actionToDo = `doActionFromHandDeck(${serializeParams(card)})`
-    }
+  
   }
 
   return /*html */ ` 
     <div 
-    data-card-id="${card.id}"
-    onclick="${actionToDo ? actionToDo : "void(0)"}"
+    data-card-id="${card.id}" 
     style="border-radius: ${calculatedRadius}px;"
      class=" ${action ? "blink" : ""} customCardOfGame ${card.hoverable ? "hoverable" : ""}">
      <img src="${card.url}" alt="Custom Card Image">

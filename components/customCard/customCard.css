@@ -29,6 +29,32 @@
 .customCardOfGame.selected  {
     margin-bottom: 10px;
 }
+
+.customCardOfGame.selected::after{
+ content: "";
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    box-shadow: 0 0 30px 9px var(--jaune);
+    bottom: 50%;
+    left: 50%;
+    z-index: -1;
+    border-radius: 0;
+    transform: translate(-50%, 50%);
+    animation: cardSelectedAnimation 2s infinite;
+} 
+@keyframes cardSelectedAnimation {
+  0% {
+  
+    box-shadow: 0 0 30px 6px var(--jaune);
+  }
+  50% {
+    box-shadow: 0 0 30px 12px var(--jaune);
+  }  0% {
+  
+    box-shadow: 0 0 30px 6px var(--jaune);
+  }
+}
 @keyframes blinkAnimation {
   0% {
     border-color: var(--jaune);

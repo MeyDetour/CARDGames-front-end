@@ -22,6 +22,7 @@ export function getPlayerStat(player, gameData) {
     }
     if (
       key == "handDeck" ||
+      key == "cardsSelectableForActionOnHand" ||
       key == "personalHandDeck" ||
       key == "personalHandDiscard"
     ) {

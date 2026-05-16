@@ -66,7 +66,7 @@ export function reloadComposant_gameplayPlayers(
   el.querySelectorAll(".player").forEach((playerElt) => {
     playerElt.remove();
   });
-  const anchor = el.querySelector(".gameplayGlobalValues, .center");
+  const anchor = el.querySelector(selector);
   if (anchor) {
     anchor.insertAdjacentHTML(
       "beforebegin",

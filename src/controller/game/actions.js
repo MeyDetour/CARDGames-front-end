@@ -6,7 +6,7 @@ import { serializeParams } from "../../helpers/serializer.js";
 import { getPlayerOfCurrentView } from "./players.js";
 import { socket } from "../../connection.js";
 import { getGameData } from "./dataStorage.js";
-import {gameplay_actionsButtons_toggle_widget} from "../../../components/game/game/actionsButtons/actionsButtons.js";
+import { gameplay_actionsButtons_toggle_widget } from "../../../components/game/game/actionsButtons/actionsButtons.js";
 import { displayAskPlayerWidget } from "../../../components/game/game/widgetContainerAskPlayer/widgetContainerAskPlayer.js";
 import { displayError } from "../error.js";
 
@@ -19,30 +19,31 @@ import { displayError } from "../error.js";
 function doAction(params) {
   gameplay_actionsButtons_toggle_widget();
   let action = params.action;
-  if (action.askValueToPlayThisAction){
-      displayAskPlayerWidget(event, params, roomId);
-      return
+  if (action.askValueToPlayThisAction) {
+    displayAskPlayerWidget(event, params, roomId);
+    return;
   }
   let actionType = params.actionType || "default";
   let id = params.playerId;
   console.log("Do Action :>> ", { action, actionType });
+  let socketToUse = socket;
   if (environnement == "test-app") {
-    socket = players.find((player) => player.id == id).socket;
+    socketToUse = players.find((player) => player.id == id).socket;
   }
-  socket.emit("doAction", { action, actionType });
+  socketToUse.emit("doAction", { action, actionType });
 }
 
 window.doAction = doAction;
 
-export function doActionFromHandDeck(card) {
-  console.log("ACTION ON CARD", card);
+export function doActionFromHandDeck() {
   let socketToDoAction = socket;
 
   // Si c'est déjà un objet, on ne parse pas
-  const cardObj = typeof card === "string" ? JSON.parse(card) : card;
+  let cardsElement = document.querySelectorAll(
+    ".handDeck [data-card-id].selected",
+  );
 
-  console.log("Card ID:", cardObj.id);
-  if (!card) {
+  if (cardsElement.length === 0) {
     console.error("No card data provided for action from hand/deck");
     displayError("No card data provided for action from hand/deck");
     return;
@@ -65,15 +66,17 @@ export function doActionFromHandDeck(card) {
     displayError("No action found for hand/deck interaction");
     return;
   }
-  let action = actionOnHand;
+  let cardsId = Array.from(cardsElement).map((card) =>
+    card.getAttribute("data-card-id"),
+  );
+  let action = actionOnHand.id;
   let actionType = action.type || "default";
-
+  let params = { selectedCards: cardsId };
   let id = currentPlayer.id;
   console.log("Do Action :>> ");
-  console.log(card);
+  console.log(cardsId);
   console.log(action);
-
-  // socketToDoAction.emit("doAction", { action, actionType });
+  socketToDoAction.emit("doAction", { action, actionType, params });
 }
 
 window.doActionFromHandDeck = doActionFromHandDeck;
@@ -94,6 +97,61 @@ export function selectCardForAction(card) {
   if (cardElement) {
     cardElement.classList.add("selected");
   }
+  cardElement.addEventListener("dblclick", () => {
+    doActionFromHandDeck(card);
+  });
+  // Ici, vous pouvez stocker la carte sélectionnée dans une variable globale ou l'envoyer au serveur pour traitement
 }
 
 window.selectCardForAction = selectCardForAction;
+
+const clickHandlers = new Map();
+const dblclickHandlers = new Map();
+export function listenActionsOnDeck() {
+  let clickTimeout;
+
+  document.querySelectorAll(".handDeck").forEach((deck) => {
+    if (clickHandlers.has(deck)) {
+      deck.removeEventListener("click", clickHandlers.get(deck));
+    }
+    if (dblclickHandlers.has(deck)) {
+      deck.removeEventListener("dblclick", dblclickHandlers.get(deck));
+    }
+
+    const handleClick = (event) => {
+      const card = event.target.closest("[data-card-id]");
+      if (!card) return;
+      clearTimeout(clickTimeout);
+
+      // time out pour differencier click et dlb click
+      clickTimeout = setTimeout(() => {
+        console.log("Clic simple sur :", card);
+        if (card.classList.contains("hoverable")) {
+          card.classList.toggle("selected");
+        }
+      }, 250);
+    };
+    const handleDblClick = (event) => {
+      clearTimeout(clickTimeout);
+
+      const card = event.target.closest("[data-card-id]");
+      if (!card) return;
+
+      console.log("Double-clic sur :", card);
+
+      if (card.classList.contains("selected")) {
+        doActionFromHandDeck(card.dataset.cardId);
+      } else {
+        document.querySelectorAll(".handDeck [data-card-id]").forEach((c) => {
+          c.classList.remove("selected");
+        });
+      }
+    };
+
+    deck.addEventListener("click", handleClick);
+    deck.addEventListener("dblclick", handleDblClick);
+
+    clickHandlers.set(deck, handleClick);
+    dblclickHandlers.set(deck, handleDblClick);
+  });
+}

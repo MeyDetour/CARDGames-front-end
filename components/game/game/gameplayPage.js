@@ -49,7 +49,7 @@ import {
   gameplay_spectatorBanniere,
 } from "./spectatorBanniere/spectatorBanniere.js";
 import { serializeParams } from "../../../src/helpers/serializer.js";
-
+import { listenActionsOnDeck } from "../../../src/controller/game/actions.js";
 export default function gameplayPage() {
   let currentPlayer;
   let view;
@@ -95,6 +95,9 @@ export default function gameplayPage() {
   let actionOnDiscardDeck = playerActions.find(
     (action) => action.actionOnDiscardDeck,
   );
+  setTimeout(() => {
+    listenActionsOnDeck();
+  }, 1000);
 
   return /*html */ `
         <div id="gameplayPage" class="${environnement}">
@@ -104,6 +107,7 @@ export default function gameplayPage() {
          params.displayHandDeck,
          handDeck,
          cardList,
+         currentPlayer.cardsSelectableForActionOnHand?.value,
          gameData.roomInDb.params.rendering.playerHand,
          gameData.roomInDb.params.cards,
          actionOnHand,
@@ -273,10 +277,12 @@ export function reloadComposant_gameplayPage() {
     gameData.roomInDb.params.rendering.game.displayHandDeck,
     currentPlayer.handDeck.value,
     gameData.roomInDb.assets.cards,
+    currentPlayer.cardsSelectableForActionOnHand?.value,
     gameData.roomInDb.params.rendering.playerHand,
     gameData.roomInDb.params.cards,
     actionOnHand,
   );
+  listenActionsOnDeck();
   reloadComposant_gameplayActionsButtons(
     content,
     playerActions.filter((a) => !a.actionOnDeck && !a.actionOnDiscardDeck),

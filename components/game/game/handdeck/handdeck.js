@@ -17,9 +17,10 @@ export function gameplay_handdeck(
   displayHandDeck,
   handDeck,
   cardList,
+  cardListToSelect, 
   paramsPlayerHand,
-    cardsParams,
-    canDoAction,
+  cardsParams,
+  canDoAction,
 ) {
   if (!displayHandDeck) {
     return "";
@@ -38,7 +39,7 @@ export function gameplay_handdeck(
     return "";
   }
   console.log(canDoAction);
- 
+
   if (
     paramsPlayerHand?.template
       ? paramsPlayerHand.template.includes("grid")
@@ -49,13 +50,13 @@ export function gameplay_handdeck(
     ); // Extrait le nombre de colonnes du template
     const cols = parseInt(
       paramsPlayerHand.template.split("grid")[1].split("x")[1],
-    ); // Extrait le nombre de lignes du template 
+    ); // Extrait le nombre de lignes du template
     let html = `<div class="handDeck handDeck-grid" style="grid-template-rows: repeat(${rows}, 1fr); grid-template-columns: repeat(${cols}, 1fr);">`;
     for (let i = 0; i < handDeck.length; i++) {
       const cardId = handDeck[i];
       let carElt = cardList[cardId];
       carElt.faceUp = true;
-      carElt.hoverable = true;
+      carElt.hoverable = cardListToSelect.includes(cardId);
       if (carElt.type == "french_standard") {
         const suits = {
           coeur: "hearts",
@@ -66,14 +67,14 @@ export function gameplay_handdeck(
 
         carElt.suit = suits[carElt.addedAttributs.couleur] || "";
 
-        html += defaultCard(carElt,canDoAction);
+        html += defaultCard(carElt, canDoAction);
       } else {
-        html += customCard(carElt,cardsParams, canDoAction);
+        html += customCard(carElt, cardsParams, canDoAction);
       }
     }
-    html += `</div>`; 
+    html += `</div>`;
     return html;
-  }else {
+  } else {
     let sort = getCardSort();
     let sortedHandDeck = [...handDeck];
 
@@ -137,20 +138,43 @@ export function gameplay_handdeck(
     for (let i = 0; i < sortedHandDeck.length; i += chunkSize) {
       const chunk = sortedHandDeck.slice(i, i + chunkSize);
       const index = Math.floor(i / chunkSize) + 1;
-      html += getHandDeckLine(chunk, cardList, index, indexMax, cardsParams,canDoAction);
+      html += getHandDeckLine(
+        chunk,
+        cardList,
+        cardListToSelect,
+        index,
+        indexMax,
+        cardsParams,
+        canDoAction,
+      );
     }
     return html;
   }
 }
 // affiche une rangée de carte
-function getHandDeckLine(cards, cardList, index, max,cardsParams,canDoAction) {
+function getHandDeckLine(
+  cards,
+  cardList,
+  cardListToSelect,
+  index,
+  max,
+  cardsParams,
+  canDoAction,
+) {
+  console.log(cardList);
   return /*html */ `
     <div class="handDeck handDeck-${index}" style="z-index: ${max - index}; transform: translate(-50%,-${index * 40}px);">
                       ${cards
                         .map((cardId) => {
                           let carElt = cardList[cardId];
+                          if (!carElt) {
+                            console.warn(
+                              `Card with ID ${cardId} not found in cardList.`,
+                            );
+                            return "";
+                          }
                           carElt.faceUp = true;
-                          carElt.hoverable = true;
+                          carElt.hoverable = cardListToSelect.includes(cardId);
                           if (carElt.type == "french_standard") {
                             const suits = {
                               coeur: "hearts",
@@ -162,7 +186,7 @@ function getHandDeckLine(cards, cardList, index, max,cardsParams,canDoAction) {
                             carElt.suit =
                               suits[carElt.addedAttributs.couleur] || "";
 
-                            return defaultCard(carElt,canDoAction);
+                            return defaultCard(carElt, canDoAction);
                           } else {
                             return customCard(carElt, cardsParams, canDoAction);
                           }
@@ -212,5 +236,12 @@ export function reloadComposant_gameplayHanddeck(
 ) {
   document.querySelectorAll(".handDeck").forEach((elt) => elt.remove());
 
-  content.innerHTML += gameplay_handdeck(displayHandDeck, handDeck, cardList, playerHandParams, cardsParams, canDoAction);
+  content.innerHTML += gameplay_handdeck(
+    displayHandDeck,
+    handDeck,
+    cardList,
+    playerHandParams,
+    cardsParams,
+    canDoAction,
+  );
 }

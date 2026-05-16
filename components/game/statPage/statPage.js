@@ -23,7 +23,7 @@ export function statPage() {
     <div class="head" >
               <h2 class="h2">${gameData.roomInDb.name}</h2> 
               <div>
-                ${button(null, null, null, "replay", "Relancer", "greyBorderButton")}
+                ${button(null, null, null, "replayForTestApp", "Relancer", "greyBorderButton")}
                 ${button(null, null, null, "exit", "Quitter", "greyBorderButton")}
               </div>
           </div> 

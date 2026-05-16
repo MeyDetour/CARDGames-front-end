@@ -16,6 +16,7 @@ export function startGame(params) {
 }
 export function replay(params) {
   deleteAllGameVariablesSaved();
+ 
   if (socket) {
     socket.emit("replayGame");
   } else {

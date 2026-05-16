@@ -49,7 +49,7 @@ export function gameplay_actionsButtons(actions, isCurrentTurn, currentPlayer) {
           })
           .join("")}
   </div>  
-  <img src="/assets/close-white.png" class="closeButton" onclick="gameplay_actionsButtons_toggle_widget()"/>
+  <img src="/assets/close-white.svg" class="closeButton" onclick="gameplay_actionsButtons_toggle_widget()"/>
   </div>  
   `;
 }
