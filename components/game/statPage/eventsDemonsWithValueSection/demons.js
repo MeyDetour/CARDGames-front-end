@@ -25,7 +25,7 @@ export default function statEventsDemonsWithValueSectionDemonSection(gameData) {
                               <span class="span" style="font-weight: bold;">Détails du démon</span>
                               <div class="detailWrapper">
                                   ${demon.boucle ? `<div class="rowInWrapper"><span class="span">Boucle :</span><span class="span">${demon.boucle}</span></div>` : ""}
-                                 ${demon.condition ? `<div  class="rowInWrapper"><span class="span">Condition :</span><span class="span">${demon.condition}</span></div>` : ""}
+                                 ${demon.condition ? `<div  class="rowInWrapper"><span class="span">Condition :</span><span class="span">${demon.condition.replaceAll('<', '&lt;').replaceAll('>', '&gt;')}</span></div>` : ""}
                             
                               </div>
                            </div>

@@ -43,6 +43,22 @@
   }
 }
 
+.defaultCardOfGame.hoverable {
+  
+    border: 4px solid var(--jaune);
+    animation: blinkAnimation 1s infinite;
+}
+@keyframes blinkAnimation {
+  0% {
+    border-color: var(--jaune);
+  }
+  50% {
+    border-color: transparent;
+  }
+  100% {
+    border-color: var(--jaune);
+  }
+}
 .defaultCardOfGame.hoverable:hover {
   cursor: pointer;
   transform: scale(1.05);

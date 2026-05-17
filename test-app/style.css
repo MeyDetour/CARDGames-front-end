@@ -20,8 +20,6 @@ body {
   font-weight: 400;
   overflow: hidden;
   font-size: 21px;
-  -webkit-user-select: none;
-  user-select: none;
 }
 .h1 {
   background: linear-gradient(90deg, #a600ff 0%, #db00e6 100%);

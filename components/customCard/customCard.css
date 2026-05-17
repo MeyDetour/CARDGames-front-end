@@ -21,9 +21,9 @@
   cursor: pointer;
   transform: scale(1.05);
 }
-.customCardOfGame.blink{
+.customCardOfGame.hoverable{
   
-    border: 1px solid var(--jaune);
+    border: 4px solid var(--jaune);
     animation: blinkAnimation 1s infinite;
 }
 .customCardOfGame.selected  {

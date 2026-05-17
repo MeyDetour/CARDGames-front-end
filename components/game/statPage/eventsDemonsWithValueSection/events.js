@@ -14,7 +14,7 @@ export default function statEventsDemonsWithValueSectionEventSection(gameData) {
                      <details class="elementDetails">
                         <summary ${index === 0 ? "style='padding-bottom: 24px;'" : ""}>
                            <img src="/assets/violet-right-arrow.svg" alt="Arrow Icon">
-                           <span class="span">${event.name}</span>
+                           <span class="span">${event.name}${!event.conditionResult ? ` (ne rempli pas la condition)` : ""}</span>
                            ${index===0 ? "<span class='tooltip span'>(Dernier événement)</span>" : ""}
                         </summary>
                         <div class="elementContent">
@@ -22,8 +22,8 @@ export default function statEventsDemonsWithValueSectionEventSection(gameData) {
                               <span class="span" style="font-weight: bold;">Détails de l'événement</span>
                               <div class="detailWrapper">
                                   ${event.boucle ? `<div class="rowInWrapper"><span class="span">Boucle :</span><span class="span">${event.boucle}</span></div>` : ""}
-                                 ${event.condition ? `<div  class="rowInWrapper"><span class="span">Condition :</span><span class="span">${event.condition}</span></div>` : ""}
-                                 ${event.event.condition ? `<div  class="rowInWrapper"><span class="span">Condition dans la boucle :</span><span class="span">${event.event.condition}</span></div>` : ""}
+                                 ${event.condition ? `<div  class="rowInWrapper"><span class="span">Condition :</span><span class="span">${event.condition.replaceAll('<', '&lt;').replaceAll('>', '&gt;') }</span></div>` : ""}
+                                 ${event.event.condition ? `<div  class="rowInWrapper"><span class="span">Condition dans la boucle :</span><span class="span">${event.event.condition.replaceAll('<', '&lt;').replaceAll('>', '&gt;')}</span></div>` : ""}
                                  ${
                                    event.event.give
                                      ? Object.keys(event.event.give)
