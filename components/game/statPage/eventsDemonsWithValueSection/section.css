@@ -129,45 +129,7 @@
             }
           }
         }
-        .statValueElement {
-          display: flex;
-          border: 1px solid #ededed;
-          flex-direction: column;
-          justify-content: space-between;
-          width: 100%;
-          align-items: start;
-          background: #f9fafb;
-          gap: 9px;
-          padding: 10px;
-          box-sizing: border-box;
-          border-radius: 17px;
-          .spanTop {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            width: 100%;
-            span:first-child {
-              font-weight: bold;
-              color: black;
-            }
-            > span:last-child {
-              background: #eceef2;
-              color: black;
-              padding: 5px 14px;
-              border-radius: 50px;
-              font-size: 15px;
-            }
-          }
-          > span {
-            width: 100%;
-            background: white;
-            border: 1px solid #e2e2e2;
-            color: #a8a8a8;
-            border-radius: 7px;
-            padding: 5px;
-            box-sizing: border-box;
-          }
-        }
+       
       }
       .statEventsDemonsWithValueSection-navigation {
         display: flex;

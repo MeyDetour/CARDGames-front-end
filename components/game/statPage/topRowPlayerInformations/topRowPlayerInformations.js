@@ -25,8 +25,7 @@ export default function topRowPlayerInformations() {
     displayError("No current player found to display game");
     return "";
   }
-  return /*html*/ `    
-            <div class="col">
+  return /*html*/ `     
                 <div class="boxContainer">
                       <div class="titleContainer">
                           <img>
@@ -72,38 +71,7 @@ export default function topRowPlayerInformations() {
                             })
                             .join("")} 
                         </div> 
-                </div> 
-            </div>
-            <div class="boxContainer playerSection">
-                  <div class="titleContainer">
-                        <img>
-                        <h4>${currentPlayer.pseudo}</h4>
-                        </h4> 
-                  </div>
-                  <div class="row">
-                  <div class="detailWrapper detailWrapper1">
-                       ${playerStat1
-                         .map(
-                           (stat) => `
-                           <div  class="rowInWrapper"><span>${stat.name} :</span><span>${stat.value}</span></div>
-                                       `,
-                         )
-                         .join("")}  
-                  </div> 
-                  <div class="separator"></div>
-                    <div class="detailWrapper detailWrapper2">
-                       ${playersStat2
-                         .map(
-                           (stat) => `
-                           <div  class="rowInWrapper"><span>${stat.name} :</span><span>${stat.value}</span></div>
-                                       `,
-                         )
-                         .join("")}  
-                  </div>
-                  </div>
-                    
-             
-            </div> 
+                </div>  
     `;
 }
 

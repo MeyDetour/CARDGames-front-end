@@ -11,6 +11,7 @@ import statEventsDemonsWithValueSectionParamsSection from "./params.js";
 import statEventsDemonsWithValueSectionValueSection from "./value.js";
 import statEventsDemonsWithValueSectionEventsSection from "./events.js";
 import statEventsDemonsWithValueSectionDemonSection from "./demons.js";
+import statEventsDemonsWithValueSectionValuePlayerSection from "./valuePlayer.js";
 
 export default function gameplay_statEventsDemonsWithValueSection(
   gameData,
@@ -39,6 +40,10 @@ export default function gameplay_statEventsDemonsWithValueSection(
                                   )
                                 : view.statEventsDemonsWithValue == "params"
                                   ? statEventsDemonsWithValueSectionParamsSection(
+                                      gameData,
+                                    )
+                                  :  view.statEventsDemonsWithValue == "valuePlayer"
+                                  ? statEventsDemonsWithValueSectionValuePlayerSection(
                                       gameData,
                                     )
                                   : ""

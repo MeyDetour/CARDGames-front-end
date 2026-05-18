@@ -27,7 +27,8 @@ export function getPlayerStat(player, gameData) {
       key == "personalHandDiscard"
     ) {
       arrayOfStat.push({
-        name: key,
+        name: key =="cardsSelectableForActionOnHand"?"Cartes sélectionnables" : key,
+        type: "Card Array",
         value: player[key].value.map((cardId) =>
           gameData.roomInDb.assets.cards[cardId].type == "french_standard"
             ? getTextualValueOfCard(gameData.roomInDb.assets.cards[cardId])
@@ -39,6 +40,7 @@ export function getPlayerStat(player, gameData) {
     if (key == "roles") {
       arrayOfStat.push({
         name: "Roles",
+        type: "Role Array",
         value: player.roles.value.map((role) => role.name).join(", "),
       });
       continue;
@@ -52,6 +54,7 @@ export function getPlayerStat(player, gameData) {
         if (!gainObject) continue;
         arrayOfStat.push({
           name: gainObject.name,
+          type: "Gain",
           value: player.gain.value[gainKey].value,
         });
       }
@@ -62,6 +65,7 @@ export function getPlayerStat(player, gameData) {
     if (player[key]) {
       arrayOfStat.push({
         name: key,
+        type: typeof player[key].type ?? typeof player[key],
         value: player[key].value != undefined ?? player[key],
       });
     }

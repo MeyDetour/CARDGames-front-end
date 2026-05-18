@@ -3,13 +3,11 @@
     .topRow {
       display: flex;
       flex-direction: row;
+      align-items: stretch;
       justify-content: space-between;
       gap: 15px;
-      .col {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        width: 46%;
+
+    
         select {
           width: 100%;
           border: 0;
@@ -19,9 +17,8 @@
         }
 
         .actionSection {
-          h4{
-
-    text-align: start;
+          h4 {
+            text-align: start;
           }
           .actionWrapper {
             width: 100%;
@@ -85,50 +82,22 @@
             }
           }
         }
-      }
+      
       .playerSection {
         width: 77%;
+        height: 100%;
         display: flex;
         flex-direction: column;
         gap: 24px;
-        .row {
+        .detailWrapper {
           display: flex;
           flex-direction: row;
+                    overflow-y: scroll;
           justify-content: space-between;
-          align-items: stretch;
-          width: 100%;
-          gap: 15px;
-          .separator {
-                       width: 1px;
-  background: #2b2b2b;
-  align-self: stretch;
-  flex-shrink: 0;
-          }
-          .detailWrapper1 {
-            width: 35%;
-          }
-          .detailWrapper2 {
-            width: 65%;
-          }
-          .detailWrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 8px; 
-            > .rowInWrapper {
-              display: flex;
-              flex-direction: row;
-              justify-content: space-between;
-              width: 100%;
-              > span:first-child {
-                font-size: 18px;
-              }
-              > span:last-child {
-                font-size: 15px;
-                max-width: 82%;
-                overflow-wrap: break-word;
-                text-align: end;
-              }
-            }
+          flex-wrap: wrap;
+          gap: 10px;
+          > .statValueElement {
+            width: 48%;
           }
         }
       }
