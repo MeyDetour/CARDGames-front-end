@@ -23,6 +23,7 @@ export default function gameplay_statEventsDemonsWithValueSection(
                    <span class="span ${ view.statEventsDemonsWithValue == "events" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('events')" class="${view.statEventsDemonsWithValue == "events" ? "selected" : ""}">Événements</span>
                    <span class="span ${ view.statEventsDemonsWithValue == "demons" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('demons')" class="${view.statEventsDemonsWithValue == "demons" ? "selected" : ""}">Démons</span>
                    <span class="span ${ view.statEventsDemonsWithValue == "params" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('params')" class="${view.statEventsDemonsWithValue == "params" ? "selected" : ""}">Paramètres</span>
+                   <span class="span ${ view.statEventsDemonsWithValue == "valuePlayer" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('valuePlayer')" class="${view.statEventsDemonsWithValue == "valuePlayer" ? "selected" : ""}">Valeur Joueur</span>
                 </div>
                 <div class="boxContainer">
                         ${

@@ -17,7 +17,15 @@ export function isPassifPlayer(player) {
 export function getPlayerStat(player, gameData) {
   let arrayOfStat = [];
   for (let key in player) {
-    if (key == "skin" || key === "actions" || key == "socketID") {
+    if (key == "skin" ||   key == "socketID") {
+      continue;
+    }
+    if (key == "actions") {
+      arrayOfStat.push({
+        name: key,
+        type: "Action Array",
+        value: player[key].value.map((action) => action.name).join(", "),
+      });
       continue;
     }
     if (
@@ -33,7 +41,7 @@ export function getPlayerStat(player, gameData) {
           gameData.roomInDb.assets.cards[cardId].type == "french_standard"
             ? getTextualValueOfCard(gameData.roomInDb.assets.cards[cardId])
             : gameData.roomInDb.assets.cards[cardId].name,
-        ),
+        ).join(", "),
       });
       continue;
     }

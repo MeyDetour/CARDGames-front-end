@@ -8,7 +8,7 @@ export default function statEventsDemonsWithValueSectionEventSection(gameData) {
    return ` 
          ${
            data.map((log, index) => {
-             if (log.testType == "event" || log.testType == "withValue") {
+             if (log.testType == "event" ) {
                let event = log; 
                return /*html */ `
                      <details class="elementDetails">

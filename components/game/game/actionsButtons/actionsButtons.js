@@ -41,7 +41,7 @@ export function gameplay_actionsButtons(actions, isCurrentTurn, currentPlayer) {
               action.name,
               "greyButton",
               {
-                action: action.name,
+                action: action,
                 actionType: action.type || "default",
                 playerId: currentPlayer.id,
               },

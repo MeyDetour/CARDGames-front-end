@@ -25,11 +25,12 @@ function doAction(params) {
   }
   let actionType = params.actionType || "default";
   let id = params.playerId;
-  console.log("Do Action :>> ", { action, actionType });
   let socketToUse = socket;
   if (environnement == "test-app") {
     socketToUse = players.find((player) => player.id == id).socket;
   }
+   action = action.id
+  console.log("Do Action :>> ", { action, actionType });
   socketToUse.emit("doAction", { action, actionType });
 }
 

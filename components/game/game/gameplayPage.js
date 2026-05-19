@@ -17,7 +17,8 @@ import {
   reloadComposant_gameplayMessageOfLoading,
 } from "./messageOfLoading/messageOfLoading.js";
 import { gameplay_displayAllPlayers } from "./players/players.js";
-import {
+import {ner>
+            <div className="menu-rendering-wrapper"></div>
   gameplay_middleCards,
   reloadComposant_gameplayMiddleCards,
 } from "./middleCards/middleCards.js";
@@ -42,7 +43,7 @@ import {
 } from "./globalValues/globalValues.js";
 import {
   gameplay_cardPile,
-  reloadComposant_gameplayCardPile,
+  autoreloadComposant_gameplayCardPile
 } from "./cardPile/cardPile.js";
 import {
   reloadComposant_gameplaySpectatorBanniere,
@@ -107,7 +108,7 @@ export default function gameplayPage() {
          params.displayHandDeck,
          handDeck,
          cardList,
-         currentPlayer.cardsSelectableForActionOnHand?.value,
+         currentPlayer.cardsSelectableForActionOnHand?.value??[],
          gameData.roomInDb.params.rendering.playerHand,
          gameData.roomInDb.params.cards,
          actionOnHand,
@@ -156,7 +157,7 @@ export default function gameplayPage() {
                       ? {
                           playerId: currentPlayer.id,
                           roomId: gameData.roomId,
-                          action: actionOnDeck ? actionOnDeck.name : null,
+                          action: actionOnDeck ? actionOnDeck : null,
                           actionType: actionOnDeck
                             ? actionOnDeck.type || "default"
                             : "default",
@@ -177,7 +178,7 @@ export default function gameplayPage() {
                         playerId: currentPlayer.id,
                         roomId: gameData.roomId,
                         action: actionOnDiscardDeck
-                          ? actionOnDiscardDeck.name
+                          ? actionOnDiscardDeck
                           : null,
                         actionType: actionOnDiscardDeck
                           ? actionOnDiscardDeck.type || "default"
@@ -246,7 +247,7 @@ export function reloadComposant_gameplayPage() {
     displayError("No current player found to display game");
     return;
   }
-
+console.log(currentPlayer);
   let playerActions = currentPlayer.actions.value;
   let actionOnHand = playerActions.find((action) => action.actionOnHand);
   let actionOnDeck = playerActions.find((action) => action.actionOnDeck);
@@ -277,7 +278,7 @@ export function reloadComposant_gameplayPage() {
     gameData.roomInDb.params.rendering.game.displayHandDeck,
     currentPlayer.handDeck.value,
     gameData.roomInDb.assets.cards,
-    currentPlayer.cardsSelectableForActionOnHand?.value,
+    currentPlayer.cardsSelectableForActionOnHand?.value?? [],
     gameData.roomInDb.params.rendering.playerHand,
     gameData.roomInDb.params.cards,
     actionOnHand,
@@ -290,44 +291,9 @@ export function reloadComposant_gameplayPage() {
     currentPlayer,
     gameData.roomId,
   );
-  reloadComposant_gameplayCardPile(
-    center,
-    gameData.roomInDb.params.cards,
-    actionOnDeck
-      ? {
-          playerId: currentPlayer.id,
-          roomId: gameData.roomId,
-          action: actionOnDeck ? actionOnDeck.name : null,
-          actionType: actionOnDeck ? actionOnDeck.type || "default" : "default",
-        }
-      : null,
-    "deck",
-    "Pioche",
-    gameData.roomInDb.params?.cards?.deck?.renderTheNextDeckCard,
-    gameData.data.deck.value.map((cardId) => {
-      return gameData.data.cards[cardId];
-    }),
-  );
-  reloadComposant_gameplayCardPile(
-    center,
-    gameData.roomInDb.params.cards,
-    actionOnDiscardDeck
-      ? {
-          playerId: currentPlayer.id,
-          roomId: gameData.roomId,
-          action: actionOnDiscardDeck ? actionOnDiscardDeck.name : null,
-          actionType: actionOnDiscardDeck
-            ? actionOnDiscardDeck.type || "default"
-            : "default",
-        }
-      : null,
-    "discardDeck",
-    "Défausse",
-    gameData.roomInDb.params.cards.discard.renderTheLastDiscardedCard,
-    gameData.data.discardDeck.value.map((cardId) => {
-      return gameData.data.cards[cardId];
-    }),
-  );
+   
+    autoreloadComposant_gameplayCardPile("deck")
+    autoreloadComposant_gameplayCardPile("discardDeck")
 }
 // ===============TEST APP - SCALE SCREEN==========
 

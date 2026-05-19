@@ -13,10 +13,10 @@ export function gameplay_cardPile(
   actionParams,
   type,
   label,
-  isVisibile=false,
+  isVisibile = false,
   cards,
   classname = "",
-) { 
+) {
   let gameData = getGameData();
 
   let currentPlayer;
@@ -40,47 +40,82 @@ export function gameplay_cardPile(
     return "";
   }
   if (isVisibile) {
-     
     return /*html */ `
-   <div onclick="${actionParams && actionParams.action ?  `doAction(${serializeParams(actionParams)})` : ""}" class="gameplayPile ${actionParams ? "blink" : ""} ${classname} ${environnement}" id="pile-type-${type}">
+   <div onclick="${actionParams && actionParams.action ? `doAction(${serializeParams(actionParams)})` : ""}" class="gameplayPile ${actionParams ? "blink" : ""} ${classname} ${environnement}" id="pile-type-${type}">
         ${!cards || cards.length === 0 ? cardPlaceholder() : customCard(cards[0])}
-        ${actionParams ? /*html */ `<span class="actionLabel">${actionParams.action}</span>` : ""}
+        ${actionParams ? /*html */ `<span class="actionLabel">${actionParams.action.name}</span>` : ""}
         ${label ? /*html */ `<span class="pileLabel">${label}</span>` : ""}
    </div>
      `;
   }
 
-
   return /*html */ `
    <div onclick="${actionParams && actionParams.action ? `doAction(${serializeParams(actionParams)})` : ""}" class="gameplayPile ${classname} ${actionParams ? "blink" : ""} ${environnement}" id="pile-type-${type}">
    <img src="/assets/images/cardBack.png">
-  ${actionParams ? /*html */ `<span class="actionLabel">${actionParams.action}</span>` : ""}
+  ${actionParams ? /*html */ `<span class="actionLabel">${actionParams.action.name}</span>` : ""}
    ${label ? /*html */ `<span class="pileLabel">${label}</span>` : ""}
    </div>
      `;
 }
 
-export function reloadComposant_gameplayCardPile(
-  content,
-  cardsParams,
-  actionParams,
-  type,
-  label,
-  isVisibile,
-  cards,
-  classname = "",
-) {
+export function autoreloadComposant_gameplayCardPile(type) {
+  let gameData = getGameData();
+  if (!gameData) {
+    console.warn("No game data found to autoreload gameplay card pile");
+    return;
+  }
+
+  let currentPlayer;
+  if (environnement == "player-app") {
+    currentPlayer = getCurrentPlayer();
+  }
+  if (environnement == "test-app") {
+    currentPlayer = getPlayerOfCurrentView();
+  }
+  let playerActions = currentPlayer.actions.value;
+
+  let actionOnDeck = playerActions.find((action) => action.actionOnDeck);
+
+  let content = document.querySelector("#gameplayPage .table .center");
+  if (!content) {
+    console.warn("No content found to autoreload gameplay card pile");
+    return;
+  }
   let pileContainer = content.querySelector(`#pile-type-${type}`);
   if (pileContainer) {
     pileContainer.remove();
   }
+  let actionOnDiscardDeck = playerActions.find(
+    (action) => action.actionOnDiscardDeck,
+  );
   content.innerHTML += gameplay_cardPile(
-    cardsParams,
-    actionParams,
+    gameData.roomInDb.params.cards,
+    (type == "discardDeck"
+      ? actionOnDiscardDeck
+        ? {
+            playerId: currentPlayer.id,
+            roomId: gameData.roomId,
+            action: actionOnDiscardDeck ? actionOnDiscardDeck : null,
+            actionType: actionOnDiscardDeck
+              ? actionOnDiscardDeck.type || "default"
+              : "default",
+          }
+        : null
+      : actionOnDeck
+        ? {
+            playerId: currentPlayer.id,
+            roomId: gameData.roomId,
+            action: actionOnDeck ? actionOnDeck : null,
+            actionType: actionOnDeck
+              ? actionOnDeck.type || "default"
+              : "default",
+          }
+        : null),
     type,
-    label,
-    isVisibile,
-    cards,
-    classname,
+    (type == "discardDeck" ? "Défausse" : "Pioche"),
+  ( type ==  "discardDeck" ? gameData.roomInDb.params.cards.discard.renderTheLastDiscardedCard :   gameData.roomInDb.params?.cards?.deck?.renderTheNextDeckCard),
+    gameData.data.discardDeck.value.map((cardId) => {
+      return gameData.data.cards[cardId];
+    }),
   );
 }

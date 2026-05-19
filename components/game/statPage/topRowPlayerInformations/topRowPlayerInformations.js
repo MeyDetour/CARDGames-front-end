@@ -14,6 +14,8 @@ import { button } from "../../../button/button.js";
 import { reloadComposant_winPage } from "../../winPage/winPage.js";
 import { reloadComposant_loosePage } from "../../loosePage/loosePage.js";
 import { displayError } from "../../../../src/controller/error.js";
+import {autoreloadComposant_gameplayCardPile} from "../../game/cardPile/cardPile.js";
+import { reloadComposant_gameplay_statEventsDemonsWithValueSection} from "../eventsDemonsWithValueSection/section.js";
 
 export default function topRowPlayerInformations() {
   let view = getView();
@@ -79,8 +81,10 @@ export function changeCurrentView(eOrValue) {
   const position = eOrValue?.target ? eOrValue.target.value : eOrValue;
   setPlayerView(position);
   reload_topRowPlayerInformations();
+  reloadComposant_gameplay_statEventsDemonsWithValueSection(getGameData(), getView());
   reloadComposant_gameplayPage();
-
+  autoreloadComposant_gameplayCardPile("deck");
+  autoreloadComposant_gameplayCardPile("discardDeck");
   reloadComposant_winPage();
   reloadComposant_loosePage();
 }
