@@ -61,6 +61,8 @@ export function reloadComposant_gameplayPlayers(
   gameData,
   currentPlayer,
 ) {
+
+  console.log("-- reload players --");
   const el = document.querySelector(selector);
   if (!el) return;
   el.querySelectorAll(".player").forEach((playerElt) => {

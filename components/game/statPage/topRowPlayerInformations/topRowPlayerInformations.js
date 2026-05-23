@@ -92,6 +92,7 @@ window.changePlayerView = changeCurrentView;
 
 // ============ RELOAD =============
 export function reload_topRowPlayerInformations() {
+  console.log("-- reload top row player informations --");
   let content = document.querySelector(".statGamePage .right .topRow");
   if (content) {
     content.innerHTML = topRowPlayerInformations();

@@ -26,6 +26,7 @@ export function waitingPage() {
 }
 
 export function reloadComposant_waitingPage() {
+  console.log("-- reload waiting page --");
   let content = document.querySelector("#content");
   if (!content) {
     return;
@@ -34,6 +35,7 @@ export function reloadComposant_waitingPage() {
 }
 
 export function reloadComposant_messagerie_inWaitingPage() {
+  console.log("-- reload messagerie in waiting page --");
   let content = document.querySelector(".waitingPage .row .right");
   if (content) {
     content.innerHTML = messaegerieComponent( );

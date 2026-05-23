@@ -59,6 +59,8 @@ export function reloadComposant_gameplayPlayerValues(
   player,
   params,
 ) {
+  console.log("-- reload player values --");
+
   let playerContainer = content.querySelector(`.playerValues `);
   if (playerContainer) {
     playerContainer.remove();

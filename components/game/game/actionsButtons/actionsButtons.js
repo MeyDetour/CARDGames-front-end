@@ -77,6 +77,7 @@ export function reloadComposant_gameplayActionsButtons(
   currentPlayer,
   roomId,
 ) {
+  console.log("-- reload actions buttons --");
   let actionsContainer = document.querySelector(".actionsContainer");
   let button = document.querySelector(".oepnActionsButton");
 

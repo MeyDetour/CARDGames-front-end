@@ -81,55 +81,63 @@
               }
             }
 
-            .modificationDetail {
-              .detailWrapper {
-                .diffDetail {
-                  display: flex;
+            .modificationDetail,
+            .conditionDetail {
+              p {
+                width: 100%; 
+                overflow-wrap: break-word;
+                color:var(--tertiary);
+              }
+              > .studyConditionDetail {
+                overflow-x: scroll;
+                overflow-y: hidden;
+              }
+              .diffDetail,
+              .studyConditionDetail {
+                display: flex;
+                width: 100%;
+                flex-direction: column;                                border-left: 1px solid #a91da4;
+                align-items: start;
+                background: #f6f6f6;
+                padding: 10px;
+                border-radius: 10px;
+                gap: 11px;
+                box-sizing: border-box;
+                > span,
+                > p {
                   width: 100%;
-                  flex-direction: column;
+                  overflow: none;
+                  overflow-wrap: break-word;
+                }
+                > div {
+                  display: flex;
+                  flex-direction: row;
                   align-items: start;
-                  background: #f6f6f6;
-                  padding: 10px;
-                  border-radius: 10px;
-                  gap: 11px;
-                  box-sizing: border-box;
-                  > span {
-                    color: black;
-                    width: 100%;
-                    overflow: none;
-                    overflow-wrap: break-word;
+                  justify-content: space-between;
+                  width: 100%;
+                  gap: 23px;
+                  > img {
+                    width: 20px;
                   }
-                  > div {
-                    display: flex;
-                    flex-direction: row;
-                    align-items: start;
-                    justify-content: space-between;
-                    width: 100%;
-                    gap: 23px;
-                    > img {
-                      width: 20px;
-                    }
-                    p {
-                      margin: 0;
-                    }
-                    > span:first-child {
-                      color: #880101;
-                    }
-                    > span:last-child {
-                      color: green;
-                    }
-                    > span {
-                      max-width: 40%;
-                      overflow-wrap: break-word;
-                      height: fit-content;
-                    }
+                  p {
+                    margin: 0;
+                  }
+                  > span:first-child {
+                    color: #880101;
+                  }
+                  > span:last-child {
+                    color: green;
+                  }
+                  > span {
+                    max-width: 40%;
+                    overflow-wrap: break-word;
+                    height: fit-content;
                   }
                 }
               }
             }
           }
         }
-       
       }
       .statEventsDemonsWithValueSection-navigation {
         display: flex;
@@ -165,15 +173,14 @@
         border: 1px solid #ebebeb;
         border-radius: 10px;
         background: #fff3fe;
-        summary{
+        summary {
           width: 100%;
-        padding: 15px;
-        box-sizing: border-box;
+          padding: 15px;
+          box-sizing: border-box;
         }
         > div {
-
-        box-sizing: border-box;
-        padding: 15px;  
+          box-sizing: border-box;
+          padding: 15px;
           display: flex;
           flex-direction: column;
           gap: 15px;
@@ -233,7 +240,7 @@
         .addButton {
           background: white;
           border: 1px solid rgba(0, 0, 0, 0.1);
-          padding: 9px; 
+          padding: 9px;
           text-align: center;
           display: flex;
           flex-direction: row;
@@ -254,8 +261,8 @@
           background: rgba(255, 255, 255, 0.836);
         }
       }
-      .statEventsDemonsWithValueSectionParamsSection-actions{
-         .actionConfig {
+      .statEventsDemonsWithValueSectionParamsSection-actions {
+        .actionConfig {
           width: 100%;
           background: white;
           border-radius: 13px;
@@ -265,9 +272,9 @@
           padding: 10px;
           box-sizing: border-box;
           border: 1px solid rgba(0, 0, 0, 0.1);
- 
+
           gap: 5px;
-         }
+        }
       }
     }
   }

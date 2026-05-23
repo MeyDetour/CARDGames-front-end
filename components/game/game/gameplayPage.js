@@ -17,8 +17,7 @@ import {
   reloadComposant_gameplayMessageOfLoading,
 } from "./messageOfLoading/messageOfLoading.js";
 import { gameplay_displayAllPlayers } from "./players/players.js";
-import {ner>
-            <div className="menu-rendering-wrapper"></div>
+import { 
   gameplay_middleCards,
   reloadComposant_gameplayMiddleCards,
 } from "./middleCards/middleCards.js";
@@ -246,8 +245,7 @@ export function reloadComposant_gameplayPage() {
   if (!currentPlayer) {
     displayError("No current player found to display game");
     return;
-  }
-console.log(currentPlayer);
+  } 
   let playerActions = currentPlayer.actions.value;
   let actionOnHand = playerActions.find((action) => action.actionOnHand);
   let actionOnDeck = playerActions.find((action) => action.actionOnDeck);

@@ -74,9 +74,8 @@ export function doActionFromHandDeck() {
   let actionType = action.type || "default";
   let params = { selectedCards: cardsId };
   let id = currentPlayer.id;
-  console.log("Do Action :>> ");
-  console.log(cardsId);
-  console.log(action);
+  console.log("Do Action :>> " , actionOnHand.name + " ["+action+"] with cards : ", cardsId );
+ 
   socketToDoAction.emit("doAction", { action, actionType, params });
 }
 
@@ -119,7 +118,7 @@ export function listenActionsOnDeck() {
       deck.removeEventListener("dblclick", dblclickHandlers.get(deck));
     }
 
-    const handleClick = (event) => {
+    const handleClick = (event) => { 
       const card = event.target.closest("[data-card-id]");
       if (!card) return;
       clearTimeout(clickTimeout);

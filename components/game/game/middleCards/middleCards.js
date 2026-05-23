@@ -8,6 +8,8 @@ export function gameplay_middleCards(data) {
 }
 
 export function reloadComposant_gameplayMiddleCards(selector, data) {
+
+  console.log("-- reload middle cards --");
   const el = document.querySelector(selector);
   if (!el) return;
   const middleCardsContainer = el.querySelector(".gamePlayMiddleCardsContainer");

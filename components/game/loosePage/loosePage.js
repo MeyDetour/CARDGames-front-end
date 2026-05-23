@@ -117,7 +117,9 @@ export function loosePage() {
     `;
 }
 
-export function reloadComposant_loosePage() {
+export function reloadComposant_loosePage() { 
+  console.log("-- reload loose page --");
+
   let content = document.querySelector("#content");
   let page = loosePage();
   if (content && page) {

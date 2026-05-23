@@ -17,7 +17,11 @@ export function gameUpdatesListenForTestApp(socket) {
       });
     
       socket.on("gameChanges", ({ gameData, currentPlayer }) => {
-        console.log("RECEIVE GAME CHANGES :>>", { gameData, currentPlayer });
+         // Source - https://stackoverflow.com/a/13017382
+        // Posted by christianvuerings, modified by community. See post 'Timeline' for change history
+        // Retrieved 2026-05-23, License - CC BY-SA 4.0
+        console.log('%c ============RECEIVE GAME CHANGES============', 'color: #fd1818;');
+        console.log(  { gameData, currentPlayer });
         
         storeGameData(gameData);
         reloadComposant_StatPage();
@@ -41,7 +45,11 @@ export function gameUpdatesListen(socket) {
       });
     
       socket.on("gameChanges", ({ gameData, currentPlayer }) => {
-        console.log("RECEIVE GAME CHANGES :>>", { gameData, currentPlayer });
+        // Source - https://stackoverflow.com/a/13017382
+        // Posted by christianvuerings, modified by community. See post 'Timeline' for change history
+        // Retrieved 2026-05-23, License - CC BY-SA 4.0
+        console.log('%c ============RECEIVE GAME CHANGES============', 'color: #fd1818;');
+        console.log(  { gameData, currentPlayer });
         console.log(
           "current player position :",
           gameData.data.currentPlayerPosition.value,

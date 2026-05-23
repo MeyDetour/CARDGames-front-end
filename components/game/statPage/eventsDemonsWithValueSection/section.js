@@ -69,6 +69,7 @@ export function reloadComposant_gameplay_statEventsDemonsWithValueSection(
   gameData,
   view,
 ) {
+  console.log("-- reload stat events demons with value section --");
   let content = document.querySelector(".statEventsDemonsWithValueSection");
   if (content) {
     content.innerHTML = gameplay_statEventsDemonsWithValueSection(

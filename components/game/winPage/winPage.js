@@ -116,6 +116,7 @@ export function winPage() {
 }
 
 export function reloadComposant_winPage() {
+  console.log("-- reload win page --");
   let content = document.querySelector("#gameplayPage");
   if (document.querySelector(".winPage")) {
     document.querySelector(".winPage").remove();

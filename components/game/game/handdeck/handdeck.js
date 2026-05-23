@@ -37,8 +37,7 @@ export function gameplay_handdeck(
   }
   if (isPassifPlayer(currentPlayer)) {
     return "";
-  }
-  console.log(canDoAction);
+  } 
 
   if (
     paramsPlayerHand?.template
@@ -160,8 +159,7 @@ function getHandDeckLine(
   max,
   cardsParams,
   canDoAction,
-) {
-  console.log(cardList);
+) { 
   return /*html */ `
     <div class="handDeck handDeck-${index}" style="z-index: ${max - index}; transform: translate(-50%,-${index * 40}px);">
                       ${cards
@@ -197,6 +195,7 @@ function getHandDeckLine(
 }
 // use to re sort hand deck
 export function autoReloadComposant_gameplayHanddeck() {
+  console.log("--autoreload handdeck  --");
   let content = document.querySelector("#gameplayPage");
   if (!content) {
     displayError("No content found to reload players");
@@ -208,20 +207,30 @@ export function autoReloadComposant_gameplayHanddeck() {
     displayError("No game data found to display game");
     return;
   }
-
-  let currentPlayer = getCurrentPlayer();
+  let currentPlayer;
+  if (environnement == "player-app") {
+    currentPlayer = getCurrentPlayer();
+  }
+  if (environnement == "test-app") {
+    currentPlayer = getPlayerOfCurrentView();
+  }
 
   if (!currentPlayer) {
     displayError("No current player found to display game");
     return;
   }
+
+  let playerActions = currentPlayer.actions.value;
+  let actionOnHand = playerActions.find((action) => action.actionOnHand);
   reloadComposant_gameplayHanddeck(
     content,
     gameData.roomInDb.params.rendering.game.displayHandDeck,
     currentPlayer.handDeck.value,
     gameData.roomInDb.assets.cards,
     gameData.roomInDb.params.rendering.playerHand,
+    actionOnHand,
   );
+  listenActionsOnDeck()
 }
 
 // reload game deck
@@ -234,6 +243,7 @@ export function reloadComposant_gameplayHanddeck(
   cardsParams,
   canDoAction,
 ) {
+  console.log("--reload handdeck --");
   document.querySelectorAll(".handDeck").forEach((elt) => elt.remove());
 
   content.innerHTML += gameplay_handdeck(

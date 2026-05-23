@@ -24,6 +24,8 @@ export function reloadComposant_gameplaySpectatorBanniere(
   content,
   currentPlayer,
 ) {
+
+  console.log("-- reload spectator banniere --");
   let spectatorBanniere = document.querySelector(".spectatorBanniere");
   if (spectatorBanniere) {
     spectatorBanniere.remove();

@@ -42,7 +42,7 @@ export function gameplay_cardPile(
   if (isVisibile) {
     return /*html */ `
    <div onclick="${actionParams && actionParams.action ? `doAction(${serializeParams(actionParams)})` : ""}" class="gameplayPile ${actionParams ? "blink" : ""} ${classname} ${environnement}" id="pile-type-${type}">
-        ${!cards || cards.length === 0 ? cardPlaceholder() : customCard(cards[0])}
+        ${!cards || cards.length === 0 ? cardPlaceholder() : customCard(cards[cards.length - 1], { hoverable: actionParams ? true : false })}
         ${actionParams ? /*html */ `<span class="actionLabel">${actionParams.action.name}</span>` : ""}
         ${label ? /*html */ `<span class="pileLabel">${label}</span>` : ""}
    </div>
@@ -59,6 +59,7 @@ export function gameplay_cardPile(
 }
 
 export function autoreloadComposant_gameplayCardPile(type) {
+  console.log("-- autorelaod card pile "+type+" --");
   let gameData = getGameData();
   if (!gameData) {
     console.warn("No game data found to autoreload gameplay card pile");
@@ -90,7 +91,7 @@ export function autoreloadComposant_gameplayCardPile(type) {
   );
   content.innerHTML += gameplay_cardPile(
     gameData.roomInDb.params.cards,
-    (type == "discardDeck"
+    type == "discardDeck"
       ? actionOnDiscardDeck
         ? {
             playerId: currentPlayer.id,
@@ -110,10 +111,12 @@ export function autoreloadComposant_gameplayCardPile(type) {
               ? actionOnDeck.type || "default"
               : "default",
           }
-        : null),
+        : null,
     type,
-    (type == "discardDeck" ? "Défausse" : "Pioche"),
-  ( type ==  "discardDeck" ? gameData.roomInDb.params.cards.discard.renderTheLastDiscardedCard :   gameData.roomInDb.params?.cards?.deck?.renderTheNextDeckCard),
+    type == "discardDeck" ? "Défausse" : "Pioche",
+    type == "discardDeck"
+      ? gameData.roomInDb.params.cards.discard.renderTheLastDiscardedCard
+      : gameData.roomInDb.params?.cards?.deck?.renderTheNextDeckCard,
     gameData.data.discardDeck.value.map((cardId) => {
       return gameData.data.cards[cardId];
     }),

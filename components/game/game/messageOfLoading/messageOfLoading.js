@@ -12,6 +12,8 @@ export function gameplay_messageOfLoading(messages) {
 }
 
 export function reloadComposant_gameplayMessageOfLoading(selector, messages) {
+
+  console.log("-- reload message of loading --");
   const el = document.querySelector(selector);
   if (!el) return;
   const oldComposant = el.querySelector(".loadMessagesContainer");

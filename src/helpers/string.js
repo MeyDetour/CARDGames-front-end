@@ -6,3 +6,7 @@ export function getGainIdOfGainString(gainString) {
     }
     return null;
 }
+export function escapeHTML(str) {
+  if (!str) return '';
+  return str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
