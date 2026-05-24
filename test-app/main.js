@@ -34,8 +34,7 @@ const getGame = async () => {
     if (!gameInDB) {
       console.error("Game not found in DB for ID:", gameId);
       return;
-    }
-    console.log(gameInDB);
+    } 
     connectSocket(gameInDB);
   } catch (e) {
     console.log(e);

@@ -26,7 +26,7 @@ let actionToDo = ""
     <div 
     data-card-id="${card.id}" 
     style="border-radius: ${calculatedRadius}px;"
-     class=" ${action ? "blink" : ""} customCardOfGame ${card.hoverable ? "hoverable" : ""}">
+     class="  customCardOfGame ${card.hoverable && action ? "hoverable" : ""}">
      <img src="${card.url}" alt="Custom Card Image">
     </div>
     `;

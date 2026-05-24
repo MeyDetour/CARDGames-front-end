@@ -13,9 +13,7 @@ import { reloadComposant_waitingPagePlayersBlock } from "../../../components/gam
 import { reloadComposant_waitingPageCopyBlock } from "../../../components/game/waitingPage/waitingPageCopyBlock/waitingPageCopyBlock.js";
 import { reloadComposant_StatPage } from "../../../components/game/statPage/statPage.js";
 import { joinRoom } from "../../controller/game/louancher.js";
-import { gameChanges } from "../../controller/game/game.js";
-import { changeCurrentView } from "../../../components/game/statPage/topRowPlayerInformations/topRowPlayerInformations.js";
-
+import { gameChanges } from "../../controller/game/game.js"; 
 // ============= TEST APP =============
 export function gameConnectionsListenForTestApp(socket) {
   socket.on("roomCreated", async ({ gameData, player }) => {
@@ -48,16 +46,15 @@ export function gameConnectionsListenForTestApp(socket) {
     storeGameData(gameData);
   });
 
-  socket.on("playerHasJoinedRoom", ({gameData, player}) => {
+  socket.on("playerHasJoinedRoom", ({ gameData, player }) => {
     console.log("PLAYER HAS JOIN ROOM");
-    storeGameData(gameData); 
-    changeCurrentView(player.position);
+    storeGameData(gameData);
+    setPlayerView(player.position);
   });
-  socket.on("playerHasJoinedRoomAsSpectator", ({gameData, player}) => {
-
+  socket.on("playerHasJoinedRoomAsSpectator", ({ gameData, player }) => {
     console.log("PLAYER HAS JOIN ROOM AS SPECTATOR >>");
-  
-    storeGameData(gameData); 
+
+    storeGameData(gameData);
     changeCurrentView(player.position);
   });
 }
@@ -106,15 +103,18 @@ export function gameConnectionsListen(socket) {
     reloadComposant_waitingPageCopyBlock();
   });
 
-  socket.on("playerHasJoinedRoom", ({gameData, player}) => {
+  socket.on("playerHasJoinedRoom", ({ gameData, player }) => {
     console.log("RECEIVE PLAYER HAS JOIN ROOM :>>", { gameData, player });
 
     gameChanges(gameData);
     reloadComposant_waitingPagePlayersBlock();
     reloadComposant_waitingPageCopyBlock();
   });
-  socket.on("playerHasJoinedRoomAsSpectator", ({gameData, player}) => {
-    console.log("RECEIVE PLAYER HAS JOIN ROOM AS SPECTATOR :>>", { gameData, player });
+  socket.on("playerHasJoinedRoomAsSpectator", ({ gameData, player }) => {
+    console.log("RECEIVE PLAYER HAS JOIN ROOM AS SPECTATOR :>>", {
+      gameData,
+      player,
+    });
     storeGameData(gameData);
   });
 

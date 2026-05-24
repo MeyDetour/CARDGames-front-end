@@ -29,7 +29,7 @@ function doAction(params) {
   if (environnement == "test-app") {
     socketToUse = players.find((player) => player.id == id).socket;
   }
-   action = action.id
+  action = action.id;
   console.log("Do Action :>> ", { action, actionType });
   socketToUse.emit("doAction", { action, actionType });
 }
@@ -74,8 +74,12 @@ export function doActionFromHandDeck() {
   let actionType = action.type || "default";
   let params = { selectedCards: cardsId };
   let id = currentPlayer.id;
-  console.log("Do Action :>> " , actionOnHand.name + " ["+action+"] with cards : ", cardsId );
- 
+  console.log(
+    "Do Action :>> ",
+    actionOnHand.name + " [" + action + "] with cards : ",
+    cardsId,
+  );
+
   socketToDoAction.emit("doAction", { action, actionType, params });
 }
 
@@ -109,18 +113,30 @@ const clickHandlers = new Map();
 const dblclickHandlers = new Map();
 export function listenActionsOnDeck() {
   let clickTimeout;
-
+  for (const deck of clickHandlers.keys()) {
+    if (!document.body.contains(deck)) {
+      clickHandlers.delete(deck);
+      dblclickHandlers.delete(deck);
+    }
+  }
   document.querySelectorAll(".handDeck").forEach((deck) => {
     if (clickHandlers.has(deck)) {
+      console.log("remove existants action on click on deck");
       deck.removeEventListener("click", clickHandlers.get(deck));
     }
     if (dblclickHandlers.has(deck)) {
+      console.log("remove existants action on dbl click on deck");
       deck.removeEventListener("dblclick", dblclickHandlers.get(deck));
     }
 
-    const handleClick = (event) => { 
+    const handleClick = (event) => {
+      console.log("click !");
       const card = event.target.closest("[data-card-id]");
-      if (!card) return;
+      if (!card) {
+        console.log(event);
+        console.log("Clicked outside of a card, ignoring.");
+        return;
+      }
       clearTimeout(clickTimeout);
 
       // time out pour differencier click et dlb click
@@ -132,11 +148,15 @@ export function listenActionsOnDeck() {
       }, 250);
     };
     const handleDblClick = (event) => {
+      console.log("dbl click !");
       clearTimeout(clickTimeout);
 
       const card = event.target.closest("[data-card-id]");
-      if (!card) return;
-
+      if (!card) {
+        console.log(event);
+        console.log("Clicked outside of a card, ignoring.");
+        return;
+      }
       console.log("Double-clic sur :", card);
 
       if (card.classList.contains("selected")) {
@@ -150,7 +170,15 @@ export function listenActionsOnDeck() {
 
     deck.addEventListener("click", handleClick);
     deck.addEventListener("dblclick", handleDblClick);
-
+    if (deck) {
+      console.log("add on click on deck");
+      console.log("add on dblclick on deck");
+      console.log(deck);
+    } else {
+      console.warn(
+        "No deck element found to add click listeners for hand/deck actions",
+      );
+    }
     clickHandlers.set(deck, handleClick);
     dblclickHandlers.set(deck, handleDblClick);
   });

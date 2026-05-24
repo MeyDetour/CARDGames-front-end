@@ -20,7 +20,7 @@ export function testConfigPage(params = {}) {
                 <div class="playerWrapper">
                   ${players
                     .map((player, index) => {
-                      console.log(player);
+                     
                       return /*html*/ `
                         <div class="playerConfig">
                             <div class="imageContainer">

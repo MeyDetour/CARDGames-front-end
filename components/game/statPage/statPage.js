@@ -55,8 +55,10 @@ export function reloadComposant_StatPage() {
   if (!gameData) {
     displayError("No game data found to display game");
     return;
+  } 
+  if (gameData.data.state.value!="inProgress"){
+  return;
   }
-
   let content = document.querySelector("#statGamePage");
   if (!content) {
     document.querySelector("#content").innerHTML = statPage();

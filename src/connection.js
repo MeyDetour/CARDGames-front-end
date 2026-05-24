@@ -96,8 +96,7 @@ export async function connectSocketForTestApp(gameInDB = {}) {
       skin: getRandomSkin(),
     });
   }
-
-  console.log(players);
+ 
   //===============GAME MANAGEMENT=============
   gameManagementListenForTestApp(socket);
 

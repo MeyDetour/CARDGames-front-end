@@ -114,8 +114,7 @@ export function getView() {
   view.playerView = nb;
   storeView(view);
 }
-export function initView() {
-  console.log(players);
+export function initView() { 
   localStorage.setItem(
     "view",
     JSON.stringify({

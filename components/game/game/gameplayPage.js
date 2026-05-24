@@ -17,7 +17,7 @@ import {
   reloadComposant_gameplayMessageOfLoading,
 } from "./messageOfLoading/messageOfLoading.js";
 import { gameplay_displayAllPlayers } from "./players/players.js";
-import { 
+import {
   gameplay_middleCards,
   reloadComposant_gameplayMiddleCards,
 } from "./middleCards/middleCards.js";
@@ -42,7 +42,7 @@ import {
 } from "./globalValues/globalValues.js";
 import {
   gameplay_cardPile,
-  autoreloadComposant_gameplayCardPile
+  autoreloadComposant_gameplayCardPile,
 } from "./cardPile/cardPile.js";
 import {
   reloadComposant_gameplaySpectatorBanniere,
@@ -95,9 +95,6 @@ export default function gameplayPage() {
   let actionOnDiscardDeck = playerActions.find(
     (action) => action.actionOnDiscardDeck,
   );
-  setTimeout(() => {
-    listenActionsOnDeck();
-  }, 1000);
 
   return /*html */ `
         <div id="gameplayPage" class="${environnement}">
@@ -107,10 +104,11 @@ export default function gameplayPage() {
          params.displayHandDeck,
          handDeck,
          cardList,
-         currentPlayer.cardsSelectableForActionOnHand?.value??[],
+         currentPlayer.cardsSelectableForActionOnHand?.value ?? [],
          gameData.roomInDb.params.rendering.playerHand,
          gameData.roomInDb.params.cards,
          actionOnHand,
+         currentPlayer,
        )}
          ${gameplay_spectatorBanniere(currentPlayer)}
          
@@ -245,13 +243,16 @@ export function reloadComposant_gameplayPage() {
   if (!currentPlayer) {
     displayError("No current player found to display game");
     return;
-  } 
+  }
   let playerActions = currentPlayer.actions.value;
   let actionOnHand = playerActions.find((action) => action.actionOnHand);
   let actionOnDeck = playerActions.find((action) => action.actionOnDeck);
   let actionOnDiscardDeck = playerActions.find(
     (action) => action.actionOnDiscardDeck,
   );
+  console.log(currentPlayer);
+  console.log(playerActions);
+  console.log(actionOnHand);
 
   reloadComposant_gameplayMessageOfLoading("#gameplayPage", gameData.data.logs);
   reloadComposant_gameplayPlayers(
@@ -276,12 +277,12 @@ export function reloadComposant_gameplayPage() {
     gameData.roomInDb.params.rendering.game.displayHandDeck,
     currentPlayer.handDeck.value,
     gameData.roomInDb.assets.cards,
-    currentPlayer.cardsSelectableForActionOnHand?.value?? [],
+    currentPlayer.cardsSelectableForActionOnHand?.value ?? [],
     gameData.roomInDb.params.rendering.playerHand,
     gameData.roomInDb.params.cards,
     actionOnHand,
+    currentPlayer,
   );
-  listenActionsOnDeck();
   reloadComposant_gameplayActionsButtons(
     content,
     playerActions.filter((a) => !a.actionOnDeck && !a.actionOnDiscardDeck),
@@ -289,9 +290,9 @@ export function reloadComposant_gameplayPage() {
     currentPlayer,
     gameData.roomId,
   );
-   
-    autoreloadComposant_gameplayCardPile("deck")
-    autoreloadComposant_gameplayCardPile("discardDeck")
+
+  autoreloadComposant_gameplayCardPile("deck");
+  autoreloadComposant_gameplayCardPile("discardDeck");
 }
 // ===============TEST APP - SCALE SCREEN==========
 

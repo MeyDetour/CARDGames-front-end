@@ -8,6 +8,12 @@ export function isPassifPlayer(player) {
     console.warn("No game data found to determine if player is passif");
     return false;
   }
+  if (!player){
+  
+    console.warn("No player provided to determine if player is passif");
+  console.warn("Player parameter:", player);
+    return false;
+  }
   return (
     gameData.data.spectators.some((spectator) => spectator.id === player.id) ||
     player.haswin?.value ||

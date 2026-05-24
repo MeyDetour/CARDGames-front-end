@@ -9,6 +9,7 @@ import { getCardSort } from "../../../../src/controller/game/dataStorage.js";
 import { isPassifPlayer } from "../../../../src/controller/game/players.js";
 import { getPlayerOfCurrentView } from "../../../../src/controller/game/players.js";
 import { environnement } from "../../../../main.js";
+import { listenActionsOnDeck } from "../../../../src/controller/game/actions.js";
 
 // Separate component for the player's hand deck in the gameplay page
 // Separe les cartes du joueurs en plusieurs tas de 11 cartes
@@ -17,10 +18,11 @@ export function gameplay_handdeck(
   displayHandDeck,
   handDeck,
   cardList,
-  cardListToSelect, 
+  cardListToSelect,
   paramsPlayerHand,
   cardsParams,
   canDoAction,
+  currentPlayer,
 ) {
   if (!displayHandDeck) {
     return "";
@@ -28,17 +30,9 @@ export function gameplay_handdeck(
   if (!handDeck || handDeck.length === 0) {
     return "";
   }
-  let currentPlayer;
-  if (environnement == "player-app") {
-    currentPlayer = getCurrentPlayer();
-  }
-  if (environnement == "test-app") {
-    currentPlayer = getPlayerOfCurrentView();
-  }
   if (isPassifPlayer(currentPlayer)) {
     return "";
-  } 
-
+  }
   if (
     paramsPlayerHand?.template
       ? paramsPlayerHand.template.includes("grid")
@@ -50,7 +44,7 @@ export function gameplay_handdeck(
     const cols = parseInt(
       paramsPlayerHand.template.split("grid")[1].split("x")[1],
     ); // Extrait le nombre de lignes du template
-    let html = `<div class="handDeck handDeck-grid" style="grid-template-rows: repeat(${rows}, 1fr); grid-template-columns: repeat(${cols}, 1fr);">`;
+    let html = `<div class="handDeck handDeck-grid" style="grid-template-rows: repeat(${rows}, 1fr); grid-template-columns: repeat(${cols}, 1fr);" id="${new Date().getTime()}">`;
     for (let i = 0; i < handDeck.length; i++) {
       const cardId = handDeck[i];
       let carElt = cardList[cardId];
@@ -159,9 +153,9 @@ function getHandDeckLine(
   max,
   cardsParams,
   canDoAction,
-) { 
+) {
   return /*html */ `
-    <div class="handDeck handDeck-${index}" style="z-index: ${max - index}; transform: translate(-50%,-${index * 40}px);">
+    <div class="handDeck handDeck-${index}" style="z-index: ${max - index}; transform: translate(-50%,-${index * 40}px);" id="handDeck-${new Date().getTime()}">
                       ${cards
                         .map((cardId) => {
                           let carElt = cardList[cardId];
@@ -227,10 +221,11 @@ export function autoReloadComposant_gameplayHanddeck() {
     gameData.roomInDb.params.rendering.game.displayHandDeck,
     currentPlayer.handDeck.value,
     gameData.roomInDb.assets.cards,
+    currentPlayer.cardsSelectableForActionOnHand?.value,
     gameData.roomInDb.params.rendering.playerHand,
     actionOnHand,
+    currentPlayer,
   );
-  listenActionsOnDeck()
 }
 
 // reload game deck
@@ -239,19 +234,46 @@ export function reloadComposant_gameplayHanddeck(
   displayHandDeck,
   handDeck,
   cardList,
+  cardListToSelect,
   playerHandParams,
   cardsParams,
   canDoAction,
+  currentPlayer,
 ) {
-  console.log("--reload handdeck --");
-  document.querySelectorAll(".handDeck").forEach((elt) => elt.remove());
-
+  console.log("-- reload handdeck --");
+  document.querySelectorAll(".handDeck").forEach((elt) => {
+    console.log("remove " );
+    console.log(elt);
+    elt.remove();
+  });
+  if (!currentPlayer) {
+    displayError("No current player found to display game");
+    console.warn("params : ", {
+      content,
+      displayHandDeck,
+      handDeck,
+      cardList,
+      playerHandParams,
+      cardsParams,
+      canDoAction,
+      currentPlayer,
+    });
+    return;
+  }
+  console.log(currentPlayer);
+  console.log(canDoAction);
   content.innerHTML += gameplay_handdeck(
     displayHandDeck,
     handDeck,
     cardList,
+    cardListToSelect,
     playerHandParams,
     cardsParams,
     canDoAction,
+    currentPlayer,
   );
+
+  setTimeout(() => {
+    listenActionsOnDeck();
+  }, 1000);
 }
