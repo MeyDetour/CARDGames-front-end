@@ -8,10 +8,9 @@ export function isPassifPlayer(player) {
     console.warn("No game data found to determine if player is passif");
     return false;
   }
-  if (!player){
-  
+  if (!player) {
     console.warn("No player provided to determine if player is passif");
-  console.warn("Player parameter:", player);
+    console.warn("Player parameter:", player);
     return false;
   }
   return (
@@ -23,7 +22,7 @@ export function isPassifPlayer(player) {
 export function getPlayerStat(player, gameData) {
   let arrayOfStat = [];
   for (let key in player) {
-    if (key == "skin" ||   key == "socketID") {
+    if (key == "skin" || key == "socketID") {
       continue;
     }
     if (key == "actions") {
@@ -41,13 +40,18 @@ export function getPlayerStat(player, gameData) {
       key == "personalHandDiscard"
     ) {
       arrayOfStat.push({
-        name: key =="cardsSelectableForActionOnHand"?"Cartes sélectionnables" : key,
+        name:
+          key == "cardsSelectableForActionOnHand"
+            ? "Cartes sélectionnables"
+            : key,
         type: "Card Array",
-        value: player[key].value.map((cardId) =>
-          gameData.roomInDb.assets.cards[cardId].type == "french_standard"
-            ? getTextualValueOfCard(gameData.roomInDb.assets.cards[cardId])
-            : gameData.roomInDb.assets.cards[cardId].name,
-        ).join(", "),
+        value: player[key].value
+          .map((cardId) =>
+            gameData.roomInDb.assets.cards[cardId].type == "french_standard"
+              ? getTextualValueOfCard(gameData.roomInDb.assets.cards[cardId])
+              : gameData.roomInDb.assets.cards[cardId].name,
+          )
+          .join(", "),
       });
       continue;
     }
@@ -76,11 +80,11 @@ export function getPlayerStat(player, gameData) {
       continue;
     }
 
-    if (player[key]) {
+    if (player[key] != undefined && player[key].value !== undefined) {
       arrayOfStat.push({
         name: key,
         type: typeof player[key].type ?? typeof player[key],
-        value: player[key].value != undefined ?? player[key],
+        value: player[key].value,
       });
     }
   }
@@ -158,18 +162,60 @@ export function getPlayerOfCurrentView() {
     console.warn("Invalid gameData structure:", gameData);
     return null;
   }
-  let view = getView(); 
+  let view = getView();
   let player = gameData.data.players.find(
     (player) => player.position == view.playerView,
   );
   if (player) return player;
-  player =
-    gameData.data.spectators.find(
-      (spectator) => spectator.position == view.playerView,
-    ) 
+  player = gameData.data.spectators.find(
+    (spectator) => spectator.position == view.playerView,
+  );
   if (player) return player;
- 
+
   return null;
+}
+export function getNextPlayerOfCurrentView() {
+  let gameData = getGameData();
+  if (!gameData) {
+    console.warn("No game data found to get player of current view");
+    return null;
+  }
+  if (!gameData || !gameData.data || !gameData.data.players) {
+    console.warn("Invalid gameData structure:", gameData);
+    return null;
+  }
+  let view = getView();
+  let playerViewPosition = parseInt(view.playerView);
+  let targetPlayer;
+  let canSelectPlayer = false;
+  for (let i = 0; i < gameData.data.players.length; i++) {
+    let player = gameData.data.players[i];
+    // selectionner le joueur si c'est le suivant apres celui deja selectionné
+    if (canSelectPlayer){
+      targetPlayer = player;
+      canSelectPlayer = false;
+    }
+    if (player.position == playerViewPosition) {
+     canSelectPlayer = true;
+    } 
+    // selectionner le joueur si on a vient de croiser le joueur actuel
+   
+ 
+  }  for (let i = 0; i < gameData.data.spectators.length; i++) {
+    let player = gameData.data.spectators[i];
+    // selectionner le joueur si c'est le suivant apres celui deja selectionné
+    if (player.position == playerViewPosition) {
+     canSelectPlayer = true;
+    } 
+    // selectionner le joueur si on a vient de croiser le joueur actuel
+    if (canSelectPlayer){
+      targetPlayer = player;
+    }
+ 
+  } 
+if (targetPlayer) return targetPlayer;
+  // renvoyer le premier joueur sinon 
+  return gameData.data.players[0];
 }
 export function getSocketOfPlayerOfCurrentView() {
   let gameData = getGameData();

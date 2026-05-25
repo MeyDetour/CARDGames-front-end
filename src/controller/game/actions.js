@@ -172,8 +172,7 @@ export function listenActionsOnDeck() {
     deck.addEventListener("dblclick", handleDblClick);
     if (deck) {
       console.log("add on click on deck");
-      console.log("add on dblclick on deck");
-      console.log(deck);
+      console.log("add on dblclick on deck"); 
     } else {
       console.warn(
         "No deck element found to add click listeners for hand/deck actions",

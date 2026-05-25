@@ -5,12 +5,14 @@ import gameplay_statEventsDemonsWithValueSection from "./eventsDemonsWithValueSe
 import topRowPlayerInformations from "./topRowPlayerInformations/topRowPlayerInformations.js";
 import { reloadComposant_gameplay_statEventsDemonsWithValueSection } from "./eventsDemonsWithValueSection/section.js";
 import { reloadComposant_gameplayPage } from "../game/gameplayPage.js";
-import { reload_topRowPlayerInformations } from "./topRowPlayerInformations/topRowPlayerInformations.js";
+import { reload_topRowPlayerInformations ,changeCurrentView} from "./topRowPlayerInformations/topRowPlayerInformations.js";
 import gameplayPage from "../game/gameplayPage.js";
 import { reloadComposant_loosePage } from "../loosePage/loosePage.js";
 import { reloadComposant_winPage } from "../winPage/winPage.js";
 import { button } from "../../button/button.js";
 import { players } from "../../../main.js";
+
+import {  getNextPlayerOfCurrentView } from "../../../src/controller/game/players.js";
 export function statPage() {
   let view = getView();
   let gameData = getGameData();
@@ -48,9 +50,26 @@ export function statPage() {
         </div>
 `;
 }
-
+let isTabListenerInitialized = false;
 export function reloadComposant_StatPage() {
   console.log("=====RELOAD STATT PAGE=========="); 
+
+// Source - https://stackoverflow.com/a/45823386
+// Posted by adeneo
+// Retrieved 2026-05-25, License - CC BY-SA 3.0
+if (!isTabListenerInitialized) {
+    document.addEventListener('keydown', function(event) {
+      if (event.keyCode == 9) {
+        event.preventDefault();
+        changeCurrentView(getNextPlayerOfCurrentView()?.position);
+      }
+    });
+    
+    // On passe le drapeau à true pour les prochains rechargements
+    isTabListenerInitialized = true;
+  }
+
+
   let gameData = getGameData(); 
   if (!gameData) {
     displayError("No game data found to display game");

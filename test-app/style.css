@@ -65,6 +65,17 @@ body {
   color: red;
   font-size: 15px;
 }
+kbd {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
+  color: #333;
+  display: inline-block;
+  font-family: monospace;
+  font-size: 0.85em;
+  padding: 2px 5px;
+}
 
 #error-container {
   position: absolute;

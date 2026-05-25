@@ -14,6 +14,7 @@ import { reloadComposant_waitingPageCopyBlock } from "../../../components/game/w
 import { reloadComposant_StatPage } from "../../../components/game/statPage/statPage.js";
 import { joinRoom } from "../../controller/game/louancher.js";
 import { gameChanges } from "../../controller/game/game.js"; 
+import { changeCurrentView } from "../../../components/game/statPage/topRowPlayerInformations/topRowPlayerInformations.js";
 // ============= TEST APP =============
 export function gameConnectionsListenForTestApp(socket) {
   socket.on("roomCreated", async ({ gameData, player }) => {
@@ -33,7 +34,7 @@ export function gameConnectionsListenForTestApp(socket) {
     storeGameData(gameData);
     players.push({ id: player.id, socket: socket, position: player.position });
 
-    await loadRoute({ path: "/test-config" });
+  await loadRoute({ path: "/test-config" });
   });
   socket.on("roomJoinedAsSpectator", async ({ gameData, player }) => {
     console.log("ROOM JOINED AS SPECTATOR");
@@ -50,6 +51,7 @@ export function gameConnectionsListenForTestApp(socket) {
     console.log("PLAYER HAS JOIN ROOM");
     storeGameData(gameData);
     setPlayerView(player.position);
+    console.log(gameData);
   });
   socket.on("playerHasJoinedRoomAsSpectator", ({ gameData, player }) => {
     console.log("PLAYER HAS JOIN ROOM AS SPECTATOR >>");

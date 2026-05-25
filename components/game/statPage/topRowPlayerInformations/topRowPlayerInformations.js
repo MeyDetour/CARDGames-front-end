@@ -32,7 +32,7 @@ export default function topRowPlayerInformations() {
                       <div class="titleContainer">
                           <img>
                           <h5>
-                              Point de vue
+                              Point de vue <kbd>Tab</kbd>
                           </h5> 
                       </div>
                           <select name="pointOfView" id="pointOfView"" onchange="changePlayerView(event)">
@@ -79,6 +79,7 @@ export default function topRowPlayerInformations() {
 
 export function changeCurrentView(eOrValue) {
   const position = eOrValue?.target ? eOrValue.target.value : eOrValue;
+  console.log("change to current position :"+eOrValue);
   setPlayerView(position);
   reload_topRowPlayerInformations();
   reloadComposant_gameplay_statEventsDemonsWithValueSection(getGameData(), getView());
