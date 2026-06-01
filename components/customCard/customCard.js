@@ -10,11 +10,7 @@ export function customCard(card, cardParams, action, origine = "hand") {
   }
   if (!card.image || !card.url) {
     return "PLEASE PROVIDE IMAGE";
-  }
-  // x*78/200 = actuel radius
-  // x is the defined radius parameter on a card of 200px
-  // to adjuste it with card of 78px of height, we do x*78/200
-  const calculatedRadius = cardParams?.radius * (origine == "hand" ? 78 : environnement == "player-app" ? 80 : 44)/ 200 ?? 0;
+  }   const calculatedRadius = cardParams?.radius * (origine == "hand" ? 78 : environnement == "player-app" ? 80 : 44) ?? 0;
  
 let actionToDo = ""
   if (action) { 
