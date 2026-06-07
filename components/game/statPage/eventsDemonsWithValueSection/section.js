@@ -10,7 +10,7 @@ import {
 import statEventsDemonsWithValueSectionParamsSection from "./params.js";
 import statEventsDemonsWithValueSectionValueSection from "./value.js";
 import statEventsDemonsWithValueSectionEventsSection from "./events.js";
-import statEventsDemonsWithValueSectionDemonSection from "./demons.js";
+import statEventsDemonsWithValueSectionDemonSection from "./triggers.js";
 import statEventsDemonsWithValueSectionValuePlayerSection from "./valuePlayer.js";
 
 export default function gameplay_statEventsDemonsWithValueSection(
@@ -21,7 +21,7 @@ export default function gameplay_statEventsDemonsWithValueSection(
     <div class="statEventsDemonsWithValueSection-navigation">
                    <span class="span ${ view.statEventsDemonsWithValue == "value" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('value')" class="${view.statEventsDemonsWithValue == "value" ? "selected" : ""}">Variable</span>
                    <span class="span ${ view.statEventsDemonsWithValue == "events" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('events')" class="${view.statEventsDemonsWithValue == "events" ? "selected" : ""}">Événements</span>
-                   <span class="span ${ view.statEventsDemonsWithValue == "demons" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('demons')" class="${view.statEventsDemonsWithValue == "demons" ? "selected" : ""}">Démons</span>
+                   <span class="span ${ view.statEventsDemonsWithValue == "triggers" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('triggers')" class="${view.statEventsDemonsWithValue == "triggers" ? "selected" : ""}">Triggers</span>
                    <span class="span ${ view.statEventsDemonsWithValue == "params" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('params')" class="${view.statEventsDemonsWithValue == "params" ? "selected" : ""}">Paramètres</span>
                    <span class="span ${ view.statEventsDemonsWithValue == "valuePlayer" ? "selected" :""}" onclick="changeSubpageOfStatEventsDemonsWithValueSection('valuePlayer')" class="${view.statEventsDemonsWithValue == "valuePlayer" ? "selected" : ""}">Valeur Joueur</span>
                 </div>
@@ -35,7 +35,7 @@ export default function gameplay_statEventsDemonsWithValueSection(
                               ? statEventsDemonsWithValueSectionEventsSection(
                                   gameData,
                                 )
-                              : view.statEventsDemonsWithValue == "demons"
+                              : view.statEventsDemonsWithValue == "triggers"
                                 ? statEventsDemonsWithValueSectionDemonSection(
                                     gameData,
                                   )
@@ -69,7 +69,7 @@ export function reloadComposant_gameplay_statEventsDemonsWithValueSection(
   gameData,
   view,
 ) {
-  console.log("-- reload stat events demons with value section --");
+  console.log("-- reload stat events triggers with value section --");
   let content = document.querySelector(".statEventsDemonsWithValueSection");
   if (content) {
     content.innerHTML = gameplay_statEventsDemonsWithValueSection(

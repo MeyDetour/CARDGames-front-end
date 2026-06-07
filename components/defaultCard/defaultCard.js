@@ -34,7 +34,7 @@ export function defaultCard(card,canDoACtion) {
   let color = getSuitColor(card.suit);
   return /*html */ ` 
     <div 
-    data-card-id="${card.id}"   class="defaultCardOfGame ${card.hoverable && canDoACtion ? "hoverable" : ""}  >
+    data-card-id="${card.id}"   class="defaultCardOfGame ${card.hoverable && canDoACtion ? "hoverable" : ""}  ">
         <span class="leftValue">${card.value}</span> 
         <span class="leftSuit ${color}">${suit}</span> 
         <span class="suit ${color}">${suit}</span> 

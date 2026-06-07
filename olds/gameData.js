@@ -269,7 +269,7 @@ export const originalGameData = {
       },
     },
     events: {
-      demons: [
+      triggers: [
         {
           id: 1,
           name: "Quand on arrive au tour 4 et que tous les joueurs ont joué",

@@ -5,27 +5,27 @@ export default function statEventsDemonsWithValueSectionDemonSection(gameData) {
   let data = gameData.data?.testLogs
     .filter(
       (log) => 
-        log.testType == "demon" 
+        log.testType == "trigger" 
     )
     ?.reverse();
   return ` 
          ${data
            .map((log, index) => {
-             if (log.testType == "demon") {
-               let demon = log;
+             if (log.testType == "trigger") {
+               let trigger = log;
                return /*html */`
                      <details class="elementDetails">
                         <summary ${index === 0 ? "style='padding-bottom: 24px;'" : ""}>
                            <img src="/assets/violet-right-arrow.svg" alt="Arrow Icon">
-                           <span class="span">${demon.name}</span>
+                           <span class="span">${trigger.name}</span>
                            ${index === 0 ? "<span class='tooltip span'>(Dernier démon)</span>" : ""}
                         </summary>
                         <div class="elementContent">
                            <div class="elementDetail">
                               <span class="span" style="font-weight: bold;">Détails du démon</span>
                               <div class="detailWrapper">
-                                  ${demon.boucle ? `<div class="rowInWrapper"><span class="span">Boucle :</span><span class="span">${demon.boucle}</span></div>` : ""}
-                                 ${demon.condition ? `<div  class="rowInWrapper"><span class="span">Condition :</span><span class="span">${demon.condition.replaceAll('<', '&lt;').replaceAll('>', '&gt;')}</span></div>` : ""}
+                                  ${trigger.boucle ? `<div class="rowInWrapper"><span class="span">Boucle :</span><span class="span">${trigger.boucle}</span></div>` : ""}
+                                 ${trigger.condition ? `<div  class="rowInWrapper"><span class="span">Condition :</span><span class="span">${trigger.condition.replaceAll('<', '&lt;').replaceAll('>', '&gt;')}</span></div>` : ""}
                             
                               </div>
                            </div>
@@ -41,12 +41,12 @@ export default function statEventsDemonsWithValueSectionDemonSection(gameData) {
                            </div> 
 
                            ${
-                             demon.events && demon.events.length > 0
+                             trigger.events && trigger.events.length > 0
                                ? /*html*/ `
                               <div class=" ">
                                  <span class="span" style="font-weight: bold;">Événement(s) appellé(s)</span>
                                  <div class="detailWrapper">
-                                    ${demon.events
+                                    ${trigger.events
                                       .map(
                                         (eventId, index) => /*html*/ `
                                        <div class="rowInWrapper"><span class="span">Ordre ${index + 1} :</span><span class="span">${gameData.roomInDb.events.events.find((event) => event.id === eventId)?.name || "Unknown Event"}</span></div>

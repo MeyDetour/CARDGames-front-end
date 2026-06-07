@@ -254,8 +254,8 @@ const gameInDB = {
     },
   },
   events: {
-    demons: [
-      // la partie se lance apres que tous les demons se soient activés si etat != start
+    triggers: [
+      // la partie se lance apres que tous les triggers se soient activés si etat != start
       {
         // pas besoin d'une liste de conditions , on met une comp "or" si plusieurs conditions d'exec
         name: "",
@@ -1222,7 +1222,7 @@ const gameInDB = {
 // data received
 // une manche = une partie de mise
 // Un tour  = mise stabilisé -> tous les joueurs ont joué, des que qqn remise les joueurs qui ne sont pas couché repassent en non joués
-// Distribution de 2 cartes par tour à chaque -> demon
+// Distribution de 2 cartes par tour à chaque -> trigger
 // se coucher :  atached event
 // miser : event
 const messages = [];

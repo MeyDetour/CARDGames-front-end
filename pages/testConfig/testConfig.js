@@ -66,9 +66,10 @@ export function testConfigPage(params = {}) {
             <h3 class="h3">Paramètres du jeu</h3>
               <div class="explicationSection">
                 <p class="p">
-                  Max : ${gameData.roomInDb.params.globalGame.maxPlayer}
-                  Min : ${gameData.roomInDb.params.globalGame.minPlayer}
+                Min : ${gameData.roomInDb.params.globalGame.minPlayer}
 
+                Max : ${gameData.roomInDb.params.globalGame.maxPlayer}
+                 
                 </p>
               </div>
                 ${

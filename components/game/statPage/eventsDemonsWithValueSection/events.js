@@ -8,7 +8,7 @@ export default function statEventsDemonsWithValueSectionEventSection(gameData) {
       (log) =>
         log.testType == "event" ||
         log.testType == "eventFromAction" ||
-        log.testType == "demon" ||
+        log.testType == "trigger" ||
         log.testType == "internalEvent",
     )
     ?.reverse();
@@ -130,10 +130,10 @@ export default function statEventsDemonsWithValueSectionEventSection(gameData) {
                      </details>
                      `;
              }
-             if (log.testType == "demon") {
-               let demon = log;
+             if (log.testType == "trigger") {
+               let trigger = log;
                return /*html */ `
-                  <div class="demonLine"><hr> <span class="span">Démon : ${demon.name}</span> <hr></div>
+                  <div class="triggerLine"><hr> <span class="span">Trigger : ${trigger.name}</span> <hr></div>
                   `;
              }
            })

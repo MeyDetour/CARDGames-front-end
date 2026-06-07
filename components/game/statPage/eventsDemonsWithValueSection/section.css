@@ -16,7 +16,7 @@
         overflow-x: hidden;
         height: 100%;
         gap: 12px;
-        .demonLine {
+        .triggerLine {
           width: 100%;
           text-align: center;
           background: #ffffff;
