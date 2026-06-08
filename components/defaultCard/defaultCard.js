@@ -1,6 +1,6 @@
 import { serializeParams} from "../../src/helpers/serializer.js";
 import {doActionFromHandDeck } from "../../src/controller/game/actions.js";
-export function defaultCard(card,canDoACtion) {
+export function defaultCard(card,canDoACtion,style='') {
  
   //  { id: "1", suit: "hearts", value: "9", faceUp: true },
  
@@ -34,6 +34,8 @@ export function defaultCard(card,canDoACtion) {
   let color = getSuitColor(card.suit);
   return /*html */ ` 
     <div 
+    style="${style}
+    "
     data-card-id="${card.id}"   class="defaultCardOfGame ${card.hoverable && canDoACtion ? "hoverable" : ""}  ">
         <span class="leftValue">${card.value}</span> 
         <span class="leftSuit ${color}">${suit}</span> 

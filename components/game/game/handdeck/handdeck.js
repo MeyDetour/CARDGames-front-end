@@ -154,36 +154,49 @@ function getHandDeckLine(
   cardsParams,
   canDoAction,
 ) {
+  const inclinaisonMin = -15;
   return /*html */ `
     <div class="handDeck handDeck-${index}" style="z-index: ${max - index}; transform: translate(-50%,-${index * 40}px);" id="handDeck-${new Date().getTime()}">
-                      ${cards
-                        .map((cardId) => {
-                          let carElt = cardList[cardId];
-                          if (!carElt) {
-                            console.warn(
-                              `Card with ID ${cardId} not found in cardList.`,
-                            );
-                            return "";
-                          }
-                          carElt.faceUp = true;
-                          carElt.hoverable = cardListToSelect.includes(cardId);
-                          if (carElt.type == "french_standard") {
-                            const suits = {
-                              coeur: "hearts",
-                              carreau: "diamonds",
-                              trefle: "clubs",
-                              pique: "spades",
-                            };
+      ${cards
+        .map((cardId,key) => {
+          let carElt = cardList[cardId];
+          console.log(key);
+          console.log(max);
+          if (!carElt) {
+            console.warn(
+              `Card with ID ${cardId} not found in cardList.`,
+            );
+            return "";
+          }
+          carElt.faceUp = true;
+          carElt.hoverable = cardListToSelect.includes(cardId);
+          const style=`
+                margin-bottom: ${Math.abs(key-(cards.length-1)/2)*(-9.5)}px; 
+                scale: ${1-(Math.abs(key-(cards.length-1)/2)/(cards.length-1)*0.2)}; 
+                rotate: ${inclinaisonMin+(Math.abs(inclinaisonMin)*2/(cards.length-1))*key}deg; 
+                box-shadow: ${key==0 ? "-11px" : "11px"} 13px  6px -6px #191717; 
+          `
+          if (carElt.type == "french_standard") {
+            const suits = {
+              coeur: "hearts",
+              carreau: "diamonds",
+              trefle: "clubs",
+              pique: "spades",
+            };
 
-                            carElt.suit =
-                              suits[carElt.addedAttributs.couleur] || "";
+            carElt.suit =
+              suits[carElt.addedAttributs.couleur] || "";
 
-                            return defaultCard(carElt, canDoAction);
-                          } else {
-                            return customCard(carElt, cardsParams, canDoAction);
-                          }
-                        })
-                        .join("")}
+            return defaultCard(carElt, canDoAction,  style );
+          } else {
+            return customCard(
+              carElt,
+              cardsParams,
+              canDoAction,
+              "hand",style);
+          }
+        })
+        .join("")}
                 </div>
      `;
 }
@@ -242,7 +255,7 @@ export function reloadComposant_gameplayHanddeck(
 ) {
   console.log("-- reload handdeck --");
   document.querySelectorAll(".handDeck").forEach((elt) => {
-    console.log("remove " );
+    console.log("remove ");
     console.log(elt);
     elt.remove();
   });

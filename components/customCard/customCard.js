@@ -2,7 +2,7 @@ import { environnement } from "../../main.js";
 import { doActionFromHandDeck } from "../../src/controller/game/actions.js";
 import { serializeParams } from "../../src/helpers/serializer.js";
 
-export function customCard(card, cardParams, action, origine = "hand") {
+export function customCard(card, cardParams, action, origine = "hand",style='') {
   //  { id: "1", suit: "hearts", value: "9", faceUp: true },
 
   if (!card) {
@@ -21,7 +21,7 @@ let actionToDo = ""
   return /*html */ ` 
     <div 
     data-card-id="${card.id}" 
-    style="border-radius: ${calculatedRadius}px;"
+    style="border-radius: ${calculatedRadius}px;${style}"
      class="  customCardOfGame ${card.hoverable && action ? "hoverable" : ""}">
      <img src="${card.url}" alt="Custom Card Image">
     </div>

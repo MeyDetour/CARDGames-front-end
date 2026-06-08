@@ -27,7 +27,7 @@
     animation: blinkAnimation 1s infinite;
 }
 .customCardOfGame.selected  {
-    margin-bottom: 10px;
+    margin-bottom: 30px!important;
 }
 
 .customCardOfGame.selected::after{

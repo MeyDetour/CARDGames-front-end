@@ -70,7 +70,7 @@
     animation: blinkAnimation 1s infinite;
 }
 .defaultCardOfGame.selected  {
-    margin-bottom: 10px;
+    margin-bottom: 30px!important;
 }
 @keyframes blinkAnimation {
   0% {

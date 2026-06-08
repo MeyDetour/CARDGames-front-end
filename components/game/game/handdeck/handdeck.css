@@ -6,11 +6,12 @@
     flex-direction: row;
     align-items: end;
     gap: 15px;
-    bottom: 7%;
+    bottom: 2%;
     transform: translate(-50%, 0);  
     gap: 8px;
     >div{
 
+            margin-inline: -15px;
       box-shadow: 0 -4px 14px 1px #8080806b;
     }
   } 
