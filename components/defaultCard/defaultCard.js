@@ -1,6 +1,6 @@
 import { serializeParams} from "../../src/helpers/serializer.js";
-import {doActionFromHandDeck } from "../../src/controller/game/actions.js";
-export function defaultCard(card,canDoACtion,style='') {
+import {doActionFromCards } from "../../src/controller/game/actions.js";
+export function defaultCard(card,canDoACtion,style='',origin="") {
  
   //  { id: "1", suit: "hearts", value: "9", faceUp: true },
  
@@ -32,6 +32,9 @@ export function defaultCard(card,canDoACtion,style='') {
   };
   let suit = getSuitSymbol(card.suit);
   let color = getSuitColor(card.suit);
+   
+ 
+
   return /*html */ ` 
     <div 
     style="${style}

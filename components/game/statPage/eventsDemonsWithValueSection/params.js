@@ -124,6 +124,8 @@ export default function statEventsDemonsWithValueSectionParamsSection(
        }
         <span class="span"><b>S'applique sur la défausse :</b> ${action.actionOnDiscardDeck ? "Oui" : "Non"}</span>
         <span class="span"><b>S'applique sur le deck :</b> ${action.actionOnDeck ? "Oui" : "Non"}</span>
+        <span class="span"><b>S'applique sur le deck des autres joueurs :</b> ${action.actionOnHanddOtherPlayerCards ? "Oui" : "Non"}</span>
+        <span class="span"><b>Apparait comme une première action :</b> ${action.appearAsTheFirstAction ? "Oui" : "Non"}</span>
         <span class="span"><b>Demande une valeur :</b> ${action.askValueToPlayThisAction ? "Oui" : "Non"}</span>
         ${
           action.askValueToPlayThisAction

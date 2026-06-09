@@ -11,6 +11,7 @@ import {
 import { getView } from "../../../src/controller/game/dataStorage.js";
 import { displayError } from "../../../src/controller/error.js";
 import { removeMessageNotification } from "../../../src/controller/game/messages.js";
+import { gameplay_otherPlayerCards, reloadComposant_gameplayOtherPlayerCards } from "./otherPlayerCards/otherPlayerCards.js";
 import { messaegerieComponent } from "../../messagerie/messagerie.js";
 import {
   gameplay_messageOfLoading,
@@ -96,6 +97,9 @@ export default function gameplayPage() {
     (action) => action.actionOnDiscardDeck,
   );
 
+  let actionOnHanddOtherPlayerCards = playerActions.find(
+    (action) => action.actionOnHanddOtherPlayerCards && action.appearAsTheFirstAction,
+  );
   return /*html */ `
         <div id="gameplayPage" class="${environnement}">
 
@@ -111,9 +115,10 @@ export default function gameplayPage() {
          currentPlayer,
        )}
          ${gameplay_spectatorBanniere(currentPlayer)}
-         
-
-    
+         ${gameplay_otherPlayerCards(
+         actionOnHanddOtherPlayerCards,
+         currentPlayer
+      )}  
      
          
          ${gameplay_actionButton(
@@ -250,6 +255,7 @@ export function reloadComposant_gameplayPage() {
   let actionOnDiscardDeck = playerActions.find(
     (action) => action.actionOnDiscardDeck,
   );
+  
   console.log(currentPlayer);
   console.log(playerActions);
   console.log(actionOnHand);
@@ -289,6 +295,9 @@ export function reloadComposant_gameplayPage() {
     gameData.data.currentPlayerPosition.value === currentPlayer.position,
     currentPlayer,
     gameData.roomId,
+  );
+  reloadComposant_gameplayOtherPlayerCards(
+    content
   );
 
   autoreloadComposant_gameplayCardPile("deck");

@@ -6,6 +6,7 @@ import {
 } from "../../../../src/controller/game/dataStorage.js";
 import { environnement } from "../../../../main.js";
 import { getPlayerOfCurrentView } from "../../../../src/controller/game/players.js";
+import { cardBack } from "../../../cardBack/cardBack.js";
 import { cardPlaceholder } from "../../../cardPlaceholder/cardPlaceholder.js";
 import { customCard } from "../../../customCard/customCard.js";
 export function gameplay_cardPile(
@@ -50,8 +51,8 @@ export function gameplay_cardPile(
   }
 
   return /*html */ `
-   <div onclick="${actionParams && actionParams.action ? `doAction(${serializeParams(actionParams)})` : ""}" class="gameplayPile ${classname} ${actionParams ? "blink" : ""} ${environnement}" id="pile-type-${type}">
-   <img src="/assets/images/cardBack.png">
+   <div onclick="${actionParams && actionParams.action ? `doAction(${serializeParams(actionParams)})` : ""}" class="gameplayPile ${classname}  ${environnement}" id="pile-type-${type}">
+  ${cardBack(actionParams ? true : false)}
   ${actionParams ? /*html */ `<span class="actionLabel">${actionParams.action.name}</span>` : ""}
    ${label ? /*html */ `<span class="pileLabel">${label}</span>` : ""}
    </div>

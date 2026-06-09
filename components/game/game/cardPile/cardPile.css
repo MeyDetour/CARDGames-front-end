@@ -7,12 +7,7 @@
     flex-direction: column;
     align-items: center;
     gap: 5px;
-  img {
-    width: 100%;
-  }
-  .customCardOfGame {
-    width: 100%;
-  }
+ 
   .actionLabel,
   .pileLabel {
     color: white;
@@ -46,21 +41,4 @@
 }
 .gameplayPile.test-app {
   width: 44px;
-}
-
-.gameplayPile.blink img {
-  
-    border: 4px solid var(--jaune);
-    animation: blinkAnimation 1s infinite;
-}
-@keyframes blinkAnimation {
-  0% {
-    border-color: var(--jaune);
-  }
-  50% {
-    border-color: transparent;
-  }
-  100% {
-    border-color: var(--jaune);
-  }
 }

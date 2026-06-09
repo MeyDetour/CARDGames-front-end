@@ -128,6 +128,7 @@ export function previousChangeSkin(parmas) {
     head.style.backgroundColor = skin.color;
   }
 }
+
 export function nextChangeSkin(parmas) {
   const skinElement = document.querySelector(".choose-skin-image");
   if (!skinElement) {
@@ -174,6 +175,62 @@ export function getPlayerOfCurrentView() {
 
   return null;
 }
+// use to get player of current view
+export function getPreviousPlayerFromCurrentPlayerPosition(position) {
+  if (position == undefined) {
+    console.warn(
+      "No position provided to get previous player from current player position",
+    );
+    return null;
+  }
+  let gameData = getGameData();
+  if (!gameData) {
+    console.warn(
+      "No game data found to get previous player from current player position",
+    );
+    return null;
+  }
+  if (!gameData || !gameData.data || !gameData.data.players) {
+    console.warn("Invalid gameData structure:", gameData);
+    return null;
+  }
+  let players = gameData.data.players;
+  for (let i = players.length - 1; i >= 0; i--) {
+    let player = players[i];
+    if (player.position == position ) {
+      return players[i==0? players.length - 1 : i-1];
+    } 
+  }
+   return null
+}
+export function getNextPlayerFromCurrentPlayerPosition(position) {
+  if (position == undefined) {
+    console.warn(
+      "No position provided to get next player from current player position",
+    );
+    return null;
+  }
+  let gameData = getGameData();
+  if (!gameData) {
+    console.warn(
+      "No game data found to get next player from current player position",
+    );
+    return null;
+  }
+  if (!gameData || !gameData.data || !gameData.data.players) {
+    console.warn("Invalid gameData structure:", gameData);
+    return null;
+  }
+
+  let players = gameData.data.players;
+  for (let i = players.length - 1; i >= 0; i--) {
+    let player = players[i];
+    if (player.position == position ) {
+      return players[i==players.length - 1 ? 0 : i+1];
+    } 
+  }
+   return null
+}
 export function getNextPlayerOfCurrentView() {
   let gameData = getGameData();
   if (!gameData) {
@@ -191,30 +248,28 @@ export function getNextPlayerOfCurrentView() {
   for (let i = 0; i < gameData.data.players.length; i++) {
     let player = gameData.data.players[i];
     // selectionner le joueur si c'est le suivant apres celui deja selectionné
-    if (canSelectPlayer){
+    if (canSelectPlayer) {
       targetPlayer = player;
       canSelectPlayer = false;
     }
     if (player.position == playerViewPosition) {
-     canSelectPlayer = true;
-    } 
+      canSelectPlayer = true;
+    }
     // selectionner le joueur si on a vient de croiser le joueur actuel
-   
- 
-  }  for (let i = 0; i < gameData.data.spectators.length; i++) {
+  }
+  for (let i = 0; i < gameData.data.spectators.length; i++) {
     let player = gameData.data.spectators[i];
     // selectionner le joueur si c'est le suivant apres celui deja selectionné
     if (player.position == playerViewPosition) {
-     canSelectPlayer = true;
-    } 
+      canSelectPlayer = true;
+    }
     // selectionner le joueur si on a vient de croiser le joueur actuel
-    if (canSelectPlayer){
+    if (canSelectPlayer) {
       targetPlayer = player;
     }
- 
-  } 
-if (targetPlayer) return targetPlayer;
-  // renvoyer le premier joueur sinon 
+  }
+  if (targetPlayer) return targetPlayer;
+  // renvoyer le premier joueur sinon
   return gameData.data.players[0];
 }
 export function getSocketOfPlayerOfCurrentView() {

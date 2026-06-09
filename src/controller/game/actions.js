@@ -36,12 +36,12 @@ function doAction(params) {
 
 window.doAction = doAction;
 
-export function doActionFromHandDeck() {
+export function doActionFromCards(origin) {
   let socketToDoAction = socket;
 
   // Si c'est déjà un objet, on ne parse pas
   let cardsElement = document.querySelectorAll(
-    ".handDeck [data-card-id].selected",
+    `.${origin} [data-card-id].selected`,
   );
 
   if (cardsElement.length === 0) {
@@ -83,35 +83,11 @@ export function doActionFromHandDeck() {
   socketToDoAction.emit("doAction", { action, actionType, params });
 }
 
-window.doActionFromHandDeck = doActionFromHandDeck;
-
-export function selectCardForAction(card) {
-  console.log("SELECT ON CARD", card);
-
-  // Si c'est déjà un objet, on ne parse pas
-  const cardObj = typeof card === "string" ? JSON.parse(card) : card;
-
-  console.log("Card ID:", cardObj.id);
-  if (!card) {
-    console.error("No card data provided for action from hand/deck");
-    displayError("No card data provided for action from hand/deck");
-    return;
-  }
-  let cardElement = document.querySelector(`[data-card-id="${cardObj.id}"]`);
-  if (cardElement) {
-    cardElement.classList.add("selected");
-  }
-  cardElement.addEventListener("dblclick", () => {
-    doActionFromHandDeck(card);
-  });
-  // Ici, vous pouvez stocker la carte sélectionnée dans une variable globale ou l'envoyer au serveur pour traitement
-}
-
-window.selectCardForAction = selectCardForAction;
-
+window.doActionFromCards = doActionFromCards;
+  
 const clickHandlers = new Map();
 const dblclickHandlers = new Map();
-export function listenActionsOnDeck() {
+export function listenActionsOnDeck(classToTarget) {
   let clickTimeout;
   for (const deck of clickHandlers.keys()) {
     if (!document.body.contains(deck)) {
@@ -119,7 +95,7 @@ export function listenActionsOnDeck() {
       dblclickHandlers.delete(deck);
     }
   }
-  document.querySelectorAll(".handDeck").forEach((deck) => {
+  document.querySelectorAll(`.${classToTarget}`).forEach((deck) => {
     if (clickHandlers.has(deck)) {
       console.log("remove existants action on click on deck");
       deck.removeEventListener("click", clickHandlers.get(deck));
@@ -160,9 +136,9 @@ export function listenActionsOnDeck() {
       console.log("Double-clic sur :", card);
 
       if (card.classList.contains("selected")) {
-        doActionFromHandDeck(card.dataset.cardId);
+        doActionFromCards(card.dataset.cardId, classToTarget);
       } else {
-        document.querySelectorAll(".handDeck [data-card-id]").forEach((c) => {
+        document.querySelectorAll(`.${classToTarget} [data-card-id]`).forEach((c) => {
           c.classList.remove("selected");
         });
       }

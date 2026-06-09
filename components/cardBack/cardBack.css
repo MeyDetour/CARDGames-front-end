@@ -1,0 +1,33 @@
+.cardBack {
+  width: 100%;
+  height: fit-content;
+  position: relative;
+  cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  img {
+    width: 100%;
+  }
+  .customCardOfGame {
+    width: 100%;
+  }  
+} 
+.cardBack.blink img {
+  
+    border: 4px sol
+    id var(--jaune);
+    animation: blinkAnimation 1s infinite;
+}
+@keyframes blinkAnimation {
+  0% {
+    border-color: var(--jaune);
+  }
+  50% {
+    border-color: transparent;
+  }
+  100% {
+    border-color: var(--jaune);
+  }
+}

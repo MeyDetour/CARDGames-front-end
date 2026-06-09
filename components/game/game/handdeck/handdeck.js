@@ -60,9 +60,9 @@ export function gameplay_handdeck(
 
         carElt.suit = suits[carElt.addedAttributs.couleur] || "";
 
-        html += defaultCard(carElt, canDoAction);
+        html += defaultCard(carElt, canDoAction, "", "handDeck");
       } else {
-        html += customCard(carElt, cardsParams, canDoAction);
+        html += customCard(carElt, cardsParams, canDoAction, "", "handDeck");
       }
     }
     html += `</div>`;
@@ -159,9 +159,7 @@ function getHandDeckLine(
     <div class="handDeck handDeck-${index}" style="z-index: ${max - index}; transform: translate(-50%,-${index * 40}px);" id="handDeck-${new Date().getTime()}">
       ${cards
         .map((cardId,key) => {
-          let carElt = cardList[cardId];
-          console.log(key);
-          console.log(max);
+          let carElt = cardList[cardId]; 
           if (!carElt) {
             console.warn(
               `Card with ID ${cardId} not found in cardList.`,
@@ -187,13 +185,13 @@ function getHandDeckLine(
             carElt.suit =
               suits[carElt.addedAttributs.couleur] || "";
 
-            return defaultCard(carElt, canDoAction,  style );
+            return defaultCard(carElt, canDoAction,  style ,"handDeck");
           } else {
             return customCard(
               carElt,
               cardsParams,
               canDoAction,
-              "hand",style);
+              "hand",style,"handDeck");
           }
         })
         .join("")}
@@ -287,6 +285,6 @@ export function reloadComposant_gameplayHanddeck(
   );
 
   setTimeout(() => {
-    listenActionsOnDeck();
+    listenActionsOnDeck("handDeck");
   }, 1000);
 }
