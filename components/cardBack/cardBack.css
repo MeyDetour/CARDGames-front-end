@@ -1,12 +1,13 @@
 .cardBack {
   width: 100%;
-  height: fit-content;
+  height: fit-content !important;
   position: relative;
   cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    
   img {
     width: 100%;
   }
@@ -14,11 +15,21 @@
     width: 100%;
   }  
 } 
+.cardBack.hoverable{
+    border: 4px solid var(--jaune);
+    animation: blinkAnimation 1s infinite;
+}
+.cardBack.hoverable:hover{
+  cursor: pointer;
+  transform: scale(1.05);
+}
 .cardBack.blink img {
   
     border: 4px sol
     id var(--jaune);
     animation: blinkAnimation 1s infinite;
+}.cardBack.selected  {
+    margin-bottom: 30px!important;
 }
 @keyframes blinkAnimation {
   0% {
@@ -29,5 +40,31 @@
   }
   100% {
     border-color: var(--jaune);
+  }
+}
+
+.customCardOfGame.selected::after{
+ content: "";
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    box-shadow: 0 0 30px 9px var(--jaune);
+    bottom: 50%;
+    left: 50%;
+    z-index: -1;
+    border-radius: 0;
+    transform: translate(-50%, 50%);
+    animation: cardSelectedAnimation 2s infinite;
+} 
+@keyframes cardSelectedAnimation {
+  0% {
+  
+    box-shadow: 0 0 30px 6px var(--jaune);
+  }
+  50% {
+    box-shadow: 0 0 30px 12px var(--jaune);
+  }  0% {
+  
+    box-shadow: 0 0 30px 6px var(--jaune);
   }
 }

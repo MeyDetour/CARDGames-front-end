@@ -253,8 +253,7 @@ export function reloadComposant_gameplayHanddeck(
 ) {
   console.log("-- reload handdeck --");
   document.querySelectorAll(".handDeck").forEach((elt) => {
-    console.log("remove ");
-    console.log(elt);
+    console.log("remove "); 
     elt.remove();
   });
   if (!currentPlayer) {
@@ -270,9 +269,7 @@ export function reloadComposant_gameplayHanddeck(
       currentPlayer,
     });
     return;
-  }
-  console.log(currentPlayer);
-  console.log(canDoAction);
+  } 
   content.innerHTML += gameplay_handdeck(
     displayHandDeck,
     handDeck,

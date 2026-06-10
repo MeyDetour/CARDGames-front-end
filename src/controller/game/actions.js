@@ -59,10 +59,18 @@ export function doActionFromCards(origin) {
       (player) => player.id == currentPlayer.id,
     ).socket;
   }
-  let actionOnHand = currentPlayer.actions.value.find(
-    (action) => action.actionOnHand,
-  );
-  if (!actionOnHand) {
+  let actionToDo;
+  if (origin == "handDeckOtherPlayer") {
+    actionToDo = currentPlayer.actions.value.find(
+      (action) => action.actionOnHanddOtherPlayerCards,
+    );
+  }
+  if (origin == "handDeck") {
+    actionToDo = currentPlayer.actions.value.find(
+      (action) => action.actionOnHand,
+    );
+  }
+  if (!actionToDo) {
     console.error("No action found for hand/deck interaction");
     displayError("No action found for hand/deck interaction");
     return;
@@ -70,13 +78,13 @@ export function doActionFromCards(origin) {
   let cardsId = Array.from(cardsElement).map((card) =>
     card.getAttribute("data-card-id"),
   );
-  let action = actionOnHand.id;
+  let action = actionToDo.id;
   let actionType = action.type || "default";
   let params = { selectedCards: cardsId };
   let id = currentPlayer.id;
   console.log(
     "Do Action :>> ",
-    actionOnHand.name + " [" + action + "] with cards : ",
+    actionToDo.name + " [" + action + "] with cards : ",
     cardsId,
   );
 
@@ -84,7 +92,7 @@ export function doActionFromCards(origin) {
 }
 
 window.doActionFromCards = doActionFromCards;
-  
+
 const clickHandlers = new Map();
 const dblclickHandlers = new Map();
 export function listenActionsOnDeck(classToTarget) {
@@ -95,7 +103,10 @@ export function listenActionsOnDeck(classToTarget) {
       dblclickHandlers.delete(deck);
     }
   }
+
   document.querySelectorAll(`.${classToTarget}`).forEach((deck) => {
+    
+    // enlever les anciens handlers pour éviter les doublons
     if (clickHandlers.has(deck)) {
       console.log("remove existants action on click on deck");
       deck.removeEventListener("click", clickHandlers.get(deck));
@@ -107,40 +118,59 @@ export function listenActionsOnDeck(classToTarget) {
 
     const handleClick = (event) => {
       console.log("click !");
+
+      // recuperer la carte cliquée
       const card = event.target.closest("[data-card-id]");
       if (!card) {
         console.log(event);
         console.log("Clicked outside of a card, ignoring.");
         return;
       }
-      clearTimeout(clickTimeout);
-
+      // recuperer le type de selection (single/multiple)
+      const type = event.target.closest("[data-selection-type]");
+      
       // time out pour differencier click et dlb click
+      clearTimeout(clickTimeout);
       clickTimeout = setTimeout(() => {
+
+        // selectionné la carte
         console.log("Clic simple sur :", card);
         if (card.classList.contains("hoverable")) {
           card.classList.toggle("selected");
+
+          // déselectionner les autres si le joueur ne peut en sélectionner qu'une
+          if (type == "single") {
+            document
+              .querySelectorAll(`.${classToTarget} [data-card-id]`)
+              .forEach((c) => {
+                c.classList.remove("selected");
+              });
+          }
         }
       }, 250);
     };
+
+    // Send cards or unselect all
     const handleDblClick = (event) => {
       console.log("dbl click !");
       clearTimeout(clickTimeout);
 
+      // get card and type (multipole or single selection)
       const card = event.target.closest("[data-card-id]");
+      const type = event.target.closest("[data-selection-type]");
       if (!card) {
-        console.log(event);
-        console.log("Clicked outside of a card, ignoring.");
         return;
       }
       console.log("Double-clic sur :", card);
 
       if (card.classList.contains("selected")) {
-        doActionFromCards(card.dataset.cardId, classToTarget);
+        doActionFromCards(classToTarget);
       } else {
-        document.querySelectorAll(`.${classToTarget} [data-card-id]`).forEach((c) => {
-          c.classList.remove("selected");
-        });
+        document
+          .querySelectorAll(`.${classToTarget} [data-card-id]`)
+          .forEach((c) => {
+            c.classList.remove("selected");
+          });
       }
     };
 
@@ -148,7 +178,7 @@ export function listenActionsOnDeck(classToTarget) {
     deck.addEventListener("dblclick", handleDblClick);
     if (deck) {
       console.log("add on click on deck");
-      console.log("add on dblclick on deck"); 
+      console.log("add on dblclick on deck");
     } else {
       console.warn(
         "No deck element found to add click listeners for hand/deck actions",

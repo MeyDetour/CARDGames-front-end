@@ -13,8 +13,7 @@ export function gameplay_otherPlayerCards(action, currentPlayer) {
   if (!action) {
     console.warn("No action found for other player cards");
     return "";
-  }
-  console.log(action);
+  } 
   let gameData = getGameData();
   if (!gameData) {
     console.warn("No game data found ");
@@ -48,11 +47,14 @@ export function gameplay_otherPlayerCards(action, currentPlayer) {
     console.warn("No player found to get other player cards");
     return "";
   }
+    setTimeout(() => {
+      listenActionsOnDeck("handDeckOtherPlayer");
+    }, 2000);
   return /*html */ `
     <div class="gamePlayOtherPlayerCardsContainer ">
         <h2>Sélectionnez ${action.numberOfCardToSelectMax>1 ? "des cartes":"une carte"}</h2>
         <div class="cardWrapper handDeckOtherPlayer">
-        ${Array.from(playerToGetCard.handDeck.value).map(card => cardBack(true,card)).join('')}
+        ${Array.from(playerToGetCard.handDeck.value).map(cardId => cardBack(true,true,action.numberOfCardToSelectMax,cardId)).join('')}
         </div>
     </div>
     `;
