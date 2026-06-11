@@ -54,7 +54,7 @@ export function gameplay_otherPlayerCards(action, currentPlayer) {
     <div class="gamePlayOtherPlayerCardsContainer ">
         <h2>Sélectionnez ${action.numberOfCardToSelectMax>1 ? "des cartes":"une carte"}</h2>
         <div class="cardWrapper handDeckOtherPlayer">
-        ${Array.from(playerToGetCard.handDeck.value).map(cardId => cardBack(true,true,action.numberOfCardToSelectMax,cardId)).join('')}
+        ${Array.from(playerToGetCard.handDeck.value).map(cardId => cardBack(true,true,action.numberOfCardToSelectMax,cardId,playerToGetCard.id)).join('')}
         </div>
     </div>
     `;

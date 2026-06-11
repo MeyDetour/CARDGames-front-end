@@ -40,12 +40,12 @@ export function defaultCard(card,canDoACtion,style='',origin="") {
     style="${style}
     "
     data-card-id="${card.id}"   class="defaultCardOfGame ${card.hoverable && canDoACtion ? "hoverable" : ""}  ">
-        <span class="leftValue">${card.value}</span> 
+        <span class="leftValue">${card.addedAttributs?.value}</span> 
         <span class="leftSuit ${color}">${suit}</span> 
         <span class="suit ${color}">${suit}</span> 
         <span class="rightSuit ${color}">${suit}</span> 
 
-        <span class="rightValue">${card.value}</span> 
+        <span class="rightValue">${card.addedAttributs?.value}</span> 
     </div>
     `;
 }

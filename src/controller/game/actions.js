@@ -75,12 +75,14 @@ export function doActionFromCards(origin) {
     displayError("No action found for hand/deck interaction");
     return;
   }
-  let cardsId = Array.from(cardsElement).map((card) =>
-    card.getAttribute("data-card-id"),
-  );
+  let ownerOfCards
+  let cardsId = Array.from(cardsElement).map((card) => {
+    ownerOfCards = card.getAttribute("data-origin-player-id");
+    return card.getAttribute("data-card-id");
+  });
   let action = actionToDo.id;
   let actionType = action.type || "default";
-  let params = { selectedCards: cardsId };
+  let params = { selectedCards: cardsId ,selectedPlayer : ownerOfCards};
   let id = currentPlayer.id;
   console.log(
     "Do Action :>> ",
