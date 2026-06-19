@@ -4,7 +4,7 @@ export function getTextualValueOfCard(card) {
   }
   if (card.type == "french_standard") {
     let symbol = (card) => {
-      switch (card.addedAttributs.couleur) {
+      switch (card.addedAttributs.symbol) {
         case "coeur":
           return "♥";
         case "carreau":

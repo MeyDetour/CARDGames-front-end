@@ -8,32 +8,32 @@ export function defaultCard(card,canDoACtion,style='',origin="") {
   if (!card) {
     return "PLEASE PROVIDE CARD";
   }
-  if (!card.value || !card.suit) {
+  if (!card.addedAttributs.value || !card.addedAttributs?.symbol) {
     return "PLEASE PROVODE SUIT";
   }
   const getSuitColor = (suit) => {
-    return suit === "hearts" || suit === "diamonds"
+    return suit === "coeur" || suit === "carreau"
       ? "text-red-600"
       : "text-slate-900";
   };
   const getSuitSymbol = (suit) => {
     switch (suit) {
-      case "hearts":
+      case "coeur":
         return "♥";
-      case "diamonds":
+      case "carreau":
         return "♦";
-      case "clubs":
+      case "trefle":
         return "♣";
-      case "spades":
+      case "pique":
         return "♠";
       default:
         return "";
     }
   };
-  let suit = getSuitSymbol(card.suit);
-  let color = getSuitColor(card.suit);
+  let suit = getSuitSymbol(card.addedAttributs?.symbol)
+
+  let color = getSuitColor(card.addedAttributs?.symbol);
    
- 
 
   return /*html */ ` 
     <div 

@@ -51,15 +51,7 @@ export function gameplay_handdeck(
       carElt.faceUp = true;
       carElt.hoverable = cardListToSelect.includes(cardId);
       if (carElt.type == "french_standard") {
-        const suits = {
-          coeur: "hearts",
-          carreau: "diamonds",
-          trefle: "clubs",
-          pique: "spades",
-        };
-
-        carElt.suit = suits[carElt.addedAttributs.couleur] || "";
-
+     
         html += defaultCard(carElt, canDoAction, "", "handDeck");
       } else {
         html += customCard(carElt, cardsParams, canDoAction, "", "handDeck");
@@ -71,7 +63,7 @@ export function gameplay_handdeck(
     let sort = getCardSort();
     let sortedHandDeck = [...handDeck];
 
-    // TRI PAR COULEUR
+    // TRI PAR symbol
     if (sort === "value") {
       sortedHandDeck.sort((a, b) => {
         const cardA = cardList[a];
@@ -86,8 +78,8 @@ export function gameplay_handdeck(
         ) {
           const colorOrder = { coeur: 1, carreau: 2, trefle: 3, pique: 4 };
           return (
-            (colorOrder[cardA.addedAttributs.couleur] || 0) -
-            (colorOrder[cardB.addedAttributs.couleur] || 0)
+            (colorOrder[cardA.addedAttributs.symbol] || 0) -
+            (colorOrder[cardB.addedAttributs.symbol] || 0)
           );
         }
 
@@ -112,10 +104,10 @@ export function gameplay_handdeck(
           return 0;
         if (!cardA || !cardB) return 0;
 
-        const orderA = colorOrder[cardA.addedAttributs.couleur] || 0;
-        const orderB = colorOrder[cardB.addedAttributs.couleur] || 0;
+        const orderA = colorOrder[cardA.addedAttributs.symbol] || 0;
+        const orderB = colorOrder[cardB.addedAttributs.symbol] || 0;
 
-        // Si les couleurs sont les mêmes, on trie par valeur
+        // Si les symbols sont les mêmes, on trie par valeur
         if (orderA === orderB) {
           return (cardA.value || 0) - (cardB.value || 0);
         }
@@ -183,7 +175,7 @@ function getHandDeckLine(
             };
 
             carElt.suit =
-              suits[carElt.addedAttributs.couleur] || "";
+              suits[carElt.addedAttributs.symbol] || "";
 
             return defaultCard(carElt, canDoAction,  style ,"handDeck");
           } else {

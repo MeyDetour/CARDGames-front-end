@@ -2,6 +2,7 @@ import { getTextualValueOfCard } from "../../../../src/controller/game/cards.js"
 import { getGainIdOfGainString } from "../../../../src/helpers/string.js";
 export default function statEventsDemonsWithValueSectionValueSection(gameData){
     return /*html*/ `
+        <div class="statValueElement"><div class="spanTop"><span>Erreurs</span><span>Array</span></div><span style='color:red'>${gameData.data.errors.map(e=>e).join(', ')}</span></div>
         <div class="statValueElement"><div class="spanTop"><span>State</span><span>String</span></div><span>${gameData.data.state.value}</span></div>
         <div class="statValueElement"><div class="spanTop"><span>Players</span><span>Player Array</span></div><span>${gameData.data.players.map(player => player.pseudo).join(", ")}</span></div>
         <div class="statValueElement"><div class="spanTop"><span>Spectators</span><span>Spectator Array</span></div><span>${gameData.data.spectators.map(player => player.pseudo).join(", ")}</span></div>
