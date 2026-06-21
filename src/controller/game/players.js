@@ -164,9 +164,12 @@ export function getPlayerOfCurrentView() {
     return null;
   }
   let view = getView();
+  console.log(gameData.data.players);
+  console.log(view.playerView);
   let player = gameData.data.players.find(
     (player) => player.position == view.playerView,
   );
+  console.log(player);
   if (player) return player;
   player = gameData.data.spectators.find(
     (spectator) => spectator.position == view.playerView,

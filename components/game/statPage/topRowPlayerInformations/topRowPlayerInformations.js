@@ -24,7 +24,7 @@ export default function topRowPlayerInformations() {
   let playersStat2 = getPlayerStat(currentPlayer, gameData);
   let playerStat1 = playersStat2.splice(Math.round(playersStat2.length / 2));
   if (!currentPlayer) {
-    displayError("No current player found to display game");
+    displayError("No current player found to display game in topRowPlayerInformations");
     return "";
   }
   return /*html*/ `     

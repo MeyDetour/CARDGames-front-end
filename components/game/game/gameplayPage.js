@@ -71,7 +71,7 @@ export default function gameplayPage() {
     return "";
   }
   if (!currentPlayer) {
-    displayError("No current player found to display game");
+    displayError("No current player found to display game in gameplayPage");
     console.warn("No current player found");
     return "";
   }
@@ -246,7 +246,7 @@ export function reloadComposant_gameplayPage() {
     currentPlayer = getPlayerOfCurrentView();
   }
   if (!currentPlayer) {
-    displayError("No current player found to display game");
+    displayError("No current player found to display game in gameplayPage");
     return;
   }
   let playerActions = currentPlayer.actions.value;

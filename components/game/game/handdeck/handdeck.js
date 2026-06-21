@@ -195,13 +195,13 @@ export function autoReloadComposant_gameplayHanddeck() {
   console.log("--autoreload handdeck  --");
   let content = document.querySelector("#gameplayPage");
   if (!content) {
-    displayError("No content found to reload players");
+    displayError("No content found to reload game in handdeck");
     return;
   }
 
   let gameData = getGameData();
   if (!gameData) {
-    displayError("No game data found to display game");
+    displayError("No game data found to display game in handdeck");
     return;
   }
   let currentPlayer;
@@ -213,7 +213,7 @@ export function autoReloadComposant_gameplayHanddeck() {
   }
 
   if (!currentPlayer) {
-    displayError("No current player found to display game");
+    displayError("No current player found to display game in handdeck");
     return;
   }
 
@@ -224,8 +224,9 @@ export function autoReloadComposant_gameplayHanddeck() {
     gameData.roomInDb.params.rendering.game.displayHandDeck,
     currentPlayer.handDeck.value,
     gameData.roomInDb.assets.cards,
-    currentPlayer.cardsSelectableForActionOnHand?.value,
+    currentPlayer.cardsSelectableForActionOnHand?.value ?? [] ,
     gameData.roomInDb.params.rendering.playerHand,
+    gameData.roomInDb.params.cards,
     actionOnHand,
     currentPlayer,
   );
@@ -249,7 +250,7 @@ export function reloadComposant_gameplayHanddeck(
     elt.remove();
   });
   if (!currentPlayer) {
-    displayError("No current player found to display game");
+    displayError("No current player found to display game in handdeck l252");
     console.warn("params : ", {
       content,
       displayHandDeck,
@@ -262,7 +263,9 @@ export function reloadComposant_gameplayHanddeck(
     });
     return;
   } 
-  content.innerHTML += gameplay_handdeck(
+ 
+
+   let handDeckHtml = gameplay_handdeck(
     displayHandDeck,
     handDeck,
     cardList,
@@ -272,6 +275,13 @@ export function reloadComposant_gameplayHanddeck(
     canDoAction,
     currentPlayer,
   );
+ 
+   
+      content.innerHTML += handDeckHtml;
+    
+
+
+
 
   setTimeout(() => {
     listenActionsOnDeck("handDeck");

@@ -1,7 +1,7 @@
 export function displayError(error) {
   console.error(error)
   let content = /*html */ `  
-             <p>${error.message}</p>
+             <p>${error.message ? error.message : error}</p>
      
     `;
   let errorContainer = document.querySelector("#error-container");
