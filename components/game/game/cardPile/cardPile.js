@@ -9,6 +9,7 @@ import { getPlayerOfCurrentView } from "../../../../src/controller/game/players.
 import { cardBack } from "../../../cardBack/cardBack.js";
 import { cardPlaceholder } from "../../../cardPlaceholder/cardPlaceholder.js";
 import { customCard } from "../../../customCard/customCard.js";
+import { defaultCard } from "../../../defaultCard/defaultCard.js";
 export function gameplay_cardPile(
   cardsParams,
   actionParams,
@@ -32,18 +33,25 @@ export function gameplay_cardPile(
       (spectator) => spectator.id == currentPlayer.id,
     )
   ) {
+    console.warn("Spectators cannot see card piles, returning empty string");
     return "";
   }
   if (type == "deck" && !cardsParams?.deck?.activation) {
+    console.warn("Deck is not activated, returning empty string");
     return "";
   }
   if (type == "discardDeck" && !cardsParams?.discard?.activation) {
+    console.warn("Discard deck is not activated, returning empty string");
     return "";
   }
   if (isVisibile) {
     return /*html */ `
    <div onclick="${actionParams && actionParams.action ? `doAction(${serializeParams(actionParams)})` : ""}" class="gameplayPile ${actionParams ? "blink" : ""} ${classname} ${environnement}" id="pile-type-${type}">
-        ${!cards || cards.length === 0 ? cardPlaceholder() : customCard(cards[cards.length - 1], { hoverable: actionParams ? true : false })}
+        ${!cards || cards.length === 0 ? cardPlaceholder() : 
+          cards[cards.length - 1].type =="custom"
+          ? customCard(cards[cards.length - 1], { hoverable: actionParams ? true : false })
+          : defaultCard(cards[cards.length - 1], { hoverable: actionParams ? true : false })
+        }
         ${actionParams ? /*html */ `<span class="actionLabel">${actionParams.action.name}</span>` : ""}
         ${label ? /*html */ `<span class="pileLabel">${label}</span>` : ""}
    </div>
