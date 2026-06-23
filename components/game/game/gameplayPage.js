@@ -49,6 +49,7 @@ import {
   reloadComposant_gameplaySpectatorBanniere,
   gameplay_spectatorBanniere,
 } from "./spectatorBanniere/spectatorBanniere.js";
+import { countDown ,removeCountDown} from "../../countDown/countDown.js";
 import { serializeParams } from "../../../src/helpers/serializer.js";
 import { listenActionsOnDeck } from "../../../src/controller/game/actions.js";
 export default function gameplayPage() {
@@ -100,9 +101,18 @@ export default function gameplayPage() {
   let actionOnHanddOtherPlayerCards = playerActions.find(
     (action) => action.actionOnHanddOtherPlayerCards && action.appearAsTheFirstAction,
   );
-  return /*html */ `
-        <div id="gameplayPage" class="${environnement}">
 
+  setTimeout(() => { 
+    removeCountDown();
+    return;
+  },5000)
+  console.log("display game");
+
+  return /*html */ `
+
+
+        <div id="gameplayPage" class="${environnement}">
+        ${ countDown()}
        ${gameplay_messageOfLoading(gameData.data.logs)}
        ${gameplay_handdeck(
          params.displayHandDeck,
@@ -113,6 +123,7 @@ export default function gameplayPage() {
          gameData.roomInDb.params.cards,
          actionOnHand,
          currentPlayer,
+         "handDeck-animation"
        )}
          ${gameplay_spectatorBanniere(currentPlayer)}
          ${gameplay_otherPlayerCards(
@@ -219,6 +230,7 @@ export function reloadComposant_gameplayPage() {
   let content = document.querySelector("#gameplayPage");
   if (!content) {
     if (environnement == "test-app") {
+      console.log("DISPLAY GAMEPLAY PAGE BECAUSE CONTENT IS EMPTY");
       document.querySelector("#gamePlayPageContainer").innerHTML =
         gameplayPage();
       return;
@@ -255,11 +267,7 @@ export function reloadComposant_gameplayPage() {
   let actionOnDiscardDeck = playerActions.find(
     (action) => action.actionOnDiscardDeck,
   );
-  
-  console.log(currentPlayer);
-  console.log(playerActions);
-  console.log(actionOnHand);
-
+   
   reloadComposant_gameplayMessageOfLoading("#gameplayPage", gameData.data.logs);
   reloadComposant_gameplayPlayers(
     "#gameplayPage .table",
@@ -288,6 +296,7 @@ export function reloadComposant_gameplayPage() {
     gameData.roomInDb.params.cards,
     actionOnHand,
     currentPlayer,
+    ""
   );
   reloadComposant_gameplayActionsButtons(
     content,

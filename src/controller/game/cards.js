@@ -17,7 +17,7 @@ export function getTextualValueOfCard(card) {
           return "";
       }
     };
-    return `${card.value}${symbol(card)}`;
+    return `${card.addedAttributs.value}${symbol(card)}`;
   }else{
     return card.name??"No name";
   }

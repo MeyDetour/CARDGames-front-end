@@ -126,8 +126,12 @@ export function autoreloadComposant_gameplayCardPile(type) {
     type == "discardDeck"
       ? gameData.roomInDb.params.cards.discard.renderTheLastDiscardedCard
       : gameData.roomInDb.params?.cards?.deck?.renderTheNextDeckCard,
-    gameData.data.discardDeck.value.map((cardId) => {
-      return gameData.data.cards[cardId];
-    }),
-  );
+    type == "discardDeck"
+      ? gameData.data.discardDeck.value.map((cardId) => {
+          return gameData.data.cards[cardId];
+        })
+      : gameData.data.deck.value.map((cardId) => {
+          return gameData.data.cards[cardId];
+        }),
+  ); 
 }

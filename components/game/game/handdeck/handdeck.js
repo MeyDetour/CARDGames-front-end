@@ -23,6 +23,7 @@ export function gameplay_handdeck(
   cardsParams,
   canDoAction,
   currentPlayer,
+  classToAdd = ""
 ) {
   if (!displayHandDeck) {
     return "";
@@ -44,7 +45,7 @@ export function gameplay_handdeck(
     const cols = parseInt(
       paramsPlayerHand.template.split("grid")[1].split("x")[1],
     ); // Extrait le nombre de lignes du template
-    let html = `<div class="handDeck handDeck-grid" style="grid-template-rows: repeat(${rows}, 1fr); grid-template-columns: repeat(${cols}, 1fr);" id="${new Date().getTime()}">`;
+    let html = `<div class="handDeck handDeck-grid ${classToAdd}" style="grid-template-rows: repeat(${rows}, 1fr); grid-template-columns: repeat(${cols}, 1fr);" id="${new Date().getTime()}">`;
     for (let i = 0; i < handDeck.length; i++) {
       const cardId = handDeck[i];
       let carElt = cardList[cardId];
@@ -131,6 +132,7 @@ export function gameplay_handdeck(
         indexMax,
         cardsParams,
         canDoAction,
+        classToAdd
       );
     }
     return html;
@@ -145,10 +147,11 @@ function getHandDeckLine(
   max,
   cardsParams,
   canDoAction,
+  clasToAdd = ""
 ) {
   const inclinaisonMin = -15;
   return /*html */ `
-    <div class="handDeck handDeck-${index}" style="z-index: ${max - index}; transform: translate(-50%,-${index * 40}px);" id="handDeck-${new Date().getTime()}">
+    <div class="handDeck handDeck-${index} ${clasToAdd}" style="z-index: ${max - index}; transform: translate(-50%,-${index * 40}px);" id="handDeck-${new Date().getTime()}">
       ${cards
         .map((cardId,key) => {
           let carElt = cardList[cardId]; 
@@ -229,6 +232,7 @@ export function autoReloadComposant_gameplayHanddeck() {
     gameData.roomInDb.params.cards,
     actionOnHand,
     currentPlayer,
+    ""
   );
 }
 
@@ -243,6 +247,7 @@ export function reloadComposant_gameplayHanddeck(
   cardsParams,
   canDoAction,
   currentPlayer,
+  classToAdd = ""
 ) {
   console.log("-- reload handdeck --");
   document.querySelectorAll(".handDeck").forEach((elt) => {
@@ -274,6 +279,7 @@ export function reloadComposant_gameplayHanddeck(
     cardsParams,
     canDoAction,
     currentPlayer,
+    classToAdd
   );
  
    

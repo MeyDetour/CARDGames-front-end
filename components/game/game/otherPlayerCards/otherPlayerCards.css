@@ -14,8 +14,9 @@
     background: #ffba008f;
     border-radius: 21px;
     backdrop-filter: blur(6px);
+     animation : choicePlayerCardsAppear 2s ease-in-out;
     .cardWrapper {
-      height: 1fit-content;
+      height: fit-content;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
@@ -26,5 +27,17 @@
         width: 8%;
       }
     }
+   
+  }
+}
+
+@keyframes choicePlayerCardsAppear {
+  0% {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 1;
   }
 }

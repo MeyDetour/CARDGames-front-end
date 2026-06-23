@@ -30,9 +30,7 @@ export function gameUpdatesListenForTestApp(socket) {
           currentPlayerNow = getPlayerOfCurrentView();
         }else{
           currentPlayerNow = getCurrentPlayer();
-        } 
-        console.log("current player");
-        console.log(currentPlayerNow);
+        }  
         storeGameData(gameData);
         reloadComposant_StatPage();
       });

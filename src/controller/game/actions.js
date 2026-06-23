@@ -109,18 +109,14 @@ export function listenActionsOnDeck(classToTarget) {
   document.querySelectorAll(`.${classToTarget}`).forEach((deck) => {
     
     // enlever les anciens handlers pour éviter les doublons
-    if (clickHandlers.has(deck)) {
-      console.log("remove existants action on click on deck");
+    if (clickHandlers.has(deck)) { 
       deck.removeEventListener("click", clickHandlers.get(deck));
     }
-    if (dblclickHandlers.has(deck)) {
-      console.log("remove existants action on dbl click on deck");
+    if (dblclickHandlers.has(deck)) { 
       deck.removeEventListener("dblclick", dblclickHandlers.get(deck));
     }
 
-    const handleClick = (event) => {
-      console.log("click !");
-
+    const handleClick = (event) => { 
       // recuperer la carte cliquée
       const card = event.target.closest("[data-card-id]");
       if (!card) {
@@ -178,14 +174,7 @@ export function listenActionsOnDeck(classToTarget) {
 
     deck.addEventListener("click", handleClick);
     deck.addEventListener("dblclick", handleDblClick);
-    if (deck) {
-      console.log("add on click on deck");
-      console.log("add on dblclick on deck");
-    } else {
-      console.warn(
-        "No deck element found to add click listeners for hand/deck actions",
-      );
-    }
+     
     clickHandlers.set(deck, handleClick);
     dblclickHandlers.set(deck, handleDblClick);
   });

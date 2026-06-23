@@ -78,8 +78,9 @@ if (!isTabListenerInitialized) {
   if (gameData.data.state.value!="inProgress"){
   return;
   }
-  let content = document.querySelector("#statGamePage");
+  let content = document.querySelector(".statGamePage");
   if (!content) {
+    console.log("RELOAD ENTIRE STATPAGE BECAUSE NO STATPAGE");
     document.querySelector("#content").innerHTML = statPage();
   }
 
