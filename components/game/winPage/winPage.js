@@ -23,31 +23,26 @@ export function winPage() {
     displayError("No current player found to display win page");
     return "";
   }
- 
-  if (
-    currentPlayer.haswin.value !== true ||
-    currentPlayer.isSpectator.value == true
-  ) {
-    return "";
-  }
-  if (currentPlayer.haswin.value !== true) {
-    return "";
-  }
+  
+  
   if (gameData.data.winners.value.length == 0) {
-    return ""
+    console.warn("No winners found in game data, not displaying win page");
+    return "";
   }
   if (
     !gameData.data?.winners?.value?.some(
-      (winner) => winner.id === currentPlayer.id,
+      (winner) => winner.id == currentPlayer.id,
     )
   ) {
+    console.log(currentPlayer);
+    console.warn("Current player is not in the winners list, not displaying win page");
     return "";
   }
 
   // pas besoin de verifier que la partie soit finie
   // car certains joueuers peuvent gagner avant la fin
-  // de la partie
-
+  // de la partie 
+  const winnersList = gameData.data.winners.value;
   let particlesHTML = "";
   for (let i = 0; i < 400; i++) {
     const x = Math.random() * 100 + "vw";
@@ -66,25 +61,26 @@ export function winPage() {
       ${particlesHTML}
       </div>
       <img src="/assets/images/victory.png" alt="Victory" class="victory-image">
-      ${gameData.data.winners?.value && gameData.data.winners?.value[0] ? `<img class="firstPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners?.value[0]?.skin.name}.png" alt="Victory" class="victory-image">` : ""}
-      ${gameData.data.winners?.value && gameData.data.winners?.value[1] ? `<img class="secondPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners?.value[1]?.skin.name}.png" alt="Victory" class="victory-image">` : ""}
-      ${gameData.data.winners?.value && gameData.data.winners?.value[2] ? `<img class="thirdPlayerOnPodium" src="/assets/images/spooky-skins/${gameData.data.winners?.value[2]?.skin.name}.png" alt="Victory" class="victory-image">` : ""}
+      ${winnersList && winnersList[0] ? `<img class="firstPlayerOnPodium" src="/assets/images/spooky-skins/${winnersList[0]?.skin.name}.png" alt="Victory" class="victory-image">` : ""}
+      ${winnersList && winnersList[1] ? `<img class="secondPlayerOnPodium" src="/assets/images/spooky-skins/${winnersList[1]?.skin.name}.png" alt="Victory" class="victory-image">` : ""}
+      ${winnersList && winnersList[2] ? `<img class="thirdPlayerOnPodium" src="/assets/images/spooky-skins/${winnersList[2]?.skin.name}.png" alt="Victory" class="victory-image">` : ""}
       <div class="buttonContainers">
           
 
 
         <div class="buttons">
-          ${
+         
+          ${ false&&
             gameData.data.state.value == "endOfGame" &&
             gameData.admin.id == currentPlayer.id &&
-            gameData.data.players >= 2
+            gameData.data.players.length >= 2
               ? // on affiche le boutton rejouer que si la partie est vraiment finie
                 // le bouton rejouer va reinitialiser la partie et donc faire revenir
                 // tous les joueurs dans la salle d'attente, c'est pour ça que je veux
                 // pas l'afficher avant que la partie soit vraiment finie
                 button(null, null, null, "replay", "Rejouer", "darkBlueButton")
               : ""
-          }
+          } 
           
         
           ${
@@ -118,11 +114,16 @@ export function winPage() {
 export function reloadComposant_winPage() {
   console.log("-- reload win page --");
   let content = document.querySelector("#gameplayPage");
-  if (document.querySelector(".winPage")) {
-    document.querySelector(".winPage").remove();
-  }
+  
   let page = winPage();
   if (content && page) {
+      if (document.querySelector(".winPage")) {
+    document.querySelector(".winPage").remove();
+    
+  }  if (document.querySelector(".loosePage")) {
+    document.querySelector(".loosePage").remove();
+    
+  } 
     content.innerHTML = page;
     console.log("WIN PAGE LOADED");
   }

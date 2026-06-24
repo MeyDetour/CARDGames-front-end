@@ -280,7 +280,7 @@ export function reloadComposant_gameplayPage() {
   });
   reloadComposant_gameplayMiddleCards("#gameplayPage .table", {});
   reloadComposant_gameplaySpectatorBanniere(content, currentPlayer);
-  reloadComposant_gameplayPlayerValues(content, getPlayerOfCurrentView(), {
+  reloadComposant_gameplayPlayerValues(content, currentPlayer, {
     key: 0,
     displayPoints: params.displayStatistics,
     dislayCardCount: params.displayCountAdversaryHandDeck,

@@ -26,12 +26,16 @@ export function gameplay_handdeck(
   classToAdd = ""
 ) {
   if (!displayHandDeck) {
+    console.warn("Display hand deck is false, not displaying hand deck");
     return "";
   }
   if (!handDeck || handDeck.length === 0) {
+    console.log(handDeck);
+    console.warn("Hand deck is empty, not displaying hand deck");
     return "";
   }
   if (isPassifPlayer(currentPlayer)) {
+    console.warn("Current player is passive, not displaying hand deck");  
     return "";
   }
   if (

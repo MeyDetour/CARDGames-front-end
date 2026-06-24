@@ -67,7 +67,7 @@ export function gameUpdatesListen(socket) {
         if (environnement == "test-app") {
           currentPlayerNow = getPlayerOfCurrentView();
         }else{
-          currentPlayerNow = getCurrentPlayer();
+          currentPlayerNow = currentPlayer;
         }
         gameChanges(gameData, currentPlayerNow);
       });

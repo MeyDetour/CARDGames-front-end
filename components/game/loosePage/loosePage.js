@@ -72,11 +72,11 @@ export function loosePage() {
    
         <h1>Défaite !</h1>
         ${
-          gameData.data.winners && gameData.data.winners.length > 1
-            ? `<p>Gagnants : ${gameData.data.winners
+          gameData.data.winners && gameData.data.winners.value.length > 1
+            ? `<p>Gagnants : ${gameData.data.winners.value
                 .map((winner) => winner.pseudo)
                 .join(", ")}</p>`
-            : `<p>Gagnant : ${gameData.data.winners[0].pseudo}</p>`
+            : `<p>Gagnant : ${gameData.data.winners.value[0]?.pseudo}</p>`
         }
 
      
@@ -119,10 +119,17 @@ export function loosePage() {
 
 export function reloadComposant_loosePage() { 
   console.log("-- reload loose page --");
+  let content = document.querySelector("#gameplayPage");
 
-  let content = document.querySelector("#content");
   let page = loosePage();
   if (content && page) {
+      if (document.querySelector(".loosePage")) {
+    document.querySelector(".loosePage").remove();
+    
+  }   if (document.querySelector(".winPage")) {
+    document.querySelector(".winPage").remove();
+    
+  } 
     content.innerHTML = page;
   }
 }
