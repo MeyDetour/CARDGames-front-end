@@ -46,36 +46,71 @@ CARD Games est une interface web multijoueur qui permet de créer ou rejoindre f
  
 ```mermaid
 sequenceDiagram
-    participant C as Créateur (Front-end)
-    participant J as Joueurs (Amis)
+    actor C as Joueur Créateur 
+    actor J as Joueurs (Amis)
+    participant CG@{"type" :"boundary"} as CARD Games 
     participant Node as Serveur Node.js (Websocket)
     participant Sym as API Symfony (Config)
+    Note over C, Sym: Phase de récupération des jeux
+    C->>CG:Ouverture de l'interface de jeu
+    C->>CG:Ouverture de la page de liste de jeu
+    CG-->>Sym: Récupération de la liste de jeux disponible
+    activate Sym
+    Note over Sym : Appel GET à la base de donnée
+    Sym->>CG : Envoie de la liste des jeux
+    deactivate Sym
+    CG->>C:Affichage de la liste 
+    Note over C, Sym: Phase de Création de la Room
+    C->>CG:Choix du jeu 
+    CG-->>Sym: Récupération de la configuration du jeu
+    alt Le jeu existe et la partie est publique
+        Sym-->>CG: Envoi de la configuration
+         Note over Node,CG: Création de la partie
 
-    Note over C, Node: Phase de Création de la Room
-    C->>Sym: Récupération de la configuration du jeu
-    Sym-->>C: Données de config (JSON)
-    C->>Node: Création de Room + Envoi de la config
-    Node-->>C: Confirmation + Room ID (Code)
-
+        CG-->>Node: Signal : Demande de création de la partie et envoi de la configuration
+        alt Configuration valide
+            Node-->>CG: Signal : Envoie du code de la partie
+            CG ->> C : Affichage de la salle d'attente
+        else Configuration invalide, Connexion invalide, Pas de pseudo renseigné
+            Node -->> CG : Signal : Envoie d'une erreur 
+            CG ->> C : Affichage l'erreur 
+        end
+    else Le jeu n'existe pas ou n'est pas publié
+        Sym -->> CG : Envoie d'une erreur 
+        CG ->> C : Affichage de l'erreur 
+    end
     Note over J, Node: Phase de Connexion des Joueurs
     C->>J: Partage du code de la partie
-    J->>Node: Rejoint la partie (Code)
-    Node-->>J: Signal : Connexion validée
-    Node-->>C: Signal : Nouveau joueur connecté
-
-    Note over C, Node: Lancement et Gameplay
-    C->>Node: Lancer la partie
-    
-    loop Logique de jeu (Temps réel)
+    J ->> CG : Ouverture de l'interface de jeu
+    J ->> CG : Copie du code de la partie et clic sur le bouton pour rejoindre
+    CG-->>Node: Signal : Demande pour rejoindre une partie avec le code
+    alt La partie existe bien 
+        Node-->>CG: Signal : Connexion validée
+        CG ->> J : Affichage de la salle d'attente
+        Node-->>CG: Signal : Nouveau joueur connecté
+        CG->>C: Affichage d'un nouveau joueur dans la liste des joueurs
+    else La partie n'existe pas
+        Node -->> CG : Envoie d'une erreur
+        CG ->> J : Affichage de l'erreur
+    end
+    Note over C, Node: Lancement de la partie
+    C->>CG: Lancer la partie
+    CG -->> Node : Signal : Lancer la partie
+    alt Minimum et maximum de joueur respecté dans la partie
+        Node-->>CG : Changement de la variable de progression du jeu
+        CG ->> J : Démarage du jeu pour tous les joueurs    
+        CG ->> C : Démarage du jeu pour tous les joueurs      
+    else Qutoa de joueurs non atteints
+        Node-->> CG : Signal : Impossible de lancer la partie
+        CG ->> C : Affichage de l'erreur
+    end
+    loop Lig Logique de jeu (Temps réel)
+        CG ->> CG : Attente de l'action d'un joueur
+        CG -->> Node : Signal : Envoie de l'action
         Node->>Node: Traitement de la logique (State machine)
-        Node-->>C: Update : Nouvel état du jeu
-        Node-->>J: Update : Nouvel état du jeu
+        CG ->> J : Affichage du jeu modifié
+        CG ->> C : Affichage du jeu modifié 
         
-        Note right of J: Action du joueur
-        J->>Node: Envoi d'une action (Move/Click)
-        Node->>Node: Calcul des conséquences
-        Node-->>C: Broadcast : Mise à jour de la partie
-        Node-->>J: Broadcast : Mise à jour de la partie
     end
 
 ```

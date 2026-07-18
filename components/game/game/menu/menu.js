@@ -56,6 +56,8 @@ export function changeCardSort(e) {
   toggleGameplayMenu();
   reloadSortSeleciton();
 }
+window.changeCardSort = changeCardSort;
+
 function reloadSortSeleciton() {
   let sort = getCardSort();
   let selectElement = document.getElementById("card-sort");
@@ -63,7 +65,7 @@ function reloadSortSeleciton() {
     selectElement.value = sort;
   }
 }
-window.changeCardSort = changeCardSort;
+
 export function hideGameplayMenu() {
   let menuContainer = document.querySelector(".menu");
   if (menuContainer) {

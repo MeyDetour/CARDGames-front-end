@@ -113,26 +113,24 @@ export default function gameplayPage() {
 
         <div id="gameplayPage" class="${environnement}">
         ${ countDown()}
-       ${gameplay_messageOfLoading(gameData.data.logs)}
-       ${gameplay_handdeck(
-         params.displayHandDeck,
-         handDeck,
-         cardList,
-         currentPlayer.cardsSelectableForActionOnHand?.value ?? [],
-         gameData.roomInDb.params.rendering.playerHand,
-         gameData.roomInDb.params.cards,
-         actionOnHand,
-         currentPlayer,
-         "handDeck-animation"
-       )}
-         ${gameplay_spectatorBanniere(currentPlayer)}
-         ${gameplay_otherPlayerCards(
-         actionOnHanddOtherPlayerCards,
-         currentPlayer
-      )}  
-     
-         
-         ${gameplay_actionButton(
+        ${gameplay_messageOfLoading(gameData.data.logs)}
+        ${gameplay_handdeck(
+          params.displayHandDeck,
+          handDeck,
+          cardList,
+          currentPlayer.cardsSelectableForActionOnHand?.value ?? [],
+          gameData.roomInDb.params.rendering.playerHand,
+          gameData.roomInDb.params.cards,
+          actionOnHand,
+          currentPlayer,
+          "handDeck-animation"
+        )}
+          ${gameplay_spectatorBanniere(currentPlayer)}
+          ${gameplay_otherPlayerCards(
+          actionOnHanddOtherPlayerCards,
+          currentPlayer
+        )}  
+        ${gameplay_actionButton(
            playerActions.filter(
              (a) => !a.actionOnDeck && !a.actionOnDiscardDeck,
            ),
