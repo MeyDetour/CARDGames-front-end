@@ -1,0 +1,32 @@
+services:
+  # Première application (player-app)
+  player-application:
+    image: nginx:alpine
+    ports:
+      - "8001:80"
+    volumes:
+      # 1. On monte la racine de l'app
+      - ./player-app/:/usr/share/nginx/html/
+      # 2. On injecte les dossiers partagés directement là où les liens symboliques pointent
+      - ./assets/:/usr/share/nginx/html/assets/
+      - ./components/:/usr/share/nginx/html/components/
+      - ./data/:/usr/share/nginx/html/data/
+      - ./pages/:/usr/share/nginx/html/pages/
+      - ./src/:/usr/share/nginx/html/src/
+      - ./env.js:/usr/share/nginx/html/env.js
+
+  # Deuxième application (test-app)
+  test-application:
+    image: nginx:alpine
+    ports:
+      - "8002:80"
+    volumes:
+      # 1. On monte la racine de l'app
+      - ./test-app/:/usr/share/nginx/html/
+      # 2. On injecte les dossiers partagés directement à la place des liens symboliques
+      - ./assets/:/usr/share/nginx/html/assets/
+      - ./components/:/usr/share/nginx/html/components/
+      - ./data/:/usr/share/nginx/html/data/
+      - ./pages/:/usr/share/nginx/html/pages/
+      - ./src/:/usr/share/nginx/html/src/
+      - ./env.js:/usr/share/nginx/html/env.js
