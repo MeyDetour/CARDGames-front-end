@@ -5,9 +5,7 @@ services:
     ports:
       - "8001:80"
     volumes:
-      # 1. On monte la racine de l'app
       - ./player-app/:/usr/share/nginx/html/
-      # 2. On injecte les dossiers partagés directement là où les liens symboliques pointent
       - ./assets/:/usr/share/nginx/html/assets/
       - ./components/:/usr/share/nginx/html/components/
       - ./data/:/usr/share/nginx/html/data/

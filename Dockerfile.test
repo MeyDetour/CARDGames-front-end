@@ -1,0 +1,12 @@
+FROM nginx:alpine
+
+# Copie de l'application de test
+COPY test-app/ /usr/share/nginx/html/
+
+# Copie des dossiers partagés
+COPY assets/ /usr/share/nginx/html/assets/
+COPY components/ /usr/share/nginx/html/components/
+COPY data/ /usr/share/nginx/html/data/
+COPY pages/ /usr/share/nginx/html/pages/
+COPY src/ /usr/share/nginx/html/src/
+COPY env.js /usr/share/nginx/html/env.js
