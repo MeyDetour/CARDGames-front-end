@@ -1,4 +1,11 @@
 FROM nginx:alpine
 
-# On copie simplement tout le contenu du dossier player-app
+# 1. Copie des fichiers de base de player-app (index.html, main.js, style.css...)
 COPY test-app/ /usr/share/nginx/html/
+
+# 2. Remplacement des liens symboliques par les vrais dossiers de la racine
+COPY components/ /usr/share/nginx/html/components/
+COPY pages/ /usr/share/nginx/html/pages/
+COPY data/ /usr/share/nginx/html/data/
+COPY src/ /usr/share/nginx/html/src/
+COPY env.js /usr/share/nginx/html/env.js
