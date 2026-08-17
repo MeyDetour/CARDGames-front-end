@@ -4,6 +4,7 @@ FROM nginx:alpine
 COPY player-app/ /usr/share/nginx/html/
 
 # 2. Remplacement des liens symboliques par les vrais dossiers de la racine
+COPY assets/ /usr/share/nginx/html/assets/
 COPY components/ /usr/share/nginx/html/components/
 COPY pages/ /usr/share/nginx/html/pages/
 COPY data/ /usr/share/nginx/html/data/
