@@ -30,7 +30,21 @@ export function defaultCard(card,canDoACtion,style='',origin="") {
         return "";
     }
   };
+    const getValueSymbol = (value) => {
+    switch (value) {
+      case 11:
+        return "V";
+      case 12:
+        return "D";
+      case 13:
+        return "R"; 
+      default:
+        return value
+    }
+  };
+
   let suit = getSuitSymbol(card.addedAttributs?.symbol)
+  let value = getValueSymbol(card.addedAttributs?.value)
 
   let color = getSuitColor(card.addedAttributs?.symbol);
    
@@ -40,12 +54,12 @@ export function defaultCard(card,canDoACtion,style='',origin="") {
     style="${style}
     "
     data-card-id="${card.id}"   class="defaultCardOfGame ${card.hoverable && canDoACtion ? "hoverable" : ""}  ">
-        <span class="leftValue">${card.addedAttributs?.value}</span> 
+        <span class="leftValue">${value}</span> 
         <span class="leftSuit ${color}">${suit}</span> 
         <span class="suit ${color}">${suit}</span> 
         <span class="rightSuit ${color}">${suit}</span> 
 
-        <span class="rightValue">${card.addedAttributs?.value}</span> 
+        <span class="rightValue">${value}</span> 
     </div>
     `;
 }
